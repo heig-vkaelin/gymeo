@@ -4689,7 +4689,7 @@
 									"font": "Arial;13;0",
 									"showShadow": false,
 									"left": 635,
-									"top": 512,
+									"top": 510,
 									"width": 44.79541015625,
 									"height": 13,
 									"autoResize": true,
@@ -4714,7 +4714,7 @@
 									"font": "Arial;13;0",
 									"showShadow": false,
 									"left": 684,
-									"top": 499,
+									"top": 497,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 30,
@@ -4736,7 +4736,7 @@
 									"font": "Arial;13;0",
 									"showShadow": false,
 									"left": 728,
-									"top": 500,
+									"top": 498,
 									"height": 13,
 									"alpha": -1.5707963267948966,
 									"distance": 15,
@@ -4758,7 +4758,7 @@
 									"font": "Arial;13;0",
 									"showShadow": false,
 									"left": 363,
-									"top": 485,
+									"top": 483,
 									"height": 13,
 									"alpha": 0.5235987755982988,
 									"distance": 30,
@@ -4780,7 +4780,7 @@
 									"font": "Arial;13;0",
 									"showShadow": false,
 									"left": 366,
-									"top": 471,
+									"top": 469,
 									"height": 13,
 									"alpha": 0.7853981633974483,
 									"distance": 40,
@@ -4800,9 +4800,9 @@
 									},
 									"font": "Arial;13;0",
 									"showShadow": false,
-									"left": 357,
-									"top": 512,
-									"width": 5.05908203125,
+									"left": 350,
+									"top": 510,
+									"width": 19.5126953125,
 									"height": 13,
 									"autoResize": true,
 									"alpha": -0.5235987755982988,
@@ -4811,7 +4811,7 @@
 										"$ref": "AAAAAAF9SB+dwNB9Jkk="
 									},
 									"edgePosition": 2,
-									"text": "*"
+									"text": "1..*"
 								},
 								{
 									"_type": "EdgeLabelView",
@@ -4917,7 +4917,7 @@
 							"tail": {
 								"$ref": "AAAAAAF9MgC2YK6g4CE="
 							},
-							"points": "338:506;714:506;714:468",
+							"points": "338:504;714:504;714:468",
 							"showProperty": false,
 							"nameLabel": {
 								"$ref": "AAAAAAF9SB+dwdB+s24="
@@ -5210,7 +5210,8 @@
 								"$ref": "AAAAAAF9MfxPKq0XtSs="
 							},
 							"name": "id",
-							"isStatic": true
+							"isStatic": true,
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -5218,7 +5219,8 @@
 							"_parent": {
 								"$ref": "AAAAAAF9MfxPKq0XtSs="
 							},
-							"name": "nom"
+							"name": "nom",
+							"type": ""
 						}
 					]
 				},
@@ -5237,7 +5239,8 @@
 								"$ref": "AAAAAAF9Mfyk+K1r8pA="
 							},
 							"name": "id",
-							"isStatic": true
+							"isStatic": true,
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -5495,7 +5498,7 @@
 								"reference": {
 									"$ref": "AAAAAAF9MgC2X66eK+0="
 								},
-								"multiplicity": "*"
+								"multiplicity": "1..*"
 							},
 							"end2": {
 								"_type": "UMLAssociationEnd",
