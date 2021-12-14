@@ -160,7 +160,7 @@ ALTER TABLE Série
     ADD CONSTRAINT FK_Série_nomExercice
         FOREIGN KEY (nomExercice)
             REFERENCES Exercice (nom)
-ON DELETE CASCADE
+ON DELETE SET NULL
 ON UPDATE CASCADE;
 
 ALTER TABLE Matériel_GroupementMusculaire
@@ -228,7 +228,7 @@ ALTER TABLE Programme_Exercice
     ADD CONSTRAINT UC_Programme_Exercice_idProgramme_ordre
         UNIQUE (idProgramme, ordre);
 
-/* Check trivials */
+/* Checks triviaux */
 ALTER TABLE Utilisateur 
     ADD CONSTRAINT CK_Utilisateur_dateNaissance
         CHECK (dateNaissance < CURRENT_DATE);
@@ -241,15 +241,11 @@ ALTER TABLE Exercice
         CHECK (nbRépétitionsConseillé > 0),
         
     ADD CONSTRAINT CK_Exercice_tempsExécutionConseillé
-        CHECK (tempsExécutionConseillé > 0),
-        
-    ADD CONSTRAINT CK_Exerice_nbRépétitionsConseillé_tempsExécutionConseillé
-        CHECK 
-        (
-            ( CASE WHEN nbRépétitionsConseillé IS NULL THEN 0 ELSE 1 END
-            + CASE WHEN tempsExécutionConseillé NULL THEN 0 ELSE 1 END
-            ) = 1
-        );
+        CHECK (tempsExécutionConseillé > 0);
+
+ALTER TABLE Séance
+    ADD CONSTRAINT CK_Séance_dateDébut_dateFin
+        CHECK (dateDébut < dateFin);
 
 ALTER TABLE Série 
     ADD CONSTRAINT CK_Série_nbRépétitions
@@ -259,14 +255,7 @@ ALTER TABLE Série
         CHECK (tempsExécution > 0),
 
     ADD CONSTRAINT CK_Série_poids
-        CHECK (poids > 0),
-            ADD CONSTRAINT CK_Série_nbRépétitions_tempsExécution
-    CHECK 
-    (
-        ( CASE WHEN nbRépétitions IS NULL THEN 0 ELSE 1 END
-        + CASE WHEN tempsExécution NULL THEN 0 ELSE 1 END
-        ) = 1
-    );
+        CHECK (poids > 0);
 
 ALTER TABLE Programme_Exercice 
     ADD CONSTRAINT CK_Programme_Exercice_tempsPause
@@ -280,17 +269,20 @@ ALTER TABLE Programme_Exercice
 
 
 /* Autres */
+ALTER TABLE Exercice 
+    ADD CONSTRAINT CK_Exerice_nbRépétitionsConseillé_tempsExécutionConseillé
+        CHECK 
+        (
+            ( CASE WHEN nbRépétitionsConseillé IS NULL THEN 0 ELSE 1 END
+            + CASE WHEN tempsExécutionConseillé IS NULL THEN 0 ELSE 1 END
+            ) = 1
+        );
 
--- Contraintes d'intégrité  
-
--- Un exercice utilisant un matériel doit travailler les mêmes groupements musculaires que ce dernier. 
--- Une fois la séance terminée, il est impossible d’y ajouter une série supplémentaire. 
--- Une série doit contenir le même attribut que l’exercice auquel elle se rattache (soit nbRépétitions soit tempsExécution). 
--- L'exercice d’une série doit faire partie du programme de cette dernière. 
-
-
-
--- Les exercices et les séries doivent forcément contenir soit l’attribut nbRépétitions soit tempsExécution mais pas les deux. 
--- Deux exercices d'un programme ne peuvent pas avoir le même numéro d’ordre 
-
-
+ALTER TABLE Série 
+    ADD CONSTRAINT CK_Série_nbRépétitions_tempsExécution
+        CHECK 
+        (
+            ( CASE WHEN nbRépétitions IS NULL THEN 0 ELSE 1 END
+            + CASE WHEN tempsExécution IS NULL THEN 0 ELSE 1 END
+            ) = 1
+        );
