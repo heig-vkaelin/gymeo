@@ -3,6 +3,7 @@ SET client_encoding TO 'UTF-8';
 /* ---------------------------------------------------------------------------- */
 /*                               Création des types                             */
 /* ---------------------------------------------------------------------------- */
+DROP TYPE IF EXISTS DIFFICULTE CASCADE;
 CREATE TYPE DIFFICULTE AS ENUM('Facile', 'Moyen', 'Difficile');
 
 /* ---------------------------------------------------------------------------- */
@@ -17,24 +18,24 @@ CREATE TABLE GroupementMusculaire(
 DROP TABLE IF EXISTS Matériel CASCADE;
 CREATE TABLE Matériel(
     id SERIAL,
-    nom VARCHAR(50),
+    nom VARCHAR(50) NOT NULL,
     description TEXT,
     CONSTRAINT PK_Matériel PRIMARY KEY (id)
 );
 
-DROP TABLE IF EXISTS Exercice;
+DROP TABLE IF EXISTS Exercice CASCADE;
 CREATE TABLE Exercice (
     nom VARCHAR(50),
     description TEXT,
-    nbSériesConseillé SMALLINT CHECK (nbSériesConseillé > 0),
-    nbRépétitionsConseillé SMALLINT CHECK (nbSériesConseillé > 0),
-    tempsExécutionConseiller INTEGER CHECK (tempsExécutionConseiller > 0),
+    nbSériesConseillé SMALLINT NOT NULL,
+    nbRépétitionsConseillé SMALLINT,
+    tempsExécutionConseillé INTEGER,
     difficulté DIFFICULTE NOT NULL,
     idMatériel INTEGER,
     CONSTRAINT PK_Exercice PRIMARY KEY (nom)
 );
 
-DROP TABLE IF EXISTS Programme;
+DROP TABLE IF EXISTS Programme CASCADE;
 CREATE TABLE Programme (
     id SERIAL,
     nom VARCHAR(50) NOT NULL,
@@ -51,8 +52,8 @@ CREATE TABLE Lieu (
 DROP TABLE IF EXISTS Séance CASCADE;
 CREATE TABLE Séance (
     id SERIAL,
-    date DATE NOT NULL,
-    estTerminée BOOLEAN DEFAULT FALSE NOT NULL,
+    dateDébut DATE NOT NULL,
+    dateFin DATE,
     idProgramme INTEGER NOT NULL,
     CONSTRAINT PK_Séance PRIMARY KEY (id)
 );
@@ -68,11 +69,10 @@ CREATE TABLE Série (
     CONSTRAINT PK_Série PRIMARY KEY (id)
 );
 
-
 DROP TABLE IF EXISTS Utilisateur CASCADE;
 CREATE TABLE Utilisateur (
     id SERIAL,
-    pseudonyme VARCHAR(30) UNIQUE NOT NULL,
+    pseudonyme VARCHAR(30) NOT NULL,
     dateNaissance DATE NOT NULL,
     CONSTRAINT PK_Utilisateur PRIMARY KEY (id)
 );
@@ -95,41 +95,39 @@ DROP TABLE IF EXISTS Programme_Exercice CASCADE;
 CREATE TABLE Programme_Exercice (
     nomExercice VARCHAR(50),
     idProgramme INTEGER,
-    tempsPause SMALLINT,
-    nbSéries SMALLINT,
+    tempsPause SMALLINT NOT NULL,
+    nbSéries SMALLINT NOT NULL,
     ordre SMALLINT NOT NULL,
     CONSTRAINT PK_Programme_Exercice PRIMARY KEY (nomExercice, idProgramme)
+);
+
+DROP TABLE IF EXISTS Exercice_Lieu CASCADE;
+CREATE TABLE Exercice_Lieu (
+    nomExercice VARCHAR(50),
+    nomLieu VARCHAR(50),
+    CONSTRAINT PK_Exercice_Lieu PRIMARY KEY (nomExercice, nomLieu)
 );
 
 /* ---------------------------------------------------------------------------- */
 /*                               Création des index                             */
 /* ---------------------------------------------------------------------------- */
-CREATE INDEX IDX_FK_Exercice_idMatériel ON Exercice(idMatériel, ASC);
+CREATE INDEX IDX_FK_Exercice_idMatériel ON Exercice(idMatériel ASC);
 
-CREATE INDEX IDX_FK_Programme_idUtilisateur ON Programme(idUtilisateur, ASC);
+CREATE INDEX IDX_FK_Programme_idUtilisateur ON Programme(idUtilisateur ASC);
 
-CREATE INDEX IDX_FK_Séance_idProgramme ON Séance(idProgramme, ASC);
+CREATE INDEX IDX_FK_Séance_idProgramme ON Séance(idProgramme ASC);
 
-CREATE INDEX IDX_FK_Programme_idMatériel ON Programme(idUtilisateur, ASC);
+CREATE INDEX IDX_FK_Programme_idMatériel ON Programme(idUtilisateur ASC);
 
-CREATE INDEX IDX_FK_Série_nomExercice ON Série(nomExercice, ASC);
+CREATE INDEX IDX_FK_Série_nomExercice ON Série(nomExercice ASC);
 
-CREATE INDEX IDX_FK_Série_idSéance ON Série(idSéance, ASC);
-
-CREATE INDEX IDX_FK_Matériel_GroupementMusculaire_idMatériel ON Matériel_GroupementMusculaire(idMatériel, ASC);
-
-CREATE INDEX IDX_FK_Matériel_GroupementMusculaire_nomGroupementMusculaire ON Matériel_GroupementMusculaire(nomGroupementMusculaire, ASC);
-
-/* TODO FINIR LES INDEX */
-FK_Matériel_GroupementMusculaire_idMatériel
-FK_Matériel_GroupementMusculaire_nomGroupementMusculaire
-
-FK_Programme_Exercice_nomExercice
-FK_Programme_Exercice_idProgramme
+CREATE INDEX IDX_FK_Série_idSéance ON Série(idSéance ASC);
 
 /* ---------------------------------------------------------------------------- */
 /*                               Création des contraintes                       */
 /* ---------------------------------------------------------------------------- */
+
+/* Clés étrangères */
 ALTER TABLE Exercice
     ADD CONSTRAINT FK_Exercice_idMatériel
         FOREIGN KEY (idMatériel)
@@ -181,8 +179,8 @@ ON UPDATE CASCADE;
 
 ALTER TABLE Exercice_GroupementMusculaire
     ADD CONSTRAINT FK_Exercice_GroupementMusculaire_idMatériel
-        FOREIGN KEY (idMatériel)
-            REFERENCES Matériel (id)
+        FOREIGN KEY (nomExercice)
+            REFERENCES Exercice (nom)
 ON DELETE CASCADE
 ON UPDATE CASCADE;
 
@@ -206,3 +204,93 @@ ALTER TABLE Programme_Exercice
             REFERENCES Programme (id)
 ON DELETE CASCADE
 ON UPDATE CASCADE;
+
+ALTER TABLE Exercice_Lieu
+    ADD CONSTRAINT FK_Exercice_Lieu_nomExercice
+        FOREIGN KEY (nomExercice)
+            REFERENCES Exercice (nom)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+ALTER TABLE Exercice_Lieu
+    ADD CONSTRAINT FK_Exercice_Lieu_nomLieu
+        FOREIGN KEY (nomLieu)
+            REFERENCES Lieu (nom)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+/* Unique */
+ALTER TABLE Utilisateur
+    ADD CONSTRAINT UC_Utilisateur_pseudonyme
+        UNIQUE (pseudonyme);
+
+ALTER TABLE Programme_Exercice
+    ADD CONSTRAINT UC_Programme_Exercice_idProgramme_ordre
+        UNIQUE (idProgramme, ordre);
+
+/* Check trivials */
+ALTER TABLE Utilisateur 
+    ADD CONSTRAINT CK_Utilisateur_dateNaissance
+        CHECK (dateNaissance < CURRENT_DATE);
+
+ALTER TABLE Exercice 
+    ADD CONSTRAINT CK_Exerice_nbSériesConseillé
+        CHECK (nbSériesConseillé > 0),
+
+    ADD CONSTRAINT CK_Exercice_nbRépétitionsConseillé
+        CHECK (nbRépétitionsConseillé > 0),
+        
+    ADD CONSTRAINT CK_Exercice_tempsExécutionConseillé
+        CHECK (tempsExécutionConseillé > 0),
+        
+    ADD CONSTRAINT CK_Exerice_nbRépétitionsConseillé_tempsExécutionConseillé
+        CHECK 
+        (
+            ( CASE WHEN nbRépétitionsConseillé IS NULL THEN 0 ELSE 1 END
+            + CASE WHEN tempsExécutionConseillé NULL THEN 0 ELSE 1 END
+            ) = 1
+        );
+
+ALTER TABLE Série 
+    ADD CONSTRAINT CK_Série_nbRépétitions
+        CHECK (nbRépétitions > 0),
+
+    ADD CONSTRAINT CK_Série_tempsExécution
+        CHECK (tempsExécution > 0),
+
+    ADD CONSTRAINT CK_Série_poids
+        CHECK (poids > 0),
+            ADD CONSTRAINT CK_Série_nbRépétitions_tempsExécution
+    CHECK 
+    (
+        ( CASE WHEN nbRépétitions IS NULL THEN 0 ELSE 1 END
+        + CASE WHEN tempsExécution NULL THEN 0 ELSE 1 END
+        ) = 1
+    );
+
+ALTER TABLE Programme_Exercice 
+    ADD CONSTRAINT CK_Programme_Exercice_tempsPause
+        CHECK (tempsPause > 0),
+        
+    ADD CONSTRAINT CK_Programme_Exercice_nbSéries
+        CHECK (nbSéries > 0),
+
+    ADD CONSTRAINT CK_Programme_Exercice_ordre
+        CHECK (ordre > 0);
+
+
+/* Autres */
+
+-- Contraintes d'intégrité  
+
+-- Un exercice utilisant un matériel doit travailler les mêmes groupements musculaires que ce dernier. 
+-- Une fois la séance terminée, il est impossible d’y ajouter une série supplémentaire. 
+-- Une série doit contenir le même attribut que l’exercice auquel elle se rattache (soit nbRépétitions soit tempsExécution). 
+-- L'exercice d’une série doit faire partie du programme de cette dernière. 
+
+
+
+-- Les exercices et les séries doivent forcément contenir soit l’attribut nbRépétitions soit tempsExécution mais pas les deux. 
+-- Deux exercices d'un programme ne peuvent pas avoir le même numéro d’ordre 
+
+
