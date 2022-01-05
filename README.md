@@ -21,3 +21,8 @@ Lors de la création de nouveaux fichiers php, il est nécessaire de mettre à j
 ```bash
 composer dump-autoload
 ```
+
+Ensuite, il faut activer les bonnes extensions PHP dans le fichier `bin/php/php-7.0.3/php_uwamp.ini`. Pour se faire, il faut décommenter (enlever le `;` au début de ligne) des lignes suivantes:
+
+- extension=php_pdo_pgsql.dll
+- extension=php_pgsql.dll
