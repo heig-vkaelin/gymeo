@@ -12,6 +12,8 @@ Dépendances à installer:
 
 Lors de l'installation de Composer, il faut préciser le chemin du php de UwAmp (`bin/php/php-7.0.3`).
 
+Dans l'interface UwAmp, modifier la version de php par la version 7.X.X dans la select box.
+
 Une fois cela fait, il faut copier le contenu du dossier `src` dans le dossier `www` de UwAmp.
 
 Lors de la création de nouveaux fichiers php, il est nécessaire de mettre à jour les fichiers d'importation de Composer via la commande suivante:
