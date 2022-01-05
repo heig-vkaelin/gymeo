@@ -15,16 +15,16 @@
  */
 function view($name, $data = [])
 {
-  // Data from the Controller
-  extract($data);
+    // Data from the Controller
+    extract($data);
 
-  // Logged User
-  $user = $_SESSION['user'] ?? null;
-  $logged = !empty($user);
+    // Logged User
+    $user = $_SESSION['user'] ?? null;
+    $logged = !empty($user);
 
-  require "app/views/partials/header.php";
-  require "app/views/{$name}.view.php";
-  require "app/views/partials/footer.php";
+    require "app/views/partials/header.php";
+    require "app/views/{$name}.view.php";
+    require "app/views/partials/footer.php";
 }
 
 /**
@@ -34,5 +34,5 @@ function view($name, $data = [])
  */
 function redirect($path)
 {
-  header("Location: /{$path}");
+    header("Location: /{$path}");
 }
