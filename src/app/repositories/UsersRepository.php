@@ -9,15 +9,13 @@ class UsersRepository extends Repository
 {
     public function getAllUsers()
     {
-        $this->db->queryExecute('
+        $this->queryExecute('
             SELECT utilisateur.id, utilisateur.pseudonyme, utilisateur.datenaissance
             FROM utilisateur
             ORDER BY utilisateur.id
         ');
 
-        $result = $this->db->fetchAll();
-        $this->db->closeCursor();
-        return $result;
+        return $this->fetchAll();
     }
 
     /**
@@ -31,15 +29,13 @@ class UsersRepository extends Repository
             WHERE pseudonyme = :username
         ";
 
-        $this->db->prepareExecute($query, [
+        $this->prepareExecute($query, [
             'username' => [
                 'value' => $username,
                 'type' => PDO::PARAM_STR
             ]
         ]);
 
-        $result = $this->db->fetchOne();
-        $this->db->closeCursor();
-        return $result;
+        return $this->fetchOne();
     }
 }
