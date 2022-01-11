@@ -6,14 +6,20 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Controllers\\ExercicesController' => $baseDir . '/app/controllers/ExercicesController.php',
     'App\\Controllers\\NicknamesController' => $baseDir . '/app/controllers/NicknamesController.php',
+    'App\\Controllers\\ProgramsController' => $baseDir . '/app/controllers/ProgramsController.php',
+    'App\\Controllers\\SessionsController' => $baseDir . '/app/controllers/SessionsController.php',
     'App\\Controllers\\TeachersController' => $baseDir . '/app/controllers/TeachersController.php',
     'App\\Controllers\\UsersController' => $baseDir . '/app/controllers/UsersController.php',
     'App\\Core\\App' => $baseDir . '/core/App.php',
     'App\\Core\\Database\\Database' => $baseDir . '/core/database/Database.php',
     'App\\Core\\Request' => $baseDir . '/core/Request.php',
     'App\\Core\\Router' => $baseDir . '/core/Router.php',
+    'App\\Repositories\\ExercicesRepository' => $baseDir . '/app/repositories/ExercicesRepository.php',
+    'App\\Repositories\\ProgramsRepository' => $baseDir . '/app/repositories/ProgramsRepository.php',
     'App\\Repositories\\Repository' => $baseDir . '/app/repositories/Repository.php',
+    'App\\Repositories\\SessionsRepository' => $baseDir . '/app/repositories/SessionsRepository.php',
     'App\\Repositories\\UsersRepository' => $baseDir . '/app/repositories/UsersRepository.php',
     'ComposerAutoloaderInit00051b5f1f9667e2557362bd129a1d01' => $vendorDir . '/composer/autoload_real.php',
     'Composer\\Autoload\\ClassLoader' => $vendorDir . '/composer/ClassLoader.php',

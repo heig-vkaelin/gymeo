@@ -2,7 +2,6 @@
 
 namespace App\Repositories;
 
-use App\Core\App;
 use PDO;
 
 class UsersRepository extends Repository
