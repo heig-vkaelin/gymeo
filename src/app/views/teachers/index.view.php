@@ -1,5 +1,5 @@
 <main>
-    <div class="mt-6 container mx-auto">
+    <div class="mt-6 container px-4">
         <h2 class="text-lg font-semibold">Liste des utilisateurs</h2>
         <table class="mt-2 bg-white shadow rounded-lg overflow-hidden">
             <thead>

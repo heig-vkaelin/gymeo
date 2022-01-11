@@ -12,15 +12,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>gymeo</title>
-    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-
 </head>
 
 <body class="font-sans antialiased bg-gray-200">
     <header>
         <div class="mt-5 container mx-auto">
-            <div class="flex justify-between items-center">
+            <div class="flex justify-between items-center px-4">
                 <h1 class="text-xl font-bold uppercase">gymeo</h1>
                 <?php if (!$logged) : ?>
                     <form action="/login" method="POST" class="flex">
