@@ -26,3 +26,12 @@ Ensuite, il faut activer les bonnes extensions PHP dans le fichier `bin/php/php-
 
 - extension=php_pdo_pgsql.dll
 - extension=php_pgsql.dll
+
+
+Lancer l'application sans Uwamp (à faire dans le dossier `src`):
+
+```bash
+php -S localhost:8080
+```
+
+Le site est maintenant disponible à l'adresse: [localhost:8080](http://localhost:8080/)

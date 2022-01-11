@@ -73,6 +73,11 @@ class Database
         return $this->fetchData(PDO::FETCH_ASSOC);
     }
 
+    public function fetchOne()
+    {
+        return $this->req->fetch(PDO::FETCH_ASSOC);
+    }
+
     /**
      * Empty the record set
      */
@@ -362,29 +367,6 @@ class Database
         ]);
 
         $this->closeCursor();
-    }
-
-    /**
-     * Try to find a user to login with
-     */
-    public function findUser($username)
-    {
-        $query = "
-            SELECT t_user.idUser, t_user.useUsername, t_user.useHashedPass, t_user.useRole, t_user.useVotes
-            FROM t_user
-            WHERE t_user.useUsername = :username
-        ";
-
-        $this->prepareExecute($query, [
-            'username' => [
-                'value' => $username,
-                'type' => PDO::PARAM_STR
-            ]
-        ]);
-
-        $result = $this->fetchData(PDO::FETCH_ASSOC);
-        $this->closeCursor();
-        return $result;
     }
 
     /**

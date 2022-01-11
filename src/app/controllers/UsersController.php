@@ -19,19 +19,17 @@ class UsersController
     public function login()
     {
         $username = htmlspecialchars($_POST['user'] ?? '');
-        $password = htmlspecialchars($_POST['password'] ?? '');
 
-        // Check user exists in db
-        $userFromDB = App::get('database')->findUser($username);
+        // Check if user exists in db
+        $userFromDB = App::get('user-repository')->findUser($username);
         $userExists = !empty($userFromDB);
 
-        if ($userExists && password_verify($password, $userFromDB[0]['useHashedPass'])) {
+        if ($userExists) {
             // Store user in Session
             $_SESSION['user'] = [
-                'id' => $userFromDB[0]['idUser'],
-                'user' => $userFromDB[0]['useUsername'],
-                'role' => $userFromDB[0]['useRole'],
-                'votes' => $userFromDB[0]['useVotes'],
+                'id' => $userFromDB['id'],
+                'user' => $userFromDB['pseudonyme'],
+                'dateNaissance' => $userFromDB['datenaissance'],
             ];
         }
 

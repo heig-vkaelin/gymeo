@@ -36,3 +36,13 @@ function redirect($path)
 {
     header("Location: /{$path}");
 }
+
+/**
+ * Kill the process to debug and dump the selected variable
+ *
+ * @param * $variable
+ */
+function dd($variable)
+{
+    die(var_dump($variable));
+}

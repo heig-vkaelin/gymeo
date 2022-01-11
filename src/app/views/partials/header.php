@@ -24,15 +24,14 @@
                 <h1 class="text-xl font-bold uppercase">gymeo</h1>
                 <?php if (!$logged) : ?>
                     <form action="/login" method="POST" class="flex">
-                        <input class="appearance-none block w-full bg-white text-gray-700 border border-gray-20 rounded py-2 px-4 leading-tight focus:outline-none focus:border-gray-500" type="text" name="user" placeholder="Utilisateur">
-                        <input class="ml-2 appearance-none block w-full bg-white text-gray-700 border border-gray-20 rounded py-2 px-4 leading-tight focus:outline-none focus:border-gray-500" type="password" name="password" placeholder="Mot de passe">
+                        <input class="appearance-none block w-full bg-white text-gray-700 border border-gray-20 rounded py-2 px-4 leading-tight focus:outline-none focus:border-gray-500" type="text" name="user" placeholder="Pseudonyme">
                         <button class="ml-2 flex-shrink-0 shadow bg-gray-800 hover:bg-gray-900 focus:outline-none text-white font-bold py-2 px-4 rounded" type="submit">
                             Se connecter
                         </button>
                     </form>
                 <?php else : ?>
                     <div class="flex items-center">
-                        <div><?= $user['user'] ?> (<?= $user['role'] ?>)</div>
+                        <div><?= $user['user'] ?></div>
                         <a href="/logout" class="ml-2 flex-shrink-0 shadow bg-gray-800 hover:bg-gray-900 focus:outline-none text-white font-bold py-2 px-4 rounded">
                             Se déconnecter
                         </a>
@@ -41,7 +40,7 @@
             </div>
             <nav class="mt-2 flex items-center px-4 py-3 bg-indigo-200">
                 <a href="/" class="border-b-2 border-transparent hover:border-gray-900">Accueil</a>
-                <?php if ($logged && $user['role'] === 'Admin') : ?>
+                <?php if ($logged) : ?>
                     <span class="mx-3">●</span>
                     <a href="/teachers/create" class="border-b-2 border-transparent hover:border-gray-900">Ajouter un enseignant</a>
                 <?php endif; ?>
