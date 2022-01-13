@@ -7,7 +7,27 @@
  * Description: All routes of the website
  */
 
+// Auth
+$router->post('login', 'UsersController@login');
+$router->get('logout', 'UsersController@logout');
+
+//  Exercices
+$router->get('exercices', 'ExercicesController@index');
+$router->get('exercice', 'ExercicesController@show');
+
+// Programs
+$router->get('programs', 'ProgramsController@index');
+$router->get('program', 'ProgramsController@show');
+$router->get('programs/create', 'ProgramsController@create');
+$router->post('programs', 'ProgramsController@store');
+
+// Sessions
+
+// Users
 $router->get('', 'TeachersController@index');
+
+
+// Old ETML project
 $router->get('teachers', 'TeachersController@show');
 $router->get('teachers/create', 'TeachersController@create');
 $router->post('teachers', 'TeachersController@store');
@@ -18,6 +38,3 @@ $router->post('teachers/vote', 'TeachersController@vote');
 
 $router->post('nicknames', 'NicknamesController@store');
 $router->post('nicknames/update', 'NicknamesController@update');
-
-$router->post('login', 'UsersController@login');
-$router->get('logout', 'UsersController@logout');

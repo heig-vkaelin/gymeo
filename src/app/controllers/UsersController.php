@@ -21,7 +21,7 @@ class UsersController
         $username = htmlspecialchars($_POST['user'] ?? '');
 
         // Check if user exists in db
-        $userFromDB = App::get('user-repository')->findUser($username);
+        $userFromDB = App::get('users-repository')->findUser($username);
         $userExists = !empty($userFromDB);
 
         if ($userExists) {

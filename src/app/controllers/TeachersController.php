@@ -18,7 +18,7 @@ class TeachersController
      */
     public function index()
     {
-        $users = App::get('user-repository')->getAllUsers();
+        $users = App::get('users-repository')->getAllUsers();
 
         return view('teachers/index', compact('users'));
     }

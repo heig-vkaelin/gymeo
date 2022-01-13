@@ -39,11 +39,11 @@
             </div>
             <nav class="mt-2 flex items-center px-4 py-3 bg-indigo-200">
                 <a href="/" class="border-b-2 border-transparent hover:border-gray-900">Accueil</a>
-                <a href="#" class="ml-3 border-b-2 border-transparent hover:border-gray-900">Exercices</a>
+                <a href="/exercices" class="ml-3 border-b-2 border-transparent hover:border-gray-900">Exercices</a>
                 <?php if ($logged) : ?>
                     <span class="mx-3">●</span>
                     <!-- <a href="/teachers/create" class="border-b-2 border-transparent hover:border-gray-900">Ajouter un enseignant</a> -->
-                    <a href="#" class="border-b-2 border-transparent hover:border-gray-900">Mes programmes</a>
+                    <a href="/programs" class="border-b-2 border-transparent hover:border-gray-900">Mes programmes</a>
                     <a href="#" class="ml-3 border-b-2 border-transparent hover:border-gray-900">Historique séances</a>
                     <a href="#" class="ml-3 border-b-2 border-transparent hover:border-gray-900">Historique séries</a>
                     <a href="#" class="ml-3 border-b-2 border-transparent hover:border-gray-900">Créer une séance</a>
