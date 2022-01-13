@@ -44,7 +44,8 @@
                     <span class="mx-3">●</span>
                     <!-- <a href="/teachers/create" class="border-b-2 border-transparent hover:border-gray-900">Ajouter un enseignant</a> -->
                     <a href="#" class="border-b-2 border-transparent hover:border-gray-900">Mes programmes</a>
-                    <a href="#" class="ml-3 border-b-2 border-transparent hover:border-gray-900">Historique</a>
+                    <a href="#" class="ml-3 border-b-2 border-transparent hover:border-gray-900">Historique séances</a>
+                    <a href="#" class="ml-3 border-b-2 border-transparent hover:border-gray-900">Historique séries</a>
                     <a href="#" class="ml-3 border-b-2 border-transparent hover:border-gray-900">Créer une séance</a>
                 <?php endif; ?>
             </nav>
