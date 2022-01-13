@@ -55,7 +55,9 @@ class Database
             }
             $this->req->execute();
         } catch (PDOException $e) {
-            redirect('');
+            dd($e);
+            // TODO: add this in production
+            // redirect('');
         }
     }
 

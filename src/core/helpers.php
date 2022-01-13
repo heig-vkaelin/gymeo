@@ -10,8 +10,8 @@
 /**
  * Require a view.
  *
- * @param  string $name
- * @param  array  $data
+ * @param  string $name : name of the view
+ * @param  array  $data : data to pass to the view
  */
 function view($name, $data = [])
 {
@@ -30,7 +30,7 @@ function view($name, $data = [])
 /**
  * Redirect to a new page.
  *
- * @param  string $path
+ * @param  string $path : path of the new page
  */
 function redirect($path)
 {
@@ -38,9 +38,9 @@ function redirect($path)
 }
 
 /**
- * Kill the process to debug and dump the selected variable
+ * Die and debug: kill the process to debug and dump the selected variable
  *
- * @param * $variable
+ * @param * $variable to display
  */
 function dd($variable)
 {

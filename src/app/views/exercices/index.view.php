@@ -15,8 +15,11 @@
                 $i = 0;
                 foreach ($exercices as $exercice) : ?>
                     <tr class="<?= $i % 2 == 0 ? 'bg-gray-100' : '' ?>">
-                        <!-- <td class="px-4 py-2"> <?= $user['id'] ?></td> -->
-                        <td class="px-4 py-2 truncate max-w-sm"><?= $exercice['nom'] ?></td>
+                        <td class="px-4 py-2 truncate max-w-sm">
+                            <a href="exercice?name=<?= $exercice['nom'] ?>" class="border-b-2 border-transparent hover:border-gray-800">
+                                <?= $exercice['nom'] ?>
+                            </a>
+                        </td>
                         <td class="px-4 py-2 truncate max-w-sm"><?= $exercice['difficulté'] ?></td>
                         <td class="px-4 py-2 truncate max-w-sm"><?= $exercice['idmatériel'] ? $exercice['matériel'] : 'Aucun' ?></td>
                     </tr>
@@ -26,12 +29,3 @@
         </table>
     </div>
 </main>
-
-<script>
-    function deleteTeacher(idTeacher) {
-        const confirmation = confirm("Êtes-vous sûr de vouloir supprimer l'enseignant ?");
-        if (confirmation) {
-            location.href = `teachers/delete?id=${idTeacher}`;
-        }
-    }
-</script>

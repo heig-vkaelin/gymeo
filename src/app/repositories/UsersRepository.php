@@ -20,10 +20,11 @@ class UsersRepository extends Repository
     /**
      * Try to find a user to login with
      */
-    public function findUser($username) 
+    public function findUser($username)
     {
         $query = "
-            SELECT id, pseudonyme, dateNaissance
+            SELECT
+                id, pseudonyme, dateNaissance
             FROM Utilisateur
             WHERE pseudonyme = :username
         ";
