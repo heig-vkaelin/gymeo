@@ -63,10 +63,10 @@ class ProgramsController
         // $nickname =  htmlspecialchars($_POST['nickname'] ?? '');
         // $origin =  htmlspecialchars($_POST['origin'] ?? '');
 
-        App::get('programs-repository')->createProgram([
-            'programName' => $programName,
-            // 'lastName' => $lastName,
-        ]);
-        redirect('/programs');
+        // App::get('programs-repository')->createProgram([
+        //     'programName' => $programName,
+        //     // 'lastName' => $lastName,
+        // ]);
+        redirect('programs');
     }
 }

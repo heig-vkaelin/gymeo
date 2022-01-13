@@ -8,12 +8,7 @@ class ExercicesController
 {
     public function index()
     {
-        if (!isset($_GET['id'])) {
-            return redirect('');
-        }
-
-        // $exercices = App::get('exercices-repository')->getAllExercices();
-        $exercices = [];
+        $exercices = App::get('exercices-repository')->TMP_getAllExercices();
 
         return view('exercices/index', compact('exercices'));
     }
