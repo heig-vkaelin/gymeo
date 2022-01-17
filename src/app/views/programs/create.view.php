@@ -26,8 +26,15 @@
                 <div class="text-sm italic">L'ordre des exercices et les autres informations pourront être modifiés par la suite.</div>
                 <?php foreach ($exercices as $exercice) : ?>
                     <div class="flex items-center">
-                        <input id="<?= $exercice['nom'] ?>" type="checkbox" name="exercices[]" value="<?= $exercice['nom'] ?>">
-                        <label class="ml-2" for="<?= $exercice['nom'] ?>"><?= $exercice['nom'] ?></label>
+                        <?php if($exercice['nbrépétitionsconseillé']): ?>
+                            <input hidden data-id="<?=$exercice['nom'] . '-repeat'?>" type="checkbox" name="nbRépétitions[]" value="<?= $exercice['nbrépétitionsconseillé'] ?>">
+                        <?php else : ?>
+                            <input hidden data-id="<?=$exercice['nom'] . '-time'?>" type="checkbox" name="tempsExécution[]" value="<?= $exercice['tempsexécutionconseillé'] ?>">
+                        <?php endif; ?>
+                        <input hidden data-id="<?=$exercice['nom'] . '-serie'?>" type="checkbox" name="nbSéries[]" value="<?= $exercice['nbsériesconseillé'] ?>">
+                        
+                        <input class="checks" id="<?= $exercice['nom'] ?>" type="checkbox" name="exercices[]" value="<?= $exercice['nom'] ?>">
+                        <label class="ml-2 checks"><?= $exercice['nom'] ?></label>
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -63,3 +70,22 @@
         </div>
     </div>
 </main>
+
+<script>
+const hiddenInput = ['serie', 'time', 'repeat']
+const checkboxes = document.querySelectorAll('.checks')
+const onCheckBoxClick = (e) => {
+    const checked = e.target.checked
+
+    hiddenInput.forEach(name => {
+        const domInput = document.querySelector(`input[data-id="${e.target.id}-${name}"]`)
+        if (domInput) {
+            domInput.checked = checked
+        }
+    })
+}
+checkboxes.forEach(box => 
+  box.addEventListener('click', onCheckBoxClick)
+)
+
+</script>

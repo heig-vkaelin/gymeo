@@ -10,7 +10,8 @@ class ExercicesRepository extends Repository
     {
         $this->queryExecute('
             SELECT
-                Exercice.nom, Exercice.difficulté, Exercice.idMatériel,
+                Exercice.nom, Exercice.difficulté, Exercice.idMatériel, Exercice.nbsériesconseillé,
+                Exercice.nbRépétitionsConseillé, Exercice.tempsExécutionConseillé,
                 Matériel.nom as Matériel
             FROM Exercice
             LEFT JOIN Matériel

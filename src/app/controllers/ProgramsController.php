@@ -55,6 +55,8 @@ class ProgramsController
             return redirect('');
         }
 
+        dd($_POST);
+
         $programName = htmlspecialchars($_POST['programName'] ?? '');
         // $lastName = htmlspecialchars($_POST['lastName'] ?? '');
         // $gender = !empty($_POST['gender']) ? htmlspecialchars($_POST['gender']) : 'Z';
