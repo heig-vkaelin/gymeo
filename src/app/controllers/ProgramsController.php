@@ -43,8 +43,7 @@ class ProgramsController
             return redirect('');
         }
 
-        // $exercices = App::get('exercices-repository')->getAllExercices();
-        $exercices = [];
+        $exercices = App::get('exercices-repository')->TMP_getAllExercices();
 
         return view('programs/create', compact('exercices'));
     }

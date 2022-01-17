@@ -33,6 +33,11 @@ class ExercicesRepository extends Repository
             WHERE Exercice.nom = :name
         ";
 
+        // LEFT JOIN Exercice_Lieu
+        //     ON Matériel.nom = Exercice_Lieu.nomExercice
+        // LEFT JOIN Lieu
+        //     ON Exercice_Lieu.nomLieu = Lieu.nom
+
         $this->prepareExecute($query, [
             'name' => [
                 'value' => $name,
