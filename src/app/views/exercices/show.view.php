@@ -4,7 +4,14 @@
             <h2 class="text-lg font-semibold">
                 Exercice: <?= $exercice['nom'] ?>
             </h2>
-            <div class="">
+            <div>Description: <?= $exercice['description'] ?></div>
+            <div class="mt-2">Nombre de séries recommandé: <?= $exercice['nbsériesconseillé'] ?></div>
+            <?php if($exercice['nbrépétitionsconseillé']): ?>
+                <div>Nombre de répétitions recommandé: <?= $exercice['nbrépétitionsconseillé'] ?></div>
+            <?php else : ?>
+                <div>Temps d'exécution recommandé: <?= $exercice['tempsexécutionconseillé'] ?></div>
+            <?php endif; ?>
+            <div class="mt-2">
                 <span>Difficulté: <?= $exercice['difficulté'] ?></span>
                 <?php switch ($exercice['difficulté']) {
                     case 'Difficile':
@@ -21,7 +28,15 @@
                 }
                 ?>
             </div>
-            <div>Matériel: <?= '' ?></div>
+            <div class="mt-2 text-lg font-semibold">Matériel:</div>
+            <div class="pl-4">
+            <?php if($exercice['idmatériel']): ?>
+                <div><?= $exercice['nommatériel'] ?></div>
+                <div><?= $exercice['descriptionmatériel'] ?></div>
+            <?php else : ?>
+                <div>Aucun</div>
+            <?php endif; ?>
+            </div>
         </div>
 
         <div class="mt-4 text-lg font-semibold">Lieux:</div>
