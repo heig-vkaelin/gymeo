@@ -6,6 +6,9 @@ use App\Core\App;
 
 class ProgramsController
 {
+    // Temps de pause par défaut entre 2 séries d'exercice
+    const DEFAULT_BREAK_TIME = 30;
+
     public function index($user)
     {
         // Redirect if the user is not logged
@@ -66,7 +69,7 @@ class ProgramsController
             $data->id = $id;
             $data->nbSériesConseillé = $exercice['nbsériesconseillé'];
             $data->ordre = $index + 1;
-            $data->tempsPause = 30; // 30 secondes de pause par défaut
+            $data->tempsPause = self::DEFAULT_BREAK_TIME; // 30s par défaut
 
             // if ($exercice['tempsexécutionconseillé']) {
             //     $data->recommandation = $exercice['tempsexécutionconseillé'];
