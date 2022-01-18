@@ -22,8 +22,9 @@ CREATE TYPE DIFFICULTE AS ENUM('Facile', 'Moyen', 'Difficile');
 /* ---------------------------------------------------------------------------- */
 DROP TABLE IF EXISTS GroupementMusculaire CASCADE;
 CREATE TABLE GroupementMusculaire(
+    id SERIAL,
     nom VARCHAR(50),
-    CONSTRAINT PK_GroupementMusculaire PRIMARY KEY (nom)
+    CONSTRAINT PK_GroupementMusculaire PRIMARY KEY (id)
 );
 
 DROP TABLE IF EXISTS Matériel CASCADE;
@@ -36,6 +37,7 @@ CREATE TABLE Matériel(
 
 DROP TABLE IF EXISTS Exercice CASCADE;
 CREATE TABLE Exercice (
+    id SERIAL,
     nom VARCHAR(50),
     description TEXT,
     nbSériesConseillé SMALLINT NOT NULL,
@@ -43,7 +45,7 @@ CREATE TABLE Exercice (
     tempsExécutionConseillé INTEGER,
     difficulté DIFFICULTE NOT NULL,
     idMatériel INTEGER,
-    CONSTRAINT PK_Exercice PRIMARY KEY (nom)
+    CONSTRAINT PK_Exercice PRIMARY KEY (id)
 );
 
 DROP TABLE IF EXISTS Programme CASCADE;
@@ -56,15 +58,16 @@ CREATE TABLE Programme (
 
 DROP TABLE IF EXISTS Lieu CASCADE;
 CREATE TABLE Lieu (
+    id SERIAL,
     nom VARCHAR(50),
-    CONSTRAINT PK_Lieu PRIMARY KEY (nom)
+    CONSTRAINT PK_Lieu PRIMARY KEY (id)
 );
 
 DROP TABLE IF EXISTS Séance CASCADE;
 CREATE TABLE Séance (
     id SERIAL,
-    dateDébut DATE NOT NULL,
-    dateFin DATE,
+    dateDébut TIMESTAMP(0) NOT NULL,
+    dateFin TIMESTAMP(0),
     idProgramme INTEGER NOT NULL,
     CONSTRAINT PK_Séance PRIMARY KEY (id)
 );
@@ -76,7 +79,7 @@ CREATE TABLE Série (
     tempsExécution INTEGER,
     poids SMALLINT,
     idSéance INTEGER NOT NULL,
-    nomExercice VARCHAR(50) NOT NULL,
+    idExercice INTEGER NOT NULL,
     CONSTRAINT PK_Série PRIMARY KEY (id)
 );
 
@@ -91,32 +94,32 @@ CREATE TABLE Utilisateur (
 DROP TABLE IF EXISTS Matériel_GroupementMusculaire CASCADE;
 CREATE TABLE Matériel_GroupementMusculaire (
     idMatériel INTEGER,
-    nomGroupementMusculaire VARCHAR(50),
-    CONSTRAINT PK_Matériel_GroupementMusculaire PRIMARY KEY (idMatériel, nomGroupementMusculaire)
+    idGroupementMusculaire INTEGER,
+    CONSTRAINT PK_Matériel_GroupementMusculaire PRIMARY KEY (idMatériel, idGroupementMusculaire)
 );
 
 DROP TABLE IF EXISTS Exercice_GroupementMusculaire CASCADE;
 CREATE TABLE Exercice_GroupementMusculaire (
-    nomExercice VARCHAR(50),
-    nomGroupementMusculaire VARCHAR(50),
-    CONSTRAINT PK_Exercice_GroupementMusculaire PRIMARY KEY (nomExercice, nomGroupementMusculaire)
+    idExercice INTEGER,
+    idGroupementMusculaire INTEGER,
+    CONSTRAINT PK_Exercice_GroupementMusculaire PRIMARY KEY (idExercice, idGroupementMusculaire)
 );
 
 DROP TABLE IF EXISTS Programme_Exercice CASCADE;
 CREATE TABLE Programme_Exercice (
-    nomExercice VARCHAR(50),
+    idExercice INTEGER,
     idProgramme INTEGER,
     tempsPause SMALLINT NOT NULL,
     nbSéries SMALLINT NOT NULL,
     ordre SMALLINT NOT NULL,
-    CONSTRAINT PK_Programme_Exercice PRIMARY KEY (nomExercice, idProgramme)
+    CONSTRAINT PK_Programme_Exercice PRIMARY KEY (idExercice, idProgramme)
 );
 
 DROP TABLE IF EXISTS Exercice_Lieu CASCADE;
 CREATE TABLE Exercice_Lieu (
-    nomExercice VARCHAR(50),
-    nomLieu VARCHAR(50),
-    CONSTRAINT PK_Exercice_Lieu PRIMARY KEY (nomExercice, nomLieu)
+    idExercice INTEGER,
+    idLieu INTEGER,
+    CONSTRAINT PK_Exercice_Lieu PRIMARY KEY (idExercice, idLieu)
 );
 
 /* ---------------------------------------------------------------------------- */
@@ -130,7 +133,7 @@ CREATE INDEX IDX_FK_Séance_idProgramme ON Séance(idProgramme ASC);
 
 CREATE INDEX IDX_FK_Programme_idMatériel ON Programme(idUtilisateur ASC);
 
-CREATE INDEX IDX_FK_Série_nomExercice ON Série(nomExercice ASC);
+CREATE INDEX IDX_FK_Série_idExercice ON Série(idExercice ASC);
 
 CREATE INDEX IDX_FK_Série_idSéance ON Série(idSéance ASC);
 
@@ -168,9 +171,9 @@ ON DELETE CASCADE
 ON UPDATE CASCADE;
 
 ALTER TABLE Série
-    ADD CONSTRAINT FK_Série_nomExercice
-        FOREIGN KEY (nomExercice)
-            REFERENCES Exercice (nom)
+    ADD CONSTRAINT FK_Série_idExercice
+        FOREIGN KEY (idExercice)
+            REFERENCES Exercice (id)
 ON DELETE CASCADE
 ON UPDATE CASCADE;
 
@@ -182,30 +185,30 @@ ON DELETE CASCADE
 ON UPDATE CASCADE;
 
 ALTER TABLE Matériel_GroupementMusculaire
-    ADD CONSTRAINT FK_Matériel_GroupementMusculaire_nomGroupementMusculaire
-        FOREIGN KEY (nomGroupementMusculaire)
-            REFERENCES GroupementMusculaire (nom)
+    ADD CONSTRAINT FK_Matériel_GroupementMusculaire_idGroupementMusculaire
+        FOREIGN KEY (idGroupementMusculaire)
+            REFERENCES GroupementMusculaire (id)
 ON DELETE CASCADE
 ON UPDATE CASCADE;
 
 ALTER TABLE Exercice_GroupementMusculaire
     ADD CONSTRAINT FK_Exercice_GroupementMusculaire_idMatériel
-        FOREIGN KEY (nomExercice)
-            REFERENCES Exercice (nom)
+        FOREIGN KEY (idExercice)
+            REFERENCES Exercice (id)
 ON DELETE CASCADE
 ON UPDATE CASCADE;
 
 ALTER TABLE Exercice_GroupementMusculaire
-    ADD CONSTRAINT FK_Exercice_GroupementMusculaire_nomGroupementMusculaire
-        FOREIGN KEY (nomGroupementMusculaire)
-            REFERENCES GroupementMusculaire (nom)
+    ADD CONSTRAINT FK_Exercice_GroupementMusculaire_idGroupementMusculaire
+        FOREIGN KEY (idGroupementMusculaire)
+            REFERENCES GroupementMusculaire (id)
 ON DELETE CASCADE
 ON UPDATE CASCADE;
 
 ALTER TABLE Programme_Exercice
-    ADD CONSTRAINT FK_Programme_Exercice_nomExercice
-        FOREIGN KEY (nomExercice)
-            REFERENCES Exercice (nom)
+    ADD CONSTRAINT FK_Programme_Exercice_idExercice
+        FOREIGN KEY (idExercice)
+            REFERENCES Exercice (id)
 ON DELETE CASCADE
 ON UPDATE CASCADE;
 
@@ -217,20 +220,32 @@ ON DELETE CASCADE
 ON UPDATE CASCADE;
 
 ALTER TABLE Exercice_Lieu
-    ADD CONSTRAINT FK_Exercice_Lieu_nomExercice
-        FOREIGN KEY (nomExercice)
-            REFERENCES Exercice (nom)
+    ADD CONSTRAINT FK_Exercice_Lieu_idExercice
+        FOREIGN KEY (idExercice)
+            REFERENCES Exercice (id)
 ON DELETE CASCADE
 ON UPDATE CASCADE;
 
 ALTER TABLE Exercice_Lieu
-    ADD CONSTRAINT FK_Exercice_Lieu_nomLieu
-        FOREIGN KEY (nomLieu)
-            REFERENCES Lieu (nom)
+    ADD CONSTRAINT FK_Exercice_Lieu_idLieu
+        FOREIGN KEY (idLieu)
+            REFERENCES Lieu (id)
 ON DELETE CASCADE
 ON UPDATE CASCADE;
 
 /* Unique */
+ALTER TABLE GroupementMusculaire
+    ADD CONSTRAINT UC_GroupementMusculaire_nom
+        UNIQUE (nom);
+
+ALTER TABLE Exercice
+    ADD CONSTRAINT UC_Exercice_nom
+        UNIQUE (nom);
+
+ALTER TABLE Lieu
+    ADD CONSTRAINT UC_Lieu_nom
+        UNIQUE (nom);
+
 ALTER TABLE Utilisateur
     ADD CONSTRAINT UC_Utilisateur_pseudonyme
         UNIQUE (pseudonyme);

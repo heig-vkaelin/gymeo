@@ -1,5 +1,11 @@
 set client_encoding to 'UTF8';
 
+/* TMP: RESET ALL */
+TRUNCATE Utilisateur, Programme, Matériel, GroupementMusculaire,
+Matériel_GroupementMusculaire, Exercice, Exercice_GroupementMusculaire,
+Séance, Série, Programme_Exercice, Lieu, Exercice_Lieu
+ RESTART IDENTITY;
+
 /* Utilisateur */
 INSERT INTO Utilisateur (pseudonyme, dateNaissance) VALUES 
 ('Valentin', '1997-11-15'),
@@ -30,14 +36,14 @@ INSERT INTO GroupementMusculaire (nom) VALUES
 ('Paroi dorsale');
 
 /* Matériel - Groupement musculaire */
-INSERT INTO Matériel_GroupementMusculaire (idMatériel, nomGroupementMusculaire) VALUES
-(1, 'Ceinture scapulaire'),
-(2, 'Ceinture scapulaire'),
-(2, 'Membres supérieurs'),
-(3, 'Ceinture scapulaire'),
-(4, 'Membres inférieurs'),
-(4, 'Paroi abdominale'),
-(5, 'Ceinture scapulaire');
+INSERT INTO Matériel_GroupementMusculaire (idMatériel, idGroupementMusculaire) VALUES
+(1, 1),
+(2, 1),
+(2, 2),
+(3, 1),
+(4, 3),
+(4, 5),
+(5, 1);
 
 /* Exercice */
 INSERT INTO Exercice (nom, description, nbSériesConseillé, nbRépétitionsConseillé, tempsExécutionConseillé, difficulté, idMatériel) VALUES
@@ -49,38 +55,38 @@ INSERT INTO Exercice (nom, description, nbSériesConseillé, nbRépétitionsCons
 ('Abdominaux au sol', '', 3, 10, null, 'Facile', null);
 
 /* Exercice - Groupement musculaire */
-INSERT INTO Exercice_GroupementMusculaire (nomExercice, nomGroupementMusculaire) VALUES
-('Dumbell alternate hammer curl', 'Membres supérieurs'),
-('Fly', 'Ceinture scapulaire'),
-('Fly', 'Membres supérieurs'),
-('Barbell press', 'Ceinture scapulaire'),
-('Barbell press', 'Membres supérieurs'),
-('Back fortification', 'Paroi dorsale'),
-('Sprint', 'Membres inférieurs'),
-('Abdominaux au sol', 'Paroi abdominale');
+INSERT INTO Exercice_GroupementMusculaire (idExercice, idGroupementMusculaire) VALUES
+(1, 2),
+(2, 1),
+(2, 2),
+(3, 1),
+(3, 2),
+(4, 5),
+(5, 3),
+(6, 4);
 
 /* Séance */
 INSERT INTO Séance (dateDébut, dateFin, idProgramme) VALUES
-('2020-05-14','2020-05-15',1),
-('2020-03-14','2020-03-15',1),
-('2020-03-14','2020-03-15',2);
+('2020-05-14 17:30', '2020-05-14 18:30', 1),
+('2020-03-14 12:15', '2020-03-14 14:00', 1),
+('2020-03-14 18:30', '2020-03-14 20:15', 2);
 
 /* Série */
-INSERT INTO Série (nbrépétitions, tempsexécution, poids, idSéance, nomExercice) VALUES
-(5, null, 20, 1, 'Dumbell alternate hammer curl'),
-(10, null, 15, 1, 'Dumbell alternate hammer curl'),
-(null, 30, null, 1, 'Sprint'),
-(28, null, 45, 3, 'Back fortification'),
-(20, null, 45, 3, 'Back fortification'),
-(15, null, 45, 3, 'Back fortification'),
-(30, null, null, 3, 'Abdominaux au sol');
+INSERT INTO Série (nbrépétitions, tempsexécution, poids, idSéance, idExercice) VALUES
+(5, null, 20, 1, 1),
+(10, null, 15, 1, 1),
+(null, 30, null, 1, 5),
+(28, null, 45, 3, 4),
+(20, null, 45, 3, 4),
+(15, null, 45, 3, 4),
+(30, null, null, 3, 6);
 
 /* Programme - Exercice*/
-INSERT INTO Programme_Exercice (nomExercice, idProgramme, tempsPause, nbSéries, ordre) VALUES
-('Dumbell alternate hammer curl', 1, 30, 5, 1),
-('Sprint', 1, 60, 3, 2),
-('Back fortification', 2, 30, 5, 1),
-('Abdominaux au sol', 2, 60, 3, 2);
+INSERT INTO Programme_Exercice (idExercice, idProgramme, tempsPause, nbSéries, ordre) VALUES
+(1, 1, 30, 5, 1),
+(5, 1, 60, 3, 2),
+(4, 2, 30, 5, 1),
+(6, 2, 60, 3, 2);
 
 /* Lieu */
 INSERT INTO Lieu (nom) VALUES
@@ -89,16 +95,16 @@ INSERT INTO Lieu (nom) VALUES
 ('Salle de fitness');
 
 /* Exercice_Lieu */
-INSERT INTO Exercice_Lieu (nomExercice, nomLieu) VALUES
-('Dumbell alternate hammer curl', 'Maison'),
-('Dumbell alternate hammer curl', 'Salle de fitness'),
-('Fly', 'Salle de fitness'),
-('Barbell press', 'Salle de fitness'),
-('Back fortification', 'Salle de fitness'),
+INSERT INTO Exercice_Lieu (idExercice, idLieu) VALUES
+(1, 1),
+(1, 3),
+(2, 3),
+(3, 3),
+(4, 3),
 /* ??? Faire un sprint en ext avec un tapis roulant*/
-('Sprint', 'Extérieur'),
-('Sprint', 'Maison'),
-('Sprint', 'Salle de fitness'),
-('Abdominaux au sol', 'Extérieur'),
-('Abdominaux au sol', 'Maison');
+(5, 2),
+(5, 1),
+(5, 3),
+(6, 2),
+(6, 1);
 -- TODO
