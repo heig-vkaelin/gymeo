@@ -16,7 +16,7 @@
                 foreach ($exercices as $exercice) : ?>
                     <tr class="<?= $i % 2 == 0 ? 'bg-gray-100' : '' ?>">
                         <td class="px-4 py-2 truncate max-w-sm">
-                            <a href="exercice?name=<?= $exercice['nom'] ?>" class="border-b-2 border-transparent hover:border-gray-800">
+                            <a href="exercice?id=<?= $exercice['id'] ?>" class="border-b-2 border-transparent hover:border-gray-800">
                                 <?= $exercice['nom'] ?>
                             </a>
                         </td>

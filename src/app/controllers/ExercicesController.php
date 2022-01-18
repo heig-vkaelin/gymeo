@@ -15,15 +15,16 @@ class ExercicesController
 
     public function show()
     {
-        if (!isset($_GET['name'])) {
+        if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
             return redirect('exercices');
         }
 
-        $exercice = App::get('exercices-repository')->getOneExercice($_GET['name']);
+        $id = intval($_GET['id']);
+        $exercice = App::get('exercices-repository')->getOneExercice($id);
 
         if ($exercice)
             return view('exercices/show', compact('exercice'));
-
+        
         return redirect('exercices');
     }
 }

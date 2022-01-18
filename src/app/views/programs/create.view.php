@@ -27,13 +27,13 @@
                 <?php foreach ($exercices as $exercice) : ?>
                     <div class="flex items-center">
                         <?php if($exercice['nbrépétitionsconseillé']): ?>
-                            <input hidden data-id="<?=$exercice['nom'] . '-repeat'?>" type="checkbox" name="nbRépétitions[]" value="<?= $exercice['nbrépétitionsconseillé'] ?>">
+                            <input hidden data-id="<?=$exercice['id'] . '-repeat'?>" type="checkbox" name="nbRépétitions[]" value="<?= $exercice['nbrépétitionsconseillé'] ?>">
                         <?php else : ?>
-                            <input hidden data-id="<?=$exercice['nom'] . '-time'?>" type="checkbox" name="tempsExécution[]" value="<?= $exercice['tempsexécutionconseillé'] ?>">
+                            <input hidden data-id="<?=$exercice['id'] . '-time'?>" type="checkbox" name="tempsExécution[]" value="<?= $exercice['tempsexécutionconseillé'] ?>">
                         <?php endif; ?>
-                        <input hidden data-id="<?=$exercice['nom'] . '-serie'?>" type="checkbox" name="nbSéries[]" value="<?= $exercice['nbsériesconseillé'] ?>">
+                        <input hidden data-id="<?=$exercice['id'] . '-serie'?>" type="checkbox" name="nbSéries[]" value="<?= $exercice['nbsériesconseillé'] ?>">
                         
-                        <input class="checks" id="<?= $exercice['nom'] ?>" type="checkbox" name="exercices[]" value="<?= $exercice['nom'] ?>">
+                        <input class="checks" id="<?= $exercice['id'] ?>" type="checkbox" name="exercices[]" value="<?= $exercice['id'] ?>">
                         <label class="ml-2 checks"><?= $exercice['nom'] ?></label>
                     </div>
                 <?php endforeach; ?>

@@ -10,7 +10,7 @@ class ExercicesRepository extends Repository
     {
         $this->queryExecute('
             SELECT
-                Exercice.nom, Exercice.difficulté, Exercice.idMatériel, Exercice.nbsériesconseillé,
+                Exercice.id, Exercice.nom, Exercice.difficulté, Exercice.idMatériel, Exercice.nbsériesconseillé,
                 Exercice.nbRépétitionsConseillé, Exercice.tempsExécutionConseillé,
                 Matériel.nom as Matériel
             FROM Exercice
@@ -20,18 +20,18 @@ class ExercicesRepository extends Repository
         return $this->fetchAll();
     }
 
-    public function getOneExercice($name)
+    public function getOneExercice($id)
     {
         $query = "
             SELECT
-                Exercice.nom, Exercice.description, Exercice.nbSériesConseillé,
+                Exercice.id, Exercice.nom, Exercice.description, Exercice.nbSériesConseillé,
                 Exercice.nbRépétitionsConseillé, Exercice.tempsExécutionConseillé, 
                 Exercice.difficulté, Exercice.idMatériel, Matériel.nom AS nomMatériel,
                 Matériel.description AS descriptionMatériel
             FROM Exercice
             LEFT JOIN Matériel
                 ON Exercice.idMatériel = Matériel.id
-            WHERE Exercice.nom = :name
+            WHERE Exercice.id = :id
         ";
 
         // LEFT JOIN Exercice_Lieu
@@ -40,9 +40,9 @@ class ExercicesRepository extends Repository
         //     ON Exercice_Lieu.nomLieu = Lieu.nom
 
         $this->prepareExecute($query, [
-            'name' => [
-                'value' => $name,
-                'type' => PDO::PARAM_STR
+            'id' => [
+                'value' => $id,
+                'type' => PDO::PARAM_INT
             ]
         ]);
 
