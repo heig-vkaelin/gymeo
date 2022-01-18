@@ -26,12 +26,12 @@
                 <div class="text-sm italic">L'ordre des exercices et les autres informations pourront être modifiés par la suite.</div>
                 <?php foreach ($exercices as $exercice) : ?>
                     <div class="flex items-center">
-                        <?php if($exercice['nbrépétitionsconseillé']): ?>
+                        <!-- <?php if($exercice['nbrépétitionsconseillé']): ?>
                             <input hidden data-id="<?=$exercice['id'] . '-repeat'?>" type="checkbox" name="nbRépétitions[]" value="<?= $exercice['nbrépétitionsconseillé'] ?>">
                         <?php else : ?>
                             <input hidden data-id="<?=$exercice['id'] . '-time'?>" type="checkbox" name="tempsExécution[]" value="<?= $exercice['tempsexécutionconseillé'] ?>">
                         <?php endif; ?>
-                        <input hidden data-id="<?=$exercice['id'] . '-serie'?>" type="checkbox" name="nbSéries[]" value="<?= $exercice['nbsériesconseillé'] ?>">
+                        <input hidden data-id="<?=$exercice['id'] . '-serie'?>" type="checkbox" name="nbSéries[]" value="<?= $exercice['nbsériesconseillé'] ?>"> -->
                         
                         <input class="checks" id="<?= $exercice['id'] ?>" type="checkbox" name="exercices[]" value="<?= $exercice['id'] ?>">
                         <label class="ml-2 checks"><?= $exercice['nom'] ?></label>
@@ -72,20 +72,20 @@
 </main>
 
 <script>
-const hiddenInput = ['serie', 'time', 'repeat']
-const checkboxes = document.querySelectorAll('.checks')
-const onCheckBoxClick = (e) => {
-    const checked = e.target.checked
+// const hiddenInput = ['serie', 'time', 'repeat']
+// const checkboxes = document.querySelectorAll('.checks')
+// const onCheckBoxClick = (e) => {
+//     const checked = e.target.checked
 
-    hiddenInput.forEach(name => {
-        const domInput = document.querySelector(`input[data-id="${e.target.id}-${name}"]`)
-        if (domInput) {
-            domInput.checked = checked
-        }
-    })
-}
-checkboxes.forEach(box => 
-  box.addEventListener('click', onCheckBoxClick)
-)
+//     hiddenInput.forEach(name => {
+//         const domInput = document.querySelector(`input[data-id="${e.target.id}-${name}"]`)
+//         if (domInput) {
+//             domInput.checked = checked
+//         }
+//     })
+// }
+// checkboxes.forEach(box => 
+//   box.addEventListener('click', onCheckBoxClick)
+// )
 
 </script>

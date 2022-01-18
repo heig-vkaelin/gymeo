@@ -55,7 +55,32 @@ class ProgramsController
             return redirect('');
         }
 
-        dd($_POST);
+        // Récupération du nombre de séries conseillées comme valeurs par défaut
+        $exercices = App::get('exercices-repository')->TMP_getAllExercices();
+        $exercicesPopulated = [];
+
+        foreach ($_POST['exercices'] as $index => $id) {
+            $exerciceIndex = array_search($id, array_column($exercices, 'id'));
+            $exercice = $exercices[$exerciceIndex];
+            $data = (object)null;
+            $data->id = $id;
+            $data->nbSériesConseillé = $exercice['nbsériesconseillé'];
+            $data->ordre = $index + 1;
+            $data->tempsPause = 30; // 30 secondes de pause par défaut
+
+            // if ($exercice['tempsexécutionconseillé']) {
+            //     $data->recommandation = $exercice['tempsexécutionconseillé'];
+            //     $data->recommandationLabel = 'tempsexécutionconseillé';
+            // } else {
+            //     $data->recommandation = $exercice['nbrépétitionsconseillé'];
+            //     $data->recommandationLabel = 'nbrépétitionsconseillé';
+            // }
+            $exercicesPopulated[] = $data;
+        }
+
+        dd($exercicesPopulated);
+
+        // TODO: insert program + insert many programme_exercice
 
         $programName = htmlspecialchars($_POST['programName'] ?? '');
         // $lastName = htmlspecialchars($_POST['lastName'] ?? '');
