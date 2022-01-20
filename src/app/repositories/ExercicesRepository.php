@@ -42,7 +42,6 @@ class ExercicesRepository extends Repository
 
     public function getAllExercices($location, $material, $muscle)
     {
-        $nbFilter = 0;
         $query = "
         SELECT Exercice.id, Exercice.nom, Exercice.difficulté, Exercice.idMatériel, Exercice.nbsériesconseillé,
         Exercice.nbRépétitionsConseillé, Exercice.tempsExécutionConseillé, Matériel.nom as Matériel

@@ -18,4 +18,31 @@ class SessionsController
 
         return view('sessions/index', compact('sessions'));
     }
+    public function create($user)
+    {
+        // Redirect if the user is not logged
+        if (empty($user)) {
+            return redirect('');
+        }
+
+        $programs = App::get('programs-repository')->getAllProgramsOfUser($user['id']);
+
+        return view('sessions/create', compact('programs'));
+    }
+
+    public function store($user)
+    {
+        // Redirect if the user is not logged
+        if (empty($user)) {
+            return redirect('');
+        }
+
+        //TODO
+        $serie = "";
+        return view('series/create', compact('serie'));
+
+        //  Récupération du nombre de séries conseillées comme valeurs par défaut
+        // $exercices = App::get('exercices-repository')->TMP_getAllExercices();
+        // $exercicesPopulated = [];
+    }
 }

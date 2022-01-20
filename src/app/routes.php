@@ -23,6 +23,9 @@ $router->post('programs', 'ProgramsController@store');
 
 // Sessions
 $router->get('sessions', 'SessionsController@index');
+$router->get('session', 'SessionsController@show');
+$router->get('sessions/create', 'SessionsController@create');
+$router->post('sessions', 'SessionsController@store');
 
 // Series
 $router->get('series', 'SeriesController@seriesOfSession');
