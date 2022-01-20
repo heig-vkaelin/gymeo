@@ -1,9 +1,5 @@
 <main>
     <div class="mt-6 container px-4">
-        <!-- Plusieurs filtres, simultanément ou non : 
-            * par lieu
-            * besoin de matériel ou non
-            * par groupement musculaire travaillé -->
         <div>
             <p class="font-semibold">Filtres:</p>
             <form action="/exercices" method="POST" class="flex items-center">
@@ -61,6 +57,11 @@
                     </tr>
                 <?php $i++;
                 endforeach; ?>
+                <?php if (count($exercices) == 0) : ?>
+                    <tr>
+                        <td class="px-4 py-2" colspan="3">Aucun exercice ne correspond à la recherche.</td>
+                    </tr>
+                <?php endif; ?>
             </tbody>
         </table>
     </div>
