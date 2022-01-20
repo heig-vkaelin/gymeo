@@ -8,8 +8,7 @@ class ExercicesController
 {
     public function index()
     {
-        $exercices = App::get('exercices-repository')->TMP_getAllExercices();
-
+        $exercices = App::get('exercices-repository')->getAllExercices(null,false,null);
         return view('exercices/index', compact('exercices'));
     }
 

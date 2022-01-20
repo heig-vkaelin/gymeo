@@ -20,6 +20,43 @@ class ExercicesRepository extends Repository
         return $this->fetchAll();
     }
 
+    public function getAllExercices($location,$material,$muscle)
+    {
+        $nbFilter = 0;
+        $query = "
+        SELECT Exercice.id, Exercice.nom, Exercice.difficulté, Exercice.idMatériel, Exercice.nbsériesconseillé,
+        Exercice.nbRépétitionsConseillé, Exercice.tempsExécutionConseillé, Matériel.nom as Matériel
+        FROM Exercice
+        LEFT JOIN Matériel ON
+            Exercice.idmatériel = Matériel.id";
+        $filter = " WHERE TRUE";
+        $data = [];
+        if(isset($location)){
+            $query .= "\nINNER JOIN Exercice_lieu ON
+            Exercice_lieu.idexercice = Exercice.id\n";
+            $filter .= " AND idlieu = :idlocation";
+            $data['idlocation'] = [
+                'value' => $location,
+                'type' => PDO::PARAM_INT
+            ];
+        }
+        if(isset($material) && $material){
+            $filter .= " AND idmatériel IS NOT NULL"; 
+        }
+        if(isset($muscle)){
+            $query .= "\nINNER JOIN Exercice_groupementmusculaire ON
+            Exercice_groupementmusculaire.idexercice = Exercice.id\n";
+            $filter .= " AND idgroupementmusculaire = :idmuscle";
+            $data['idmuscle'] = [
+                'value' => $muscle,
+                'type' => PDO::PARAM_INT
+            ];
+        }
+        $query .= $filter;
+        $this->prepareExecute($query,$data);
+        return $this->fetchAll();
+    }
+
     public function getOneExercice($id)
     {
         $query = "

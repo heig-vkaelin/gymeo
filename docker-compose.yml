@@ -19,7 +19,7 @@ services:
     image: postgres:14.0
     container_name: gymeo-postgres
     ports:
-      - "5432:5432" # DB
+      - "5433:5432" # DB
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./scripts:/docker-entrypoint-initdb.d
