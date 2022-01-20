@@ -1,8 +1,8 @@
 <main>
-<div class="mt-6 container px-4">
+<div class="mt-6 container px-4 mx-auto">
 <div class="flex items-center justify-between">
             <h2 class="text-lg font-semibold">Vos Séances</h2>
-            <a href="/programs/create" class="flex-shrink-0 shadow bg-gray-800 hover:bg-gray-900 focus:outline-none text-white font-bold py-2 px-4 rounded">
+            <a href="/sessions/create" class="flex-shrink-0 shadow bg-gray-800 hover:bg-gray-900 focus:outline-none text-white font-bold py-2 px-4 rounded">
                 Créer une séance
             </a>
         </div>
