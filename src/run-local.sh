@@ -1,0 +1,1 @@
+DB_NAME=gymeo DB_USER=postgres DB_USER=admin DB_CONNECTION=pgsql DB_HOST=127.0.0.1 php -S localhost:9090

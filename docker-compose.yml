@@ -1,11 +1,11 @@
 version: '3'
 services:
   web:
-    build: ./web/.
+    build: ./src/.
     ports:
       - "9090:80" # Page web
     volumes:
-      - ./web/src:/var/www/html
+      - ./src:/var/www/html
     depends_on:
       - db
     environment:
@@ -22,7 +22,7 @@ services:
       - "5432:5432" # DB
     volumes:
       - pgdata:/var/lib/postgresql/data
-      - ./db/init-scripts:/docker-entrypoint-initdb.d
+      - ./scripts:/docker-entrypoint-initdb.d
     environment:
       - POSTGRES_DB=gymeo
       - POSTGRES_USER=postgres
