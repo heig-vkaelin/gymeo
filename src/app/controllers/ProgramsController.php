@@ -16,8 +16,7 @@ class ProgramsController
             return redirect('');
         }
 
-        // $programs = App::get('programs-repository')->getAllprograms($user['id']);
-        $programs = [];
+        $programs = App::get('programs-repository')->getAllProgramsOfUser($user['id']);
 
         return view('programs/index', compact('programs'));
     }
