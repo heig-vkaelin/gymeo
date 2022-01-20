@@ -6,6 +6,26 @@ use PDO;
 
 class ExercicesRepository extends Repository
 {
+    public function getAllLocations()
+    {
+        $this->queryExecute('
+            SELECT
+                id, nom
+            FROM Lieu
+        ');
+        return $this->fetchAll();
+    }
+
+    public function getAllMuscles()
+    {
+        $this->queryExecute('
+            SELECT
+                id, nom
+            FROM GroupementMusculaire
+        ');
+        return $this->fetchAll();
+    }
+
     public function TMP_getAllExercices()
     {
         $this->queryExecute('
@@ -20,7 +40,7 @@ class ExercicesRepository extends Repository
         return $this->fetchAll();
     }
 
-    public function getAllExercices($location,$material,$muscle)
+    public function getAllExercices($location, $material, $muscle)
     {
         $nbFilter = 0;
         $query = "
@@ -31,7 +51,7 @@ class ExercicesRepository extends Repository
             Exercice.idmatériel = Matériel.id";
         $filter = " WHERE TRUE";
         $data = [];
-        if(isset($location)){
+        if (isset($location)) {
             $query .= "\nINNER JOIN Exercice_lieu ON
             Exercice_lieu.idexercice = Exercice.id\n";
             $filter .= " AND idlieu = :idlocation";
@@ -40,10 +60,10 @@ class ExercicesRepository extends Repository
                 'type' => PDO::PARAM_INT
             ];
         }
-        if(isset($material) && $material){
-            $filter .= " AND idmatériel IS NOT NULL"; 
+        if (isset($material) && $material) {
+            $filter .= " AND idmatériel IS NOT NULL";
         }
-        if(isset($muscle)){
+        if (isset($muscle)) {
             $query .= "\nINNER JOIN Exercice_groupementmusculaire ON
             Exercice_groupementmusculaire.idexercice = Exercice.id\n";
             $filter .= " AND idgroupementmusculaire = :idmuscle";
@@ -53,7 +73,7 @@ class ExercicesRepository extends Repository
             ];
         }
         $query .= $filter;
-        $this->prepareExecute($query,$data);
+        $this->prepareExecute($query, $data);
         return $this->fetchAll();
     }
 

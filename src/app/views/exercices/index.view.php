@@ -1,6 +1,42 @@
 <main>
     <div class="mt-6 container px-4">
-        <h2 class="text-lg font-semibold">Liste des exercices</h2>
+        <!-- Plusieurs filtres, simultanément ou non : 
+            * par lieu
+            * besoin de matériel ou non
+            * par groupement musculaire travaillé -->
+        <div>
+            <p class="font-semibold">Filtres:</p>
+            <form action="/exercices" method="POST" class="flex items-center">
+                <label class="text-sm font-medium text-gray-700" for="location">Lieu</label>
+                <select class="ml-2 pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md" id="location" name="location">
+                    <option value="-1">-- Non selectionné</option>
+                    <?php foreach ($locations as $location) : ?>
+                        <option value="<?= $location['id'] ?>">
+                            <?= $location['nom'] ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+                <label class="ml-10 text-sm font-medium text-gray-700" for="material">Matériel</label>
+                <select class="ml-2 pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md" id="material" name="material">
+                    <option value="-1">-- Non selectionné</option>
+                    <option value="true">Besoin de matériel</option>
+                    <option value="false">Aucun matériel nécessaire</option>
+                </select>
+                <label class="ml-10 text-sm font-medium text-gray-700" for="muscle">Groupement Musculaire</label>
+                <select class="ml-2 pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md" id="muscle" name="muscle">
+                    <option value="-1">-- Non selectionné</option>
+                    <?php foreach ($muscles as $muscle) : ?>
+                        <option value=" <?= $muscle['id'] ?>">
+                            <?= $muscle['nom'] ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+                <button class="ml-4 flex-shrink-0 shadow bg-gray-800 hover:bg-gray-900 focus:outline-none text-white text-sm font-bold py-2 px-4 rounded" type="submit">
+                    Filtrer
+                </button>
+            </form>
+        </div>
+        <h2 class="mt-4 text-lg font-semibold">Liste des exercices</h2>
         <table class="mt-2 bg-white shadow rounded-lg overflow-hidden">
             <thead>
                 <tr class="font-semibold text-left">
