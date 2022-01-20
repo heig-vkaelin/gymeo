@@ -1,0 +1,32 @@
+version: '3'
+services:
+  web:
+    build: ./web/.
+    ports:
+      - "9090:80" # Page web
+    volumes:
+      - ./web/src:/var/www/html
+    depends_on:
+      - db
+    environment:
+      - PORT=8082
+      - DB_HOST=gymeo-postgres
+      - DB_CONNECTION=pgsql
+      - DB_USER=postgres
+      - DB_PASSWORD=admin
+      - DB_NAME=gymeo
+  db:
+    image: postgres:14.0
+    container_name: gymeo-postgres
+    ports:
+      - "5432:5432" # DB
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db/init-scripts:/docker-entrypoint-initdb.d
+    environment:
+      - POSTGRES_DB=gymeo
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+      #- POSTGRES_INITDB_ARGS='--encoding=UTF-8'
+volumes:
+  pgdata:
