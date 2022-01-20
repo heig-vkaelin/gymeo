@@ -10,7 +10,7 @@ class SeriesRepository extends Repository
     {
         $query = "
             SELECT
-                série.nbrépétitions, série.tempsexécution, série.poids, série.nomexercice
+                série.nbrépétitions, série.tempsexécution, série.poids, exercice.nom AS nomexercice
             FROM
                 série
             INNER JOIN
@@ -19,6 +19,9 @@ class SeriesRepository extends Repository
             INNER JOIN
                 programme ON
                 séance.idprogramme = programme.id
+            INNER JOIN
+                exercice ON
+                série.idexercice = exercice.id
             WHERE
                 programme.id = :programmid AND
                 programme.idutilisateur = :userid

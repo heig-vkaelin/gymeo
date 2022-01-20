@@ -10,7 +10,7 @@ class SessionsRepository extends Repository
     {
         $query = "
             SELECT
-                programme.id AS idprogramme, programme.nom, séance.datedébut, séance.datefin
+                programme.id AS idprogramme, programme.nom, séance.datedébut, séance.datefin, séance.id
             FROM
                 séance
             INNER JOIN
