@@ -60,9 +60,9 @@ class ExercicesRepository extends Repository
                 'type' => PDO::PARAM_INT
             ];
         }
-        if (isset($material) && $material) {
-            $filter .= " AND idmatériel IS NOT NULL";
-        }
+        if (isset($material))
+            $filter .= " AND idmatériel IS ". ($material ?"NOT":"") ." NULL";
+        
         if (isset($muscle)) {
             $query .= "\nINNER JOIN Exercice_groupementmusculaire ON
             Exercice_groupementmusculaire.idexercice = Exercice.id\n";
