@@ -25,7 +25,7 @@ class ExercicesController
                 $material = filter_var($_GET['material'], FILTER_VALIDATE_BOOLEAN);
         }
 
-        $exercices = App::get('exercices-repository')->getAllExercices(
+        $exercices = App::get('exercices-repository')->getFilteredExercices(
             $location,
             $material,
             $muscle

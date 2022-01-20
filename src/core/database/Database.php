@@ -89,6 +89,14 @@ class Database
     }
 
     /**
+     * Retourne le dernier id inséré dans la base de données
+     */
+    public function getLastInsertId()
+    {
+        return $this->connector->lastInsertId();
+    }
+
+    /**
      * Return all the teachers from the db
      */
     public function getAllTeacher()

@@ -41,4 +41,9 @@ abstract class Repository
         $this->closeCursor();
         return $result;
     }
+
+    function getLastInsertId()
+    {
+        return $this->db->getLastInsertId();
+    }
 }

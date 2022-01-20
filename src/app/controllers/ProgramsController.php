@@ -46,56 +46,44 @@ class ProgramsController
             return redirect('');
         }
 
-        $exercices = App::get('exercices-repository')->TMP_getAllExercices();
+        $exercices = App::get('exercices-repository')->getAllExercices();
 
         return view('programs/create', compact('exercices'));
     }
 
     public function store($user)
     {
-        // Redirect if the user is not logged
-        if (empty($user)) {
+        // Redirect if the user is not logged or if no exerices are sent
+        if (
+            empty($user) || !isset($_POST['exercices']) ||
+            count($_POST['exercices']) == 0
+        ) {
             return redirect('');
         }
 
         // Récupération du nombre de séries conseillées comme valeurs par défaut
-        $exercices = App::get('exercices-repository')->TMP_getAllExercices();
+        $exercices = App::get('exercices-repository')->getAllExercices();
         $exercicesPopulated = [];
 
         foreach ($_POST['exercices'] as $index => $id) {
             $exerciceIndex = array_search($id, array_column($exercices, 'id'));
             $exercice = $exercices[$exerciceIndex];
             $data = (object)null;
-            $data->id = $id;
+            $data->id = intval($id);
             $data->nbSériesConseillé = $exercice['nbsériesconseillé'];
             $data->ordre = $index + 1;
             $data->tempsPause = self::DEFAULT_BREAK_TIME; // 30s par défaut
-
-            // if ($exercice['tempsexécutionconseillé']) {
-            //     $data->recommandation = $exercice['tempsexécutionconseillé'];
-            //     $data->recommandationLabel = 'tempsexécutionconseillé';
-            // } else {
-            //     $data->recommandation = $exercice['nbrépétitionsconseillé'];
-            //     $data->recommandationLabel = 'nbrépétitionsconseillé';
-            // }
             $exercicesPopulated[] = $data;
         }
 
-        dd($exercicesPopulated);
-
-        // TODO: insert program + insert many programme_exercice
-
         $programName = htmlspecialchars($_POST['programName'] ?? '');
-        // $lastName = htmlspecialchars($_POST['lastName'] ?? '');
-        // $gender = !empty($_POST['gender']) ? htmlspecialchars($_POST['gender']) : 'Z';
-        // $sections = $_POST['sections'] ?? [];
-        // $nickname =  htmlspecialchars($_POST['nickname'] ?? '');
-        // $origin =  htmlspecialchars($_POST['origin'] ?? '');
 
-        // App::get('programs-repository')->createProgram([
-        //     'programName' => $programName,
-        //     // 'lastName' => $lastName,
-        // ]);
+        App::get('programs-repository')->createProgram(
+            $user['id'],
+            $programName,
+            $exercicesPopulated
+        );
+
         redirect('programs');
     }
 }

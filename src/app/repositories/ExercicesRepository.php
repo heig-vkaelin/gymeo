@@ -26,52 +26,46 @@ class ExercicesRepository extends Repository
         return $this->fetchAll();
     }
 
-    public function TMP_getAllExercices()
+    public function getAllExercices()
     {
-        $this->queryExecute('
-            SELECT
-                Exercice.id, Exercice.nom, Exercice.difficulté, Exercice.idMatériel, Exercice.nbsériesconseillé,
-                Exercice.nbRépétitionsConseillé, Exercice.tempsExécutionConseillé,
-                Matériel.nom as Matériel
-            FROM Exercice
-            LEFT JOIN Matériel
-                ON Exercice.idMatériel = Matériel.id
-        ');
-        return $this->fetchAll();
+        return $this->getFilteredExercices(NULL, NULL, NULL);
     }
 
-    public function getAllExercices($location, $material, $muscle)
+    public function getFilteredExercices($location, $material, $muscle)
     {
         $query = "
-        SELECT Exercice.id, Exercice.nom, Exercice.difficulté, Exercice.idMatériel, Exercice.nbsériesconseillé,
-        Exercice.nbRépétitionsConseillé, Exercice.tempsExécutionConseillé, Matériel.nom as Matériel
+            SELECT
+            Exercice.id, Exercice.nom, Exercice.difficulté, Exercice.idMatériel,
+            Exercice.nbsériesconseillé, Exercice.nbRépétitionsConseillé,
+            Exercice.tempsExécutionConseillé, Matériel.nom as Matériel
         FROM Exercice
-        LEFT JOIN Matériel ON
-            Exercice.idmatériel = Matériel.id";
-        $filter = " WHERE TRUE";
+        LEFT JOIN Matériel
+            ON Exercice.idmatériel = Matériel.id
+        ";
+        $filters = " WHERE TRUE";
         $data = [];
         if (isset($location)) {
             $query .= "\nINNER JOIN Exercice_lieu ON
             Exercice_lieu.idexercice = Exercice.id\n";
-            $filter .= " AND idlieu = :idlocation";
+            $filters .= " AND idlieu = :idlocation";
             $data['idlocation'] = [
                 'value' => $location,
                 'type' => PDO::PARAM_INT
             ];
         }
         if (isset($material))
-            $filter .= " AND idmatériel IS " . ($material ? "NOT" : "") . " NULL";
+            $filters .= " AND idmatériel IS " . ($material ? "NOT" : "") . " NULL";
 
         if (isset($muscle)) {
             $query .= "\nINNER JOIN Exercice_groupementmusculaire ON
             Exercice_groupementmusculaire.idexercice = Exercice.id\n";
-            $filter .= " AND idgroupementmusculaire = :idmuscle";
+            $filters .= " AND idgroupementmusculaire = :idmuscle";
             $data['idmuscle'] = [
                 'value' => $muscle,
                 'type' => PDO::PARAM_INT
             ];
         }
-        $query .= $filter;
+        $query .= $filters;
         $this->prepareExecute($query, $data);
         return $this->fetchAll();
     }
