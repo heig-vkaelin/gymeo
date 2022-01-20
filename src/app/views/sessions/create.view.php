@@ -7,7 +7,7 @@
                 <div class="font-semibold">Choisissez un programme d'entraînement :</div>
                 <?php foreach ($programs as $program) : ?>
                     <div class="flex items-center">
-                        <input class="checks" id="<?= $program['id'] ?>" type="radio" name="progams[]" value="<?= $program['id'] ?>">
+                        <input class="checks" id="<?= $program['id'] ?>" type="radio" name="program" value="<?= $program['id'] ?>">
                         <label class="ml-2 checks" for="<?= $program['id'] ?>"><?= $program['nom'] ?></label>
                     </div>
                 <?php endforeach; ?>

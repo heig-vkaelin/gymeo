@@ -36,9 +36,8 @@ class SessionsController
         if (empty($user)) {
             return redirect('');
         }
-
-        //TODO
-        $serie = "";
+        $programid = intval(htmlspecialchars($_POST['program'] ?? 0));
+        $serie = App::get('sessions-repository')->createSession($programid);
         return view('series/create', compact('serie'));
 
         //  Récupération du nombre de séries conseillées comme valeurs par défaut
