@@ -13,7 +13,6 @@ $router->get('logout', 'UsersController@logout');
 
 //  Exercices
 $router->get('exercices', 'ExercicesController@index');
-$router->post('exercices', 'ExercicesController@index'); // Filtres appliqués
 $router->get('exercice', 'ExercicesController@show');
 
 // Programs

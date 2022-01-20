@@ -16,13 +16,13 @@ class ExercicesController
         $material = NULL;
 
         // Recherche avec des filtres appliqués
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (isset($_POST['location']) && $_POST['location'] != '-1')
-                $location = $_POST['location'];
-            if (isset($_POST['muscle']) && $_POST['muscle'] != '-1')
-                $muscle = $_POST['muscle'];
-            if (isset($_POST['material']) && $_POST['material'] != '-1')
-                $material = filter_var($_POST['material'], FILTER_VALIDATE_BOOLEAN);
+        if (!empty($_GET)) {
+            if (isset($_GET['location']) && $_GET['location'] != '-1')
+                $location = $_GET['location'];
+            if (isset($_GET['muscle']) && $_GET['muscle'] != '-1')
+                $muscle = $_GET['muscle'];
+            if (isset($_GET['material']) && $_GET['material'] != '-1')
+                $material = filter_var($_GET['material'], FILTER_VALIDATE_BOOLEAN);
         }
 
         $exercices = App::get('exercices-repository')->getAllExercices(

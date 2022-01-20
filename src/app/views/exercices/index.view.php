@@ -2,12 +2,12 @@
     <div class="mt-6 container px-4">
         <div>
             <p class="font-semibold">Filtres:</p>
-            <form action="/exercices" method="POST" class="flex items-center">
+            <form action="/exercices" method="GET" class="flex items-center">
                 <label class="text-sm font-medium text-gray-700" for="location">Lieu</label>
                 <select class="ml-2 pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md" id="location" name="location">
                     <option value="-1">-- Non selectionné</option>
                     <?php foreach ($locations as $location) : ?>
-                        <option value="<?= $location['id'] ?>">
+                        <option <?= $_GET['location'] == $location['id'] ? 'selected' : '' ?> value="<?= $location['id'] ?>">
                             <?= $location['nom'] ?>
                         </option>
                     <?php endforeach; ?>
@@ -15,14 +15,18 @@
                 <label class="ml-10 text-sm font-medium text-gray-700" for="material">Matériel</label>
                 <select class="ml-2 pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md" id="material" name="material">
                     <option value="-1">-- Non selectionné</option>
-                    <option value="true">Besoin de matériel</option>
-                    <option value="false">Aucun matériel nécessaire</option>
+                    <option <?= $_GET['material'] == 'true' ? 'selected' : '' ?> value="true">
+                        Besoin de matériel
+                    </option>
+                    <option <?= $_GET['material'] == 'false' ? 'selected' : '' ?> value="false">
+                        Aucun matériel nécessaire
+                    </option>
                 </select>
                 <label class="ml-10 text-sm font-medium text-gray-700" for="muscle">Groupement Musculaire</label>
                 <select class="ml-2 pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md" id="muscle" name="muscle">
                     <option value="-1">-- Non selectionné</option>
                     <?php foreach ($muscles as $muscle) : ?>
-                        <option value=" <?= $muscle['id'] ?>">
+                        <option <?= $_GET['muscle'] == $muscle['id'] ? 'selected' : '' ?> value=" <?= $muscle['id'] ?>">
                             <?= $muscle['nom'] ?>
                         </option>
                     <?php endforeach; ?>
