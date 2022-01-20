@@ -22,9 +22,14 @@ $router->get('programs/create', 'ProgramsController@create');
 $router->post('programs', 'ProgramsController@store');
 
 // Sessions
+$router->get('sessions', 'SessionsController@index');
+
+// Series
+$router->get('series', 'SeriesController@seriesOfSession');
 
 // Users
 $router->get('', 'TeachersController@index');
+
 
 
 // Old ETML project
