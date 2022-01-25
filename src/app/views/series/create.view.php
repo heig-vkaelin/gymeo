@@ -56,18 +56,21 @@
                     </option>
                 <?php endforeach; ?>
             </select>
-            <div class="mt-3">
-                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="repetition">
-                    Nombre de Répétitions
-                </label>
-                <input class="appearance-none block w-full bg-white text-gray-700 border border-gray-20 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:border-gray-500" id="repetition" type="number" name="repetition" placeholder="12">
-            </div>
-            <div>
-                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="time">
-                    Temps [secondes]
-                </label>
-                <input class="appearance-none block w-full bg-white text-gray-700 border border-gray-20 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:border-gray-500" id="time" type="number" name="time" placeholder="35">
-            </div>
+            <?php if ($exercice['nbrépétitionsconseillé'] != NULL) : ?>
+                <div class="mt-3">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="repetition">
+                        Nombre de Répétitions
+                    </label>
+                    <input class="appearance-none block w-full bg-white text-gray-700 border border-gray-20 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:border-gray-500" id="repetition" type="number" name="repetition" placeholder="12">
+                </div>
+            <?php else : ?>
+                <div>
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="time">
+                        Temps [secondes]
+                    </label>
+                    <input class="appearance-none block w-full bg-white text-gray-700 border border-gray-20 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:border-gray-500" id="time" type="number" name="time" placeholder="35">
+                </div>
+            <?php endif; ?>
             <div>
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="weight">
                     Poids [kg]

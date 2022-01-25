@@ -83,26 +83,16 @@ class SeriesRepository extends Repository
                 'type' => PDO::PARAM_INT
             ]
         ]);
-
-        $series = $this->fetchAll();
-        return $series;
+        return $this->fetchAll();
     }
 
     public function createSerie($sessionid, $exerciceid, $nbrep, $time, $weight)
     {
-        $query = "
-        INSERT INTO Série (nbrépétitions, poids, idSéance, idExercice) VALUES
-        (:nbrep,:weight,:session_id,:exercice_id)";
 
-        $this->prepareExecute($query, [
-            'nbrep' => [
-                'value' => $nbrep,
-                'type' => PDO::PARAM_INT
-            ],
-            'weight' => [
-                'value' => $weight,
-                'type' => PDO::PARAM_INT
-            ],
+        $query = "
+        INSERT INTO Série (%s %s idSéance, idExercice) VALUES
+        (%s %s :session_id,:exercice_id)";
+        $data = [
             'session_id' => [
                 'value' => $sessionid,
                 'type' => PDO::PARAM_INT
@@ -110,8 +100,33 @@ class SeriesRepository extends Repository
             'exercice_id' => [
                 'value' => $exerciceid,
                 'type' => PDO::PARAM_INT
-            ],
-        ]);
+            ]
+        ];
+        $poids = "";
+        $poidsVal = "";
+        if ($weight != NULL) {
+            $poids = "poids,";
+            $poidsVal = ":poids,";
+            $data['poids'] = [
+                'value' => $weight,
+                'type' => PDO::PARAM_INT
+            ];
+        }
+
+        if (isset($nbrep)) {
+            $query = sprintf($query, "nbRépétitions,", $poids, ":nbrep,", $poidsVal);
+            $data['nbrep'] = [
+                'value' => $nbrep,
+                'type' => PDO::PARAM_INT
+            ];
+        } else {
+            $query = sprintf($query, "tempsExécution,", $poids, ":time,", $poidsVal);
+            $data['time'] = [
+                'value' => $time,
+                'type' => PDO::PARAM_INT
+            ];
+        }
+        $this->prepareExecute($query, $data);
         $this->closeCursor();
     }
 }
