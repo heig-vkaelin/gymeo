@@ -13,6 +13,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>gymeo</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/@tailwindcss/forms/dist/forms.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
 </head>
@@ -21,7 +24,9 @@
     <header>
         <div class="mt-5 container mx-auto">
             <div class="flex justify-between items-center px-4">
-                <h1 class="text-xl font-bold uppercase">gymeo</h1>
+                <a href="/">
+                    <h1 class="text-xl font-bold uppercase">gymeo</h1>
+                </a>
                 <?php if (!$logged) : ?>
                     <form action="/login" method="POST" class="flex">
                         <input class="appearance-none block w-full bg-white text-gray-700 border border-gray-20 rounded py-2 px-4 leading-tight focus:outline-none focus:border-gray-500" type="text" name="user" placeholder="Pseudonyme">
@@ -39,7 +44,6 @@
                 <?php endif; ?>
             </div>
             <nav class="mt-2 flex items-center px-4 py-3 bg-indigo-200">
-                <a href="/" class="border-b-2 border-transparent hover:border-gray-900">Accueil</a>
                 <a href="/exercices" class="ml-3 border-b-2 border-transparent hover:border-gray-900">Exercices</a>
                 <?php if ($logged) : ?>
                     <span class="mx-3">●</span>

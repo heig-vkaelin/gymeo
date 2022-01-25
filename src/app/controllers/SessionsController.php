@@ -13,11 +13,29 @@ class SessionsController
             return redirect('');
         }
 
-        // $result = App::get('programs-repository')->getOneProgram($user['id'], $_GET['id']);
         $sessions = App::get('sessions-repository')->getSessionsUser($user['id']);
 
         return view('sessions/index', compact('sessions'));
     }
+
+    public function show($user)
+    {
+        // Redirect if the user is not logged
+        if (empty($user)) {
+            return redirect('');
+        }
+
+        if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+            return redirect('sessions');
+        }
+
+        $id = intval($_GET['id']);
+
+        $sessions = App::get('sessions-repository')->getSession($user['id'], $id);
+
+        return view('sessions/show', compact('sessions'));
+    }
+
     public function create($user)
     {
         // Redirect if the user is not logged

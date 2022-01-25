@@ -13,6 +13,10 @@ use App\Repositories\{ExercicesRepository, ProgramsRepository, SeriesRepository,
 
 session_start();
 
+// Settings
+date_default_timezone_set('Europe/Zurich');
+setlocale(LC_TIME, 'fr_FR', 'french', 'French_France.1252', 'fr_FR.ISO8859-1', 'fra', 'fr_FR.utf8');
+
 App::bind('config', require 'config.php');
 
 App::bind('database', new Database(App::get('config')['database']));

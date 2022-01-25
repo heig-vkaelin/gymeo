@@ -1,24 +1,20 @@
 <main>
     <div class="mt-6 container px-4 mx-auto">
-        <div class="flex items-center justify-between">
-            <h2 class="text-lg font-semibold">Séries effectuées lors de la séance</h2>
-            <a href="/programs/create" class="flex-shrink-0 shadow bg-gray-800 hover:bg-gray-900 focus:outline-none text-white font-bold py-2 px-4 rounded">
-                Créer une séance
-            </a>
-        </div>
+        <?php $startDate = custom_strftime("%A %d %B %G", strtotime($sessions[0]['datedébut'])); ?>
+        <h2 class="text-lg font-semibold">Détails de la séance du <span class="ml-1 font-bold italic"><?= $startDate ?></span></h2>
+        <h3 class="mt-6 text-base font-semibold">Séries effectuées</h3>
         <table class="mt-2 bg-white shadow rounded-lg overflow-hidden">
             <thead>
                 <tr class="font-semibold">
                     <th class="px-4 py-2 bg-gray-800 text-white">Exercice</th>
                     <th class="px-4 py-2 bg-gray-800 text-white">Répétitions/Temps</th>
                     <th class="px-4 py-2 bg-gray-800 text-white">Charge</th>
-                    <!-- <th class="px-4 py-2 bg-gray-800 text-white">Date de Naissance</th> -->
                 </tr>
             </thead>
             <tbody>
                 <?php
                 $i = 0;
-                foreach ($series as $serie) :
+                foreach ($sessions as $serie) :
                 ?>
                     <tr class="<?= $i % 2 == 0 ? 'bg-gray-100' : '' ?>">
                         <td class="px-4 py-2 truncate max-w-sm"><?= $serie['nomexercice'] ?></td>

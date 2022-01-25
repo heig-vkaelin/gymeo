@@ -193,9 +193,7 @@ INSERT INTO Programme_Exercice (idExercice, idProgramme, tempsPause, nbSéries, 
 (15, 6, 30, 2, 13),
 (14, 6, 45, 1, 14),
 (13, 6, 100, 10, 15),
-
-(10, 7, 20, 10, 15)
-;
+(10, 7, 20, 10, 15);
 
 /* Série */
 INSERT INTO Série (nbrépétitions, tempsexécution, poids, idSéance, idExercice) VALUES

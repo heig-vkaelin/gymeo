@@ -31,13 +31,49 @@ class SessionsRepository extends Repository
         //Récupérer les séances avec les ids de programmes puis return le résultat
     }
 
+    public function getSession($userId, $sessionId)
+    {
+        $query = '
+            SELECT
+                Séance.dateDébut,
+                Série.nbRépétitions, Série.tempsExécution, Série.poids,
+                Exercice.nom AS nomExercice
+            FROM
+                Série
+            INNER JOIN
+                Séance ON
+                Série.idséance = Séance.id
+            INNER JOIN
+                Programme ON
+                Séance.idprogramme = Programme.id
+            INNER JOIN
+                Exercice ON
+                Série.idexercice = Exercice.id
+            WHERE
+                Séance.id = :sessionId AND
+                Programme.idutilisateur = :userId
+        ';
+
+        $this->prepareExecute($query, [
+            'sessionId' => [
+                'value' => $sessionId,
+                'type' => PDO::PARAM_INT
+            ],
+            'userId' => [
+                'value' => $userId,
+                'type' => PDO::PARAM_INT
+            ]
+        ]);
+
+        return $this->fetchAll();
+    }
+
     public function createSession($infos)
     {
         $query = "
         INSERT INTO séance (datedébut, idprogramme)
                 VALUES(:date, :idprogramme);";
 
-        date_default_timezone_set('Europe/Zurich');
         $this->prepareExecute($query, [
             'date' => [
                 'value' => date("Y-m-d H:i:s"),
