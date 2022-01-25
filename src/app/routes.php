@@ -29,6 +29,7 @@ $router->post('sessions', 'SessionsController@store');
 
 // Series
 $router->get('series', 'SeriesController@seriesOfSession');
+$router->get('series/user', 'SeriesController@index');
 
 // Users
 $router->get('', 'TeachersController@index');

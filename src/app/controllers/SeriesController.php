@@ -24,4 +24,17 @@ class SeriesController
 
         return view('series/seriesOfSession', compact('series'));
     }
+
+    public function index($user)
+    {
+        // Redirect if the user is not logged
+        if (empty($user)) {
+            return redirect('');
+        }
+
+        // $result = App::get('programs-repository')->getOneProgram($user['id'], $_GET['id']);
+        $series = App::get('series-repository')->getSeriesByUser($user['id']);
+
+        return view('series/index', compact('series'));
+    }
 }
