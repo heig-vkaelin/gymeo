@@ -18,6 +18,7 @@ $router->get('exercice', 'ExercicesController@show');
 // Programs
 $router->get('programs', 'ProgramsController@index');
 $router->get('program', 'ProgramsController@show');
+$router->post('program/delete', 'ProgramsController@delete');
 $router->get('programs/create', 'ProgramsController@create');
 $router->post('programs', 'ProgramsController@store');
 
