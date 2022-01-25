@@ -99,12 +99,44 @@ class ProgramsController
 
         $programName = htmlspecialchars($_POST['programName'] ?? '');
 
-        App::get('programs-repository')->createProgram(
+        $idProgram = App::get('programs-repository')->createProgram(
             $user['id'],
             $programName,
             $exercicesPopulated
         );
 
-        redirect('programs');
+        return redirect('programs/edit?idProgram=' . $idProgram);
+    }
+
+    public function edit($user)
+    {
+        // Redirect if the user is not logged or if program is not set
+        if (empty($user) || !isset($_GET['idProgram'])) {
+            return redirect('');
+        }
+
+        $program = App::get('programs-repository')->getProgram($user['id'], htmlspecialchars($_GET['idProgram']));
+
+        return view('programs/edit', compact('program'));
+    }
+
+    public function update($user)
+    {
+        if (empty($user)) {
+            return redirect('');
+        }
+
+        for ($i = 0; $i < count($_POST['idexercice']); $i++) {
+            App::get('programs-repository')->confirmProgramExercice(
+                htmlspecialchars($_POST['idexercice'][$i]),
+                htmlspecialchars($_POST['idprogramme'][$i]),
+                htmlspecialchars($_POST['nbséries'][$i]),
+                htmlspecialchars($_POST['tempspause'][$i]),
+                htmlspecialchars($_POST['ordre'][$i])
+            );
+        }
+
+        // TODO: redirect sur la page show une fois créée
+        return redirect('programs');
     }
 }

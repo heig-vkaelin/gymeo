@@ -250,9 +250,10 @@ ALTER TABLE Utilisateur
     ADD CONSTRAINT UC_Utilisateur_pseudonyme
         UNIQUE (pseudonyme);
 
-ALTER TABLE Programme_Exercice
-    ADD CONSTRAINT UC_Programme_Exercice_idProgramme_ordre
-        UNIQUE (idProgramme, ordre);
+-- TODO: Que faire de cette UC...
+-- ALTER TABLE Programme_Exercice
+--     ADD CONSTRAINT UC_Programme_Exercice_idProgramme_ordre
+--         UNIQUE (idProgramme, ordre);
 
 /* Checks triviaux */
 ALTER TABLE Utilisateur 

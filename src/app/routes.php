@@ -21,6 +21,8 @@ $router->get('program', 'ProgramsController@show');
 $router->get('program/delete', 'ProgramsController@delete');
 $router->get('programs/create', 'ProgramsController@create');
 $router->post('programs', 'ProgramsController@store');
+$router->get('programs/edit', 'ProgramsController@edit');
+$router->post('programs/update', 'ProgramsController@update');
 
 // Sessions
 $router->get('sessions', 'SessionsController@index');
