@@ -11,7 +11,6 @@
                     <th class="px-4 py-2 bg-gray-800 text-white">Heure de début</th>
                     <th class="px-4 py-2 bg-gray-800 text-white">Date de fin</th>
                     <th class="px-4 py-2 bg-gray-800 text-white">Heure de fin</th>
-                    <!-- <th class="px-4 py-2 bg-gray-800 text-white">Date de Naissance</th> -->
                 </tr>
             </thead>
             <tbody>

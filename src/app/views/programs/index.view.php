@@ -12,7 +12,6 @@
                     <th class="px-4 py-2 bg-gray-800 text-white">Nom</th>
                     <th class="px-4 py-2 bg-gray-800 text-white">Nombre d'exercices</th>
                     <th class="px-4 py-2 bg-gray-800 text-white">Suppression</th>
-                    <!-- <th class="px-4 py-2 bg-gray-800 text-white">Date de Naissance</th> -->
                 </tr>
             </thead>
             <tbody>
@@ -20,11 +19,12 @@
                 $i = 0;
                 foreach ($programs as $program) : ?>
                     <tr class="<?= $i % 2 == 0 ? 'bg-gray-100' : '' ?>">
-                        <!-- <td class="px-4 py-2"> <?= $user['id'] ?></td> -->
                         <td class="px-4 py-2 truncate max-w-sm"><?= $program['nom'] ?></td>
                         <td class="px-4 py-2 truncate max-w-sm"><?= 0 ?></td>
                         <td class="px-4 py-2 truncate max-w-sm">
-                        <button onclick="deleteProgram(<?= $program['id'] ?>)" class="ml-3 hover:text-gray-700 focus:outline-none"><i class="fas fa-trash"></i></button>
+                            <button onclick="deleteProgram(<?= $program['id'] ?>)" class="ml-3 hover:text-gray-700 focus:outline-none">
+                                <i class="fas fa-trash"></i>
+                            </button>
                         </td>
                     </tr>
                 <?php $i++;
@@ -36,7 +36,7 @@
 
 <script>
     function deleteProgram(idProgram) {
-        const confirmation = confirm("Êtes-vous sûr de vouloir supprimer ce programme ?");
+        const confirmation = confirm('Êtes-vous sûr de vouloir supprimer ce programme ?');
         if (confirmation) {
             location.href = `program/delete?id=${idProgram}`;
         }
