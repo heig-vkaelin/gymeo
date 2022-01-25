@@ -18,8 +18,6 @@ class SessionsRepository extends Repository
                 séance.idprogramme = programme.id
             WHERE
                 idutilisateur = :userid";
-
-
         $this->prepareExecute($query, [
             'userid' => [
                 'value' => $userid,
@@ -49,6 +47,29 @@ class SessionsRepository extends Repository
                 'type' => PDO::PARAM_INT
             ]
         ]);
+        $idSession = $this->getLastInsertId();
         $this->closeCursor();
+        return $idSession;
+    }
+    public function endSession($userid, $sessionid)
+    {
+        $query = "
+        INSERT INTO séance (datedébut, idprogramme)
+                VALUES(:date, :idprogramme);";
+
+        date_default_timezone_set('Europe/Zurich');
+        $this->prepareExecute($query, [
+            'date' => [
+                'value' => date("Y-m-d H:i:s"),
+                'type' => PDO::PARAM_STR
+            ],
+            'idprogramme' => [
+                'value' => $userid,
+                'type' => PDO::PARAM_INT
+            ]
+        ]);
+        $idSession = $this->getLastInsertId();
+        $this->closeCursor();
+        return $idSession;
     }
 }

@@ -1,7 +1,6 @@
 <main>
     <div class="mt-6 container mx-auto px-4">
         <h2 class="text-lg font-semibold">Créer une Séance</h2>
-
         <form class="mt-4 w-full max-w-md" method="POST" action="/sessions">
             <div class="mt-4">
                 <div class="font-semibold">Choisissez un programme d'entraînement :</div>
@@ -13,9 +12,13 @@
                 <?php endforeach; ?>
             </div>
             <div class="mt-4 leading-tight">
-                <button class="shadow bg-gray-800 hover:bg-gray-900 focus:outline-none text-white font-bold py-2 px-4 rounded" type="submit">
-                    Créer
-                </button>
+                <?php if (count($programs) > 0) : ?>
+                    <button class="shadow bg-gray-800 hover:bg-gray-900 focus:outline-none text-white font-bold py-2 px-4 rounded" type="submit">
+                        Créer
+                    </button>
+                <?php else : ?>
+                    <div class="font-semibold">Aucun programme disponible</div>
+                <?php endif; ?>
             </div>
 
             <?php if (!empty($errors)) : ?>

@@ -37,4 +37,18 @@ class SeriesController
 
         return view('series/index', compact('series'));
     }
+
+    public function create($user)
+    {
+
+        // Redirect if the user is not logged
+        if (empty($user) || !isset($_GET['idSession'])) {
+            return redirect('');
+        }
+
+        $series = App::get('series-repository')->getSeriesById($user['id'], $_GET['idSession']);
+        $exercices = App::get('exercices-repository')->getAllExercices();
+
+        return view('series/create', compact('series', 'exercices'));
+    }
 }

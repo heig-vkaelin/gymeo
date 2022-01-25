@@ -27,7 +27,7 @@ class SeriesRepository extends Repository
                 programme.idutilisateur = :userid
 
             ";
-            
+
 
         $this->prepareExecute($query, [
             'seanceid' => [
@@ -65,7 +65,7 @@ class SeriesRepository extends Repository
                 programme.idutilisateur = :userid
 
             ";
-            
+
 
         $this->prepareExecute($query, [
             'userid' => [
@@ -78,7 +78,7 @@ class SeriesRepository extends Repository
 
         $orderedByExercice = [];
 
-        foreach($series as $serie){
+        foreach ($series as $serie) {
             // On stock 2x le nom exercice !!!
             //IL FAUT ORDER PAR DATE ET INDIQUER LA DATE
             $orderedByExercice[$serie['nomexercice']][] = $serie;
@@ -87,5 +87,41 @@ class SeriesRepository extends Repository
         return $orderedByExercice;
 
         //Récupérer les séances avec les ids de programmes puis return le résultat
+    }
+
+    public function getSeriesById($userid, $sessionid)
+    {
+        $query = "
+            SELECT
+                série.nbrépétitions, série.tempsexécution, série.poids, exercice.nom AS nomexercice
+            FROM
+                série
+            INNER JOIN
+                séance ON
+                série.idséance = séance.id
+            INNER JOIN
+                programme ON
+                séance.idprogramme = programme.id
+            INNER JOIN
+                exercice ON
+                série.idexercice = exercice.id
+            WHERE
+                programme.idutilisateur = :userid
+                AND séance.id = :sessionid
+                AND séance.datefin IS NULL
+            ";
+        $this->prepareExecute($query, [
+            'userid' => [
+                'value' => $userid,
+                'type' => PDO::PARAM_INT
+            ],
+            'sessionid' => [
+                'value' => $sessionid,
+                'type' => PDO::PARAM_INT
+            ]
+        ]);
+
+        $series = $this->fetchAll();
+        return $series;
     }
 }

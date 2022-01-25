@@ -27,10 +27,14 @@ $router->get('sessions', 'SessionsController@index');
 $router->get('session', 'SessionsController@show');
 $router->get('sessions/create', 'SessionsController@create');
 $router->post('sessions', 'SessionsController@store');
+$router->post('sessions/end', 'SessionsController@end');
 
 // Series
 $router->get('series', 'SeriesController@seriesOfSession');
 $router->get('series/user', 'SeriesController@index');
+$router->get('series/create', 'SeriesController@create');
+$router->post('series', 'SeriesController@store');
+
 
 // Users
 $router->get('', 'TeachersController@index');

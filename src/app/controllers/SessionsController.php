@@ -25,8 +25,7 @@ class SessionsController
             return redirect('');
         }
 
-        $programs = App::get('programs-repository')->getAllProgramsOfUser($user['id']);
-
+        $programs = App::get('programs-repository')->getAllProgramsOfUser(htmlspecialchars($user['id']));
         return view('sessions/create', compact('programs'));
     }
 
@@ -37,8 +36,25 @@ class SessionsController
             return redirect('');
         }
         $programid = intval(htmlspecialchars($_POST['program'] ?? 0));
-        $serie = App::get('sessions-repository')->createSession($programid);
-        return view('series/create', compact('serie'));
+        $session = App::get('sessions-repository')->createSession($programid);
+        return redirect('series/create?idSession=' . $session);
+        //return view('series/create', compact('session'));
+
+        //  Récupération du nombre de séries conseillées comme valeurs par défaut
+        // $exercices = App::get('exercices-repository')->TMP_getAllExercices();
+        // $exercicesPopulated = [];
+    }
+
+    public function end($user)
+    {
+        // Redirect if the user is not logged
+        if (empty($user)) {
+            return redirect('');
+        }
+        $sessionid = intval(htmlspecialchars($_POST['sessionid'] ?? 0));
+        App::get('sessions-repository')->endSession($user, $sessionid);
+        return redirect('series');
+        //return view('series/create', compact('session'));
 
         //  Récupération du nombre de séries conseillées comme valeurs par défaut
         // $exercices = App::get('exercices-repository')->TMP_getAllExercices();
