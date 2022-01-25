@@ -32,8 +32,7 @@ class ProgramsController
             return redirect('');
         }
 
-        // $result = App::get('programs-repository')->getOneProgram($user['id'], $_GET['id']);
-        $program = (object)[];
+        $program = App::get('programs-repository')->getProgram($user['id'], htmlspecialchars($_GET['id']));
 
         return view('programs/show', compact('program'));
     }

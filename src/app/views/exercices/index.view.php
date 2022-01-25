@@ -43,7 +43,6 @@
                     <th class="px-4 py-2 bg-gray-800 text-white">Exercice</th>
                     <th class="px-4 py-2 bg-gray-800 text-white">Difficulté</th>
                     <th class="px-4 py-2 bg-gray-800 text-white">Matériel</th>
-                    <!-- <th class="px-4 py-2 bg-gray-800 text-white">Date de Naissance</th> -->
                 </tr>
             </thead>
             <tbody>
