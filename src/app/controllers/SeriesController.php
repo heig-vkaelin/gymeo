@@ -6,7 +6,7 @@ use App\Core\App;
 
 class SeriesController
 {
-    public function seriesOfSession($user)
+    public function show($user)
     {
         // Redirect if the user is not logged
         if (empty($user)) {
@@ -22,7 +22,7 @@ class SeriesController
         // $result = App::get('programs-repository')->getOneProgram($user['id'], $_GET['id']);
         $series = App::get('series-repository')->getSeriesBySession($user['id'], $id);
 
-        return view('series/seriesOfSession', compact('series'));
+        return view('series/show', compact('series'));
     }
 
     public function index($user)

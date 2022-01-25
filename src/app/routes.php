@@ -32,8 +32,8 @@ $router->post('sessions', 'SessionsController@store');
 $router->post('sessions/end', 'SessionsController@end');
 
 // Series
-$router->get('series', 'SeriesController@seriesOfSession');
-$router->get('series/user', 'SeriesController@index');
+$router->get('series', 'SeriesController@index');
+$router->get('serie', 'SeriesController@show');
 $router->get('series/create', 'SeriesController@create');
 $router->post('series', 'SeriesController@store');
 

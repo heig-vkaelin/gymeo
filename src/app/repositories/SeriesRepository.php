@@ -6,7 +6,7 @@ use PDO;
 
 class SeriesRepository extends Repository
 {
-    public function getSeriesBySession($userid, $seanceid)
+    public function getSeriesBySession($userId, $sessionId)
     {
         $query = "
             SELECT
@@ -23,29 +23,25 @@ class SeriesRepository extends Repository
                 exercice ON
                 série.idexercice = exercice.id
             WHERE
-                séance.id = :seanceid AND
-                programme.idutilisateur = :userid
-
-            ";
-
+                séance.id = :sessionId AND
+                programme.idutilisateur = :userId
+        ";
 
         $this->prepareExecute($query, [
-            'seanceid' => [
-                'value' => $seanceid,
+            'sessionId' => [
+                'value' => $sessionId,
                 'type' => PDO::PARAM_INT
             ],
-            'userid' => [
-                'value' => $userid,
+            'userId' => [
+                'value' => $userId,
                 'type' => PDO::PARAM_INT
             ]
         ]);
 
         return $this->fetchAll();
-
-        //Récupérer les séances avec les ids de programmes puis return le résultat
     }
 
-    public function getSeriesByUser($userid)
+    public function getSeriesByUser($userId)
     {
         $query = "
             SELECT
@@ -62,14 +58,12 @@ class SeriesRepository extends Repository
                 exercice ON
                 série.idexercice = exercice.id
             WHERE
-                programme.idutilisateur = :userid
-
-            ";
-
+                programme.idutilisateur = :userId
+        ";
 
         $this->prepareExecute($query, [
-            'userid' => [
-                'value' => $userid,
+            'userId' => [
+                'value' => $userId,
                 'type' => PDO::PARAM_INT
             ]
         ]);
@@ -79,14 +73,11 @@ class SeriesRepository extends Repository
         $orderedByExercice = [];
 
         foreach ($series as $serie) {
-            // On stock 2x le nom exercice !!!
-            //IL FAUT ORDER PAR DATE ET INDIQUER LA DATE
+            // TODO: IL FAUT ORDER PAR DATE ET INDIQUER LA DATE
             $orderedByExercice[$serie['nomexercice']][] = $serie;
         }
 
         return $orderedByExercice;
-
-        //Récupérer les séances avec les ids de programmes puis return le résultat
     }
 
     public function getSeriesById($userid, $sessionid)
@@ -109,7 +100,7 @@ class SeriesRepository extends Repository
                 programme.idutilisateur = :userid
                 AND séance.id = :sessionid
                 AND séance.datefin IS NULL
-            ";
+        ";
         $this->prepareExecute($query, [
             'userid' => [
                 'value' => $userid,

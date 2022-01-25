@@ -30,7 +30,7 @@
                 ?>
                     <tr class="<?= $i % 2 == 0 ? 'bg-gray-100' : '' ?>">
                         <td class="px-4 py-2 truncate max-w-sm">
-                            <a href="series?id=<?= $session['id'] ?>" class="border-b-2 border-transparent hover:border-gray-800">
+                            <a href="serie?id=<?= $session['id'] ?>" class="border-b-2 border-transparent hover:border-gray-800">
                                 <?= $session['nom'] ?></a>
                         </td>
                         <td class="px-4 py-2 truncate max-w-sm"><?= $dateB ?></td>
