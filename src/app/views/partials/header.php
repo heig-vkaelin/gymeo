@@ -32,7 +32,7 @@
                 <?php else : ?>
                     <div class="flex items-center">
                         <div><?= $user['user'] ?></div>
-                        <a href="/logout" class="ml-2 flex-shrink-0 shadow bg-gray-800 hover:bg-gray-900 focus:outline-none text-white font-bold py-2 px-4 rounded">
+                        <a href="/logout" class="ml-2 flex-shrink-0 shadow bg-gray-800 hover:bg-gray-900 focus:outline-none text-white font-semibold py-2 px-4 rounded">
                             Se déconnecter
                         </a>
                     </div>
@@ -43,11 +43,16 @@
                 <a href="/exercices" class="ml-3 border-b-2 border-transparent hover:border-gray-900">Exercices</a>
                 <?php if ($logged) : ?>
                     <span class="mx-3">●</span>
-                    <!-- <a href="/teachers/create" class="border-b-2 border-transparent hover:border-gray-900">Ajouter un enseignant</a> -->
                     <a href="/programs" class="border-b-2 border-transparent hover:border-gray-900">Mes programmes</a>
+                    <span class="mx-3">●</span>
                     <a href="/sessions" class="ml-3 border-b-2 border-transparent hover:border-gray-900">Historique séances</a>
+<<<<<<< HEAD
                     <a href="/series/user" class="ml-3 border-b-2 border-transparent hover:border-gray-900">Historique séries</a>
                     <a href="/sessions/create" class="ml-3 border-b-2 border-transparent hover:border-gray-900">Créer une séance</a>
+=======
+                    <a href="#" class="ml-3 border-b-2 border-transparent hover:border-gray-900">Historique séries</a>
+                    <a href="/sessions/create" class="ml-auto flex-shrink-0 shadow bg-indigo-600 hover:bg-indigo-500 focus:outline-none text-white font-bold py-3 px-4 rounded">Démarrer une séance</a>
+>>>>>>> e2a4e7f0cda42dde48ee895259220d937c807bfd
                 <?php endif; ?>
             </nav>
         </div>
