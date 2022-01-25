@@ -31,8 +31,9 @@ class SeriesController
             return redirect('');
         }
 
-        $series = App::get('series-repository')->getSeriesById($user['id'], $_GET['idSession']);
-        $exercices = App::get('exercices-repository')->getExercicesBySession($user['id'], $_GET['idSession']);
+        $idSession = htmlspecialchars($_GET['idSession']);
+        $series = App::get('series-repository')->getSeriesById($user['id'], $idSession);
+        $exercices = App::get('exercices-repository')->getExercicesBySession($user['id'], $idSession);
 
         return view('series/create', compact('series', 'exercices'));
     }

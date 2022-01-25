@@ -29,12 +29,9 @@ class ProgramsController
 
     public function show($user)
     {
-        // Redirection si l'utilisateur n'est pas connecté
-        if (empty($user)) {
-            return redirect('');
-        }
-
-        if (!isset($_GET['id'])) {
+        // Redirection si l'utilisateur n'est pas connecté ou que l'id du programme
+        // à afficher n'est pas envoyé
+        if (empty($user) || !isset($_GET['id'])) {
             return redirect('');
         }
 

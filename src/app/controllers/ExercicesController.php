@@ -24,9 +24,9 @@ class ExercicesController
         // Recherche avec des filtres appliqués
         if (!empty($_GET)) {
             if (isset($_GET['location']) && $_GET['location'] != '-1')
-                $location = $_GET['location'];
+                $location = htmlspecialchars($_GET['location']);
             if (isset($_GET['muscle']) && $_GET['muscle'] != '-1')
-                $muscle = $_GET['muscle'];
+                $muscle = htmlspecialchars($_GET['muscle']);
             if (isset($_GET['material']) && $_GET['material'] != '-1')
                 $material = filter_var($_GET['material'], FILTER_VALIDATE_BOOLEAN);
         }

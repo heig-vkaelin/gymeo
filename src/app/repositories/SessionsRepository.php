@@ -15,24 +15,27 @@ class SessionsRepository extends Repository
     /**
      * Retourne les séances d'un utilisateur
      *
-     * @param number $userid
+     * @param number $userId
      */
-    public function getSessionsUser($userid)
+    public function getSessionsOfUser($userId)
     {
-        $query = "
+        $query = '
             SELECT
-                programme.id AS idprogramme, programme.nom, séance.datedébut, séance.datefin, séance.id
+                Programme.id AS idProgramme, Programme.nom, Séance.dateDébut, Séance.dateFin, Séance.id
             FROM
-                séance
+                Séance
             INNER JOIN
-                programme ON
-                séance.idprogramme = programme.id
+                Programme ON
+                Séance.idProgramme = Programme.id
             WHERE
-                idutilisateur = :userid
-            ORDER BY séance.datedébut DESC";
+                idUtilisateur = :userId
+            ORDER BY
+                Séance.datedébut DESC
+        ';
+
         $this->prepareExecute($query, [
-            'userid' => [
-                'value' => $userid,
+            'userId' => [
+                'value' => $userId,
                 'type' => PDO::PARAM_INT
             ]
         ]);
@@ -90,9 +93,10 @@ class SessionsRepository extends Repository
      */
     public function createSession($programId)
     {
-        $query = "
-        INSERT INTO séance (datedébut, idprogramme)
-                VALUES(:date, :programId);";
+        $query = '
+            INSERT INTO Séance (dateDébut, idProgramme)
+            VALUES(:date, :programId);
+        ';
 
         $this->prepareExecute($query, [
             'date' => [
@@ -104,36 +108,41 @@ class SessionsRepository extends Repository
                 'type' => PDO::PARAM_INT
             ]
         ]);
+
         $idSession = $this->getLastInsertId();
         $this->closeCursor();
+
         return $idSession;
     }
 
     /**
      * Termine une séance
      *
-     * @param number $userid
-     * @param number $sessionid
+     * @param number $userId
+     * @param number $sessionId
      */
-    public function endSession($userid, $sessionid)
+    public function endSession($userId, $sessionId)
     {
-        $query = "
-        INSERT INTO séance (datedébut, idprogramme)
-                VALUES(:date, :idprogramme);";
+        // TODO: A FAIRE
+        $query = '
+            INSERT INTO Séance (dateDébut, idProgramme)
+            VALUES(:date, :idProgramme);
+        ';
 
-        date_default_timezone_set('Europe/Zurich');
         $this->prepareExecute($query, [
             'date' => [
-                'value' => date("Y-m-d H:i:s"),
+                'value' => date('Y-m-d H:i:s'),
                 'type' => PDO::PARAM_STR
             ],
-            'idprogramme' => [
-                'value' => $userid,
+            'idProgramme' => [
+                'value' => $userId,
                 'type' => PDO::PARAM_INT
             ]
         ]);
+
         $idSession = $this->getLastInsertId();
         $this->closeCursor();
+
         return $idSession;
     }
 }

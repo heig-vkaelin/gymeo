@@ -66,7 +66,7 @@ class ProgramsRepository extends Repository
     {
         // Programme
         $programQuery = '
-            INSERT into Programme
+            INSERT INTO Programme
             (nom, idUtilisateur)
             VALUES (:name, :userId)
         ';
@@ -85,7 +85,7 @@ class ProgramsRepository extends Repository
         // Programme_Exercice
         $idProgram = $this->getLastInsertId();
         $exercieQuery = '
-            INSERT into Programme_Exercice
+            INSERT INTO Programme_Exercice
             (idExercice, idProgramme, tempsPause, nbSéries, ordre)
             VALUES (:exerciceId, :programId, :breakTime, :nbSeries, :order)
         ';

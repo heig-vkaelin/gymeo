@@ -19,7 +19,7 @@ class SeriesRepository extends Repository
      */
     public function getSeriesByUser($userId)
     {
-        $query = "
+        $query = '
             SELECT
                 série.nbrépétitions, série.tempsexécution, série.poids, exercice.nom AS nomexercice, séance.datedébut, séance.datefin
             FROM
@@ -35,8 +35,9 @@ class SeriesRepository extends Repository
                 série.idexercice = exercice.id
             WHERE
                 programme.idutilisateur = :userId
-            ORDER BY séance.datedébut DESC;
-        ";
+            ORDER BY
+                séance.datedébut DESC;
+        ';
 
         $this->prepareExecute($query, [
             'userId' => [
@@ -60,12 +61,12 @@ class SeriesRepository extends Repository
     /**
      * Récupère les séries réalisées lors d'une séance
      *
-     * @param number $userid
-     * @param number $sessionid
+     * @param number $userId
+     * @param number $sessionId
      */
-    public function getSeriesById($userid, $sessionid)
+    public function getSeriesById($userId, $sessionId)
     {
-        $query = "
+        $query = '
             SELECT
                 série.nbrépétitions, série.tempsexécution, série.poids, exercice.nom AS nomexercice
             FROM
@@ -80,17 +81,17 @@ class SeriesRepository extends Repository
                 exercice ON
                 série.idexercice = exercice.id
             WHERE
-                programme.idutilisateur = :userid
-                AND séance.id = :sessionid
+                programme.idutilisateur = :userId
+                AND séance.id = :sessionId
                 AND séance.datefin IS NULL
-        ";
+        ';
         $this->prepareExecute($query, [
-            'userid' => [
-                'value' => $userid,
+            'userId' => [
+                'value' => $userId,
                 'type' => PDO::PARAM_INT
             ],
-            'sessionid' => [
-                'value' => $sessionid,
+            'sessionId' => [
+                'value' => $sessionId,
                 'type' => PDO::PARAM_INT
             ]
         ]);
@@ -100,46 +101,51 @@ class SeriesRepository extends Repository
     /**
      * Crée une nouvelle série dans la base de données
      *
-     * @param number $sessionid
-     * @param number $exerciceid
-     * @param number $nbrep
-     * @param number $time
-     * @param number $weight
+     * @param number $sessionId
+     * @param number $exerciceId
+     * @param number $nbReps : potentiel nombre de répétitions
+     * @param number $time : potentiel temps d'exécution
+     * @param number $weight : potentiel poids utilisé
      */
-    public function createSerie($sessionid, $exerciceid, $nbrep, $time, $weight)
+    public function createSerie($sessionId, $exerciceId, $nbReps, $time, $weight)
     {
-        $query = "
-        INSERT INTO Série (%s %s idSéance, idExercice) VALUES
-        (%s %s :session_id,:exercice_id)";
+        $query = '
+            INSERT INTO Série (%s %s idSéance, idExercice) VALUES
+            (%s %s :sessionId,:exerciceId)
+        ';
         $data = [
-            'session_id' => [
-                'value' => $sessionid,
+            'sessionId' => [
+                'value' => $sessionId,
                 'type' => PDO::PARAM_INT
             ],
-            'exercice_id' => [
-                'value' => $exerciceid,
+            'exerciceId' => [
+                'value' => $exerciceId,
                 'type' => PDO::PARAM_INT
             ]
         ];
-        $poids = "";
-        $poidsVal = "";
+        $poids = '';
+        $poidsVal = '';
+        // Si le poids est renseigné par l'utilisateur
         if ($weight != NULL) {
-            $poids = "poids,";
-            $poidsVal = ":poids,";
+            $poids = 'poids,';
+            $poidsVal = ':poids,';
             $data['poids'] = [
                 'value' => $weight,
                 'type' => PDO::PARAM_INT
             ];
         }
 
-        if (isset($nbrep)) {
-            $query = sprintf($query, "nbRépétitions,", $poids, ":nbrep,", $poidsVal);
-            $data['nbrep'] = [
-                'value' => $nbrep,
+        // Si c'est un exercice avec un nombre de répétitions
+        if (isset($nbReps)) {
+            $query = sprintf($query, 'nbRépétitions,', $poids, ':nbReps,', $poidsVal);
+            $data['nbReps'] = [
+                'value' => $nbReps,
                 'type' => PDO::PARAM_INT
             ];
-        } else {
-            $query = sprintf($query, "tempsExécution,", $poids, ":time,", $poidsVal);
+        }
+        // Si c'est un exercice avec un temps d'exécution
+        else {
+            $query = sprintf($query, 'tempsExécution,', $poids, ':time,', $poidsVal);
             $data['time'] = [
                 'value' => $time,
                 'type' => PDO::PARAM_INT

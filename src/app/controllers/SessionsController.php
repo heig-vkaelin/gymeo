@@ -19,7 +19,7 @@ class SessionsController
             return redirect('');
         }
 
-        $sessions = App::get('sessions-repository')->getSessionsUser($user['id']);
+        $sessions = App::get('sessions-repository')->getSessionsOfUser($user['id']);
 
         return view('sessions/index', compact('sessions'));
     }
@@ -73,12 +73,13 @@ class SessionsController
      */
     public function end($user)
     {
-        // Redirection si l'utilisateur n'est pas connecté
-        if (empty($user)) {
+        // Redirection si l'utilisateur n'est pas connecté ou si l'id de
+        // la séance à terminer n'est pas envoyé
+        if (empty($user) || !isset($_POST['sessionid'])) {
             return redirect('');
         }
 
-        $sessionId = intval(htmlspecialchars($_POST['sessionid'] ?? 0));
+        $sessionId = intval(htmlspecialchars($_POST['sessionid']));
         App::get('sessions-repository')->endSession($user, $sessionId);
 
         return redirect('series');
