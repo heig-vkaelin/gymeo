@@ -7,17 +7,17 @@
  */
 
 /**
- * Require a view.
+ * Importe une vue
  *
- * @param  string $name : name of the view
- * @param  array  $data : data to pass to the view
+ * @param  string $name : nom de la vue
+ * @param  array  $data : données à passer à la vue
  */
 function view($name, $data = [])
 {
-    // Data from the Controller
+    // Données du Controller
     extract($data);
 
-    // Logged User
+    // Utilisateur connecté
     $user = $_SESSION['user'] ?? null;
     $logged = !empty($user);
 
@@ -27,9 +27,9 @@ function view($name, $data = [])
 }
 
 /**
- * Redirect to a new page.
+ * Redirige vers une nouvelle page
  *
- * @param  string $path : path of the new page
+ * @param  string $path : chemin de la nouvelle page
  */
 function redirect($path)
 {
@@ -47,17 +47,10 @@ function dd($variable)
 }
 
 /**
+ *  Transforme une date en chaîne de caractères lisible par l'utilisateur
+ * 
  * Version custom de la fonction deprecated depuis PHP 8.1
- * Transforme une date en chaîne de caractères
  * Source: https://gist.github.com/bohwaz/42fc223031e2b2dd2585aab159a20f30
- *
- * Usage:
- * use func \PHP81_BC\strftime;
- * echo strftime('%A %e %B %Y %X', new \DateTime('2021-09-28 00:00:00'), 'fr_FR');
- *
- * Original use:
- * \setlocale('fr_FR.UTF-8', LC_TIME);
- * echo \strftime('%A %e %B %Y %X', strtotime('2021-09-28 00:00:00'));
  */
 function custom_strftime(string $format, $timestamp = null): string
 {
@@ -77,13 +70,13 @@ function custom_strftime(string $format, $timestamp = null): string
     $locale = substr($locale, 0, 5);
 
     $intl_formats = [
-        '%a' => 'EEE',    // An abbreviated textual representation of the day	Sun through Sat
-        '%A' => 'EEEE',    // A full textual representation of the day	Sunday through Saturday
-        '%b' => 'MMM',    // Abbreviated month name, based on the locale	Jan through Dec
-        '%B' => 'MMMM',    // Full month name, based on the locale	January through December
-        '%h' => 'MMM',    // Abbreviated month name, based on the locale (an alias of %b)	Jan through Dec
-        '%p' => 'aa',    // UPPER-CASE 'AM' or 'PM' based on the given time	Example: AM for 00:31, PM for 22:23
-        '%P' => 'aa',    // lower-case 'am' or 'pm' based on the given time	Example: am for 00:31, pm for 22:23
+        '%a' => 'EEE',
+        '%A' => 'EEEE',
+        '%b' => 'MMM',
+        '%B' => 'MMMM',
+        '%h' => 'MMM',
+        '%p' => 'aa',
+        '%P' => 'aa',
     ];
 
     $intl_formatter = function (\DateTimeInterface $timestamp, string $format) use ($intl_formats, $locale) {
@@ -92,20 +85,13 @@ function custom_strftime(string $format, $timestamp = null): string
         $time_type = IntlDateFormatter::FULL;
         $pattern = '';
 
-        // %c = Preferred date and time stamp based on locale
-        // Example: Tue Feb 5 00:45:10 2009 for February 5, 2009 at 12:45:10 AM
         if ($format == '%c') {
             $date_type = IntlDateFormatter::LONG;
             $time_type = IntlDateFormatter::SHORT;
-        }
-        // %x = Preferred date representation based on locale, without the time
-        // Example: 02/05/09 for February 5, 2009
-        elseif ($format == '%x') {
+        } elseif ($format == '%x') {
             $date_type = IntlDateFormatter::SHORT;
             $time_type = IntlDateFormatter::NONE;
-        }
-        // Localized time format
-        elseif ($format == '%X') {
+        } elseif ($format == '%X') {
             $date_type = IntlDateFormatter::NONE;
             $time_type = IntlDateFormatter::MEDIUM;
         } else {
@@ -115,42 +101,30 @@ function custom_strftime(string $format, $timestamp = null): string
         return (new IntlDateFormatter($locale, $date_type, $time_type, $tz, null, $pattern))->format($timestamp);
     };
 
-    // Same order as https://www.php.net/manual/en/function.strftime.php
     $translation_table = [
-        // Day
         '%a' => $intl_formatter,
         '%A' => $intl_formatter,
         '%d' => 'd',
         '%e' => 'j',
         '%j' => function ($timestamp) {
-            // Day number in year, 001 to 366
             return sprintf('%03d', $timestamp->format('z') + 1);
         },
         '%u' => 'N',
         '%w' => 'w',
-
-        // Week
         '%U' => function ($timestamp) {
-            // Number of weeks between date and first Sunday of year
             $day = new \DateTime(sprintf('%d-01 Sunday', $timestamp->format('Y')));
             return intval(($timestamp->format('z') - $day->format('z')) / 7);
         },
         '%W' => function ($timestamp) {
-            // Number of weeks between date and first Monday of year
             $day = new \DateTime(sprintf('%d-01 Monday', $timestamp->format('Y')));
             return intval(($timestamp->format('z') - $day->format('z')) / 7);
         },
         '%V' => 'W',
-
-        // Month
         '%b' => $intl_formatter,
         '%B' => $intl_formatter,
         '%h' => $intl_formatter,
         '%m' => 'm',
-
-        // Year
         '%C' => function ($timestamp) {
-            // Century (-1): 19 for 20th century
             return (int) $timestamp->format('Y') / 100;
         },
         '%g' => function ($timestamp) {
@@ -159,25 +133,19 @@ function custom_strftime(string $format, $timestamp = null): string
         '%G' => 'o',
         '%y' => 'y',
         '%Y' => 'Y',
-
-        // Time
         '%H' => 'H',
         '%k' => 'G',
         '%I' => 'h',
         '%l' => 'g',
         '%M' => 'i',
-        '%p' => $intl_formatter, // AM PM (this is reversed on purpose!)
-        '%P' => $intl_formatter, // am pm
-        '%r' => 'G:i:s A', // %I:%M:%S %p
-        '%R' => 'H:i', // %H:%M
+        '%p' => $intl_formatter,
+        '%P' => $intl_formatter,
+        '%r' => 'G:i:s A',
+        '%R' => 'H:i',
         '%S' => 's',
-        '%X' => $intl_formatter, // Preferred time representation based on locale, without the date
-
-        // Timezone
+        '%X' => $intl_formatter,
         '%z' => 'O',
         '%Z' => 'T',
-
-        // Time and Date Stamps
         '%c' => $intl_formatter,
         '%D' => 'm/d/Y',
         '%F' => 'Y-m-d',

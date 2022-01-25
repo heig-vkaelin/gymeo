@@ -17,7 +17,7 @@ class Database
     private $req;
 
     /**
-     * Create the database connection
+     * Crée la connexion avec la base de données
      */
     function __construct($config)
     {
@@ -34,7 +34,7 @@ class Database
     }
 
     /**
-     * Query simple queries when there is no params to pass
+     * Requête simple qui sans aucun paramètre à passer
      */
     public function queryExecute($query)
     {
@@ -42,7 +42,7 @@ class Database
     }
 
     /**
-     * Prepare and execute a query to avoid sql injections
+     * Prépare et exécute une requête afin d'éviter les injections SQL
      */
     public function prepareExecute($query, $params)
     {
@@ -61,26 +61,32 @@ class Database
     }
 
     /**
-     * Transfrom the fetched data into the selected type
+     * Transforme les données reçues d'une requête dans le type souhaité
      */
     private function fetchData($mode)
     {
-        // Ex: PDO::FETCH_ASSOC
+        // Exemple: PDO::FETCH_ASSOC
         return $this->req->fetchALL($mode);
     }
 
+    /**
+     * Récupère toutes les résultats d'une requête
+     */
     public function fetchAll()
     {
         return $this->fetchData(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Récupère un résultat d'une requête
+     */
     public function fetchOne()
     {
         return $this->req->fetch(PDO::FETCH_ASSOC);
     }
 
     /**
-     * Empty the record set
+     * Vide le jeu de documents
      */
     public function closeCursor()
     {

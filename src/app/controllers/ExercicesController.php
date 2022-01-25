@@ -42,6 +42,7 @@ class ExercicesController
 
     public function show()
     {
+        // Redirection si l'id de l'exercice n'est pas envoyé
         if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
             return redirect('exercices');
         }

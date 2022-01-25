@@ -12,28 +12,21 @@ use PDO;
 
 class UsersRepository extends Repository
 {
-    public function getAllUsers()
-    {
-        $this->queryExecute('
-            SELECT utilisateur.id, utilisateur.pseudonyme, utilisateur.datenaissance
-            FROM utilisateur
-            ORDER BY utilisateur.id
-        ');
-
-        return $this->fetchAll();
-    }
-
     /**
-     * Try to find a user to login with
+     * Cherche un utilisateur par son pseudonyme
+     *
+     * @param string $username
      */
     public function findUser($username)
     {
-        $query = "
+        $query = '
             SELECT
                 id, pseudonyme, dateNaissance
-            FROM Utilisateur
-            WHERE pseudonyme = :username
-        ";
+            FROM
+                Utilisateur
+            WHERE
+                pseudonyme = :username
+        ';
 
         $this->prepareExecute($query, [
             'username' => [

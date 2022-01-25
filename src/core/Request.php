@@ -11,7 +11,7 @@ namespace App\Core;
 class Request
 {
     /**
-     * Fetch the request URI.
+     * Retourne l'URI de la requête
      *
      * @return string
      */
@@ -24,7 +24,7 @@ class Request
     }
 
     /**
-     * Fetch the request method.
+     * Retourne la méthode de la requête
      *
      * @return string
      */

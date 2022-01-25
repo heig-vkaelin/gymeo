@@ -13,18 +13,18 @@ use App\Core\App;
 class UsersController
 {
     /**
-     * Login a user (POST)
+     * Connecte un utilisateur (POST)
      */
     public function login()
     {
         $username = htmlspecialchars($_POST['user'] ?? '');
 
-        // Check if user exists in db
+        // Vérifie que l'utilisateur existe dans la DB
         $userFromDB = App::get('users-repository')->findUser($username);
         $userExists = !empty($userFromDB);
 
         if ($userExists) {
-            // Store user in Session
+            // Stocke l'utilisateur dans la session
             $_SESSION['user'] = [
                 'id' => $userFromDB['id'],
                 'user' => $userFromDB['pseudonyme'],
@@ -36,11 +36,11 @@ class UsersController
     }
 
     /**
-     * Logout the logged user
+     * Déconnecte l'utilisateur
      */
     public function logout($user)
     {
-        // Redirect if the user is not logged
+        // Redirection si l'utilisateur n'est pas connecté
         if (empty($user)) {
             return redirect('');
         }

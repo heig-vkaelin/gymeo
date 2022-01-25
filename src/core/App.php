@@ -13,14 +13,14 @@ use Exception;
 class App
 {
     /**
-     * All registered keys.
+     * Toutes les clés enregistrées
      *
      * @var array
      */
     protected static $registry = [];
 
     /**
-     * Bind a new key/value into the container.
+     * lie une nouvelle paire de clé/valeur au registre
      *
      * @param  string $key
      * @param  mixed  $value
@@ -31,14 +31,14 @@ class App
     }
 
     /**
-     * Retrieve a value from the registry.
+     * Retourne une valeur du registre
      *
      * @param  string $key
      */
     public static function get($key)
     {
         if (!array_key_exists($key, static::$registry)) {
-            throw new Exception("No {$key} is bound in the container.");
+            throw new Exception("La clé {$key} n'existe pas dans le registre.");
         }
 
         return static::$registry[$key];

@@ -12,6 +12,11 @@ use PDO;
 
 class SessionsRepository extends Repository
 {
+    /**
+     * Retourne les séances d'un utilisateur
+     *
+     * @param number $userid
+     */
     public function getSessionsUser($userid)
     {
         $query = "
@@ -33,10 +38,14 @@ class SessionsRepository extends Repository
         ]);
 
         return $this->fetchAll();
-
-        //Récupérer les séances avec les ids de programmes puis return le résultat
     }
 
+    /**
+     * Récupère les détails d'une séance
+     *
+     * @param number $userId
+     * @param number $sessionId
+     */
     public function getSession($userId, $sessionId)
     {
         $query = '
@@ -74,19 +83,24 @@ class SessionsRepository extends Repository
         return $this->fetchAll();
     }
 
-    public function createSession($infos)
+    /**
+     * Crée une nouvelle séance dans la base de données
+     *
+     * @param number $programId
+     */
+    public function createSession($programId)
     {
         $query = "
         INSERT INTO séance (datedébut, idprogramme)
-                VALUES(:date, :idprogramme);";
+                VALUES(:date, :programId);";
 
         $this->prepareExecute($query, [
             'date' => [
                 'value' => date("Y-m-d H:i:s"),
                 'type' => PDO::PARAM_STR
             ],
-            'idprogramme' => [
-                'value' => $infos,
+            'programId' => [
+                'value' => $programId,
                 'type' => PDO::PARAM_INT
             ]
         ]);
@@ -94,6 +108,13 @@ class SessionsRepository extends Repository
         $this->closeCursor();
         return $idSession;
     }
+
+    /**
+     * Termine une séance
+     *
+     * @param number $userid
+     * @param number $sessionid
+     */
     public function endSession($userid, $sessionid)
     {
         $query = "

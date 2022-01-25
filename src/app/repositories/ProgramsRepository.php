@@ -12,6 +12,12 @@ use PDO;
 
 class ProgramsRepository extends Repository
 {
+    /**
+     * Récupère les détails d'un programme
+     *
+     * @param number $userId
+     * @param number $programId
+     */
     public function getProgram($userId, $programId)
     {
         $query = '
@@ -49,6 +55,13 @@ class ProgramsRepository extends Repository
         return $this->fetchAll();
     }
 
+    /**
+     * Crée un nouveau programme dans la base de données
+     *
+     * @param number $userId
+     * @param string $programName
+     * @param array $exercices
+     */
     public function createProgram($userId, $programName, $exercices)
     {
         // Programme
@@ -105,6 +118,12 @@ class ProgramsRepository extends Repository
         return $idProgram;
     }
 
+    /**
+     * Supprime un programme de la base de données
+     *
+     * @param number $userId
+     * @param number $programId
+     */
     public function deleteProgram($userId, $programId)
     {
         $query = '
@@ -130,6 +149,11 @@ class ProgramsRepository extends Repository
         $this->closeCursor();
     }
 
+    /**
+     * Récupère les informations essentielles des programmes créés par un utilisateur
+     *
+     * @param number $userId
+     */
     public function getLightProgramsOfUser($userId)
     {
         $query = '
@@ -150,6 +174,11 @@ class ProgramsRepository extends Repository
         return $this->fetchAll();
     }
 
+    /**
+     * Récupère toutes les informations des programmes créés par un utilisateur
+     *
+     * @param number $userId
+     */
     public function getAllProgramsOfUser($userId)
     {
         $query = "
@@ -180,6 +209,15 @@ class ProgramsRepository extends Repository
         return $this->fetchAll();
     }
 
+    /**
+     * Valide la création d'un nouveau programme en assignant un exercice au programme
+     *
+     * @param number $exerciceId
+     * @param number $programId
+     * @param number $nbSeries
+     * @param number $breakTime
+     * @param number $order
+     */
     public function confirmProgramExercice($exerciceId, $programId, $nbSeries, $breakTime, $order)
     {
         $query = '

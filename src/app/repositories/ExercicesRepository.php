@@ -12,6 +12,9 @@ use PDO;
 
 class ExercicesRepository extends Repository
 {
+    /**
+     * Récupère tous les lieux possibles pour les exercices
+     */
     public function getAllLocations()
     {
         $this->queryExecute('
@@ -23,6 +26,9 @@ class ExercicesRepository extends Repository
         return $this->fetchAll();
     }
 
+    /**
+     * Récupère tous les groupements musculaires possibles pour les exercices
+     */
     public function getAllMuscles()
     {
         $this->queryExecute('
@@ -34,11 +40,21 @@ class ExercicesRepository extends Repository
         return $this->fetchAll();
     }
 
+    /**
+     * Récupère tous les exercices
+     */
     public function getAllExercices()
     {
         return $this->getFilteredExercices(NULL, NULL, NULL);
     }
 
+    /**
+     * Récupère les exercices selon les filtres appliqués
+     *
+     * @param number $location
+     * @param number $material
+     * @param number $muscle
+     */
     public function getFilteredExercices($location, $material, $muscle)
     {
         $query = "
@@ -83,6 +99,11 @@ class ExercicesRepository extends Repository
         return $this->fetchAll();
     }
 
+    /**
+     * Récupère les détails d'un exercices en particulier
+     *
+     * @param number $id
+     */
     public function getOneExercice($id)
     {
         $query = "
@@ -124,6 +145,12 @@ class ExercicesRepository extends Repository
         return $this->fetchOne();
     }
 
+    /**
+     * Récupère les exercices d'une séance
+     *
+     * @param number $userId
+     * @param number $sessionId
+     */
     public function getExercicesBySession($userId, $sessionId)
     {
         $query = '

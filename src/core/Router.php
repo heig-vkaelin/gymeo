@@ -13,7 +13,7 @@ use Exception;
 class Router
 {
     /**
-     * All registered routes.
+     * Toutes les routes enregistrées
      *
      * @var array
      */
@@ -23,9 +23,9 @@ class Router
     ];
 
     /**
-     * Load a user's routes file.
+     * Charge le fichier des routes de l'application
      *
-     * @param string $file
+     * @param string $fichier
      */
     public static function load($file)
     {
@@ -37,7 +37,7 @@ class Router
     }
 
     /**
-     * Register a GET route.
+     * Enregistre une route GET
      *
      * @param string $uri
      * @param string $controller
@@ -48,7 +48,7 @@ class Router
     }
 
     /**
-     * Register a POST route.
+     * Enregistre une route POST
      *
      * @param string $uri
      * @param string $controller
@@ -59,7 +59,7 @@ class Router
     }
 
     /**
-     * Load the requested URI's associated controller method.
+     * Charge la méthode du controller associée à l'URI demandé 
      *
      * @param string $uri
      * @param string $requestType
@@ -72,13 +72,12 @@ class Router
             );
         }
 
-        // Throw Exception in dev mode and redirect to homepage in "production"
-        // throw new Exception('No route defined for this URI.');
+        // Redirige vers la page d'accueil si la page est inconnue
         redirect('');
     }
 
     /**
-     * Load and call the relevant controller action.
+     * Charge et appelle l'action du controller associée
      *
      * @param string $controller
      * @param string $action
@@ -94,7 +93,7 @@ class Router
             );
         }
 
-        // Get user from Session
+        // Récupère l'utilisation de la session
         $user = $_SESSION['user'] ?? null;
 
         return $controller->$action($user);

@@ -4,7 +4,7 @@
             <span class="font-bold italic"><?= $program[0]['nomprogramme'] ?></span>
         </h2>
 
-        <form class="mt-4 w-full" method="POST" action="/programs/next">
+        <form class="mt-4 w-full" method="POST" action="/programs/update">
             <div class="flex flex-wrap -mx-8 -mt-6">
                 <?php
                 $i = 0;

@@ -14,12 +14,11 @@ class SeriesController
 {
     public function index($user)
     {
-        // Redirect if the user is not logged
+        // Redirection si l'utilisateur n'est pas connecté
         if (empty($user)) {
             return redirect('');
         }
 
-        // $result = App::get('programs-repository')->getOneProgram($user['id'], $_GET['id']);
         $series = App::get('series-repository')->getSeriesByUser($user['id']);
 
         return view('series/index', compact('series'));
@@ -27,23 +26,25 @@ class SeriesController
 
     public function create($user)
     {
-
-        // Redirect if the user is not logged
+        // Redirection si l'utilisateur n'est pas connecté
         if (empty($user) || !isset($_GET['idSession'])) {
             return redirect('');
         }
 
         $series = App::get('series-repository')->getSeriesById($user['id'], $_GET['idSession']);
         $exercices = App::get('exercices-repository')->getExercicesBySession($user['id'], $_GET['idSession']);
+
         return view('series/create', compact('series', 'exercices'));
     }
 
     public function store($user)
     {
-        // Redirect if the user is not logged
+        // Redirection si l'utilisateur n'est pas connecté
         if (empty($user) || !isset($_POST['exercice'])) {
             return redirect('');
         }
+
+        // Soit le nombre de répétitions soit le temps est utilisé
         $time = NULL;
         $repetition = NULL;
         if (isset($_POST['repetition'])) {
@@ -51,6 +52,7 @@ class SeriesController
         } else {
             $time = htmlspecialchars($_POST['time']);
         }
+
         App::get('series-repository')->createSerie(
             htmlspecialchars($_POST['idSession']),
             htmlspecialchars($_POST['exercice']),
@@ -58,6 +60,7 @@ class SeriesController
             $time,
             htmlspecialchars($_POST['weight'])
         );
+
         return redirect('series/create?idSession=' . $_POST['idSession']);
     }
 }

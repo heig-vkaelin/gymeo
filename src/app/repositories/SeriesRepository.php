@@ -12,6 +12,11 @@ use PDO;
 
 class SeriesRepository extends Repository
 {
+    /**
+     * Récupère les séries réalisées par un utilisateur
+     *
+     * @param number $userId
+     */
     public function getSeriesByUser($userId)
     {
         $query = "
@@ -52,6 +57,12 @@ class SeriesRepository extends Repository
         return $orderedByExercice;
     }
 
+    /**
+     * Récupère les séries réalisées lors d'une séance
+     *
+     * @param number $userid
+     * @param number $sessionid
+     */
     public function getSeriesById($userid, $sessionid)
     {
         $query = "
@@ -86,9 +97,17 @@ class SeriesRepository extends Repository
         return $this->fetchAll();
     }
 
+    /**
+     * Crée une nouvelle série dans la base de données
+     *
+     * @param number $sessionid
+     * @param number $exerciceid
+     * @param number $nbrep
+     * @param number $time
+     * @param number $weight
+     */
     public function createSerie($sessionid, $exerciceid, $nbrep, $time, $weight)
     {
-
         $query = "
         INSERT INTO Série (%s %s idSéance, idExercice) VALUES
         (%s %s :session_id,:exercice_id)";

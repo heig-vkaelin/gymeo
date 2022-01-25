@@ -17,7 +17,7 @@ class ProgramsController
 
     public function index($user)
     {
-        // Redirect if the user is not logged
+        // Redirection si l'utilisateur n'est pas connecté
         if (empty($user)) {
             return redirect('');
         }
@@ -29,7 +29,7 @@ class ProgramsController
 
     public function show($user)
     {
-        // Redirect if the user is not logged
+        // Redirection si l'utilisateur n'est pas connecté
         if (empty($user)) {
             return redirect('');
         }
@@ -45,7 +45,7 @@ class ProgramsController
 
     public function create($user)
     {
-        // Redirect if the user is not logged
+        // Redirection si l'utilisateur n'est pas connecté
         if (empty($user)) {
             return redirect('');
         }
@@ -57,21 +57,15 @@ class ProgramsController
 
     public function delete($user)
     {
-        // Redirect if the user is not logged or if no exerices are sent
-        if (
-            empty($user)
-        ) {
+        // Redirection si l'utilisateur n'est pas connecté ou que l'id du programme
+        // à supprimer n'est pas envoyé
+        if (empty($user) || !isset($_GET['id'])) {
             return redirect('');
         }
-
-        if (!isset($_GET['id'])) {
-            return redirect('');
-        }
-
 
         App::get('programs-repository')->deleteProgram(
             $user['id'],
-            $_GET['id']
+            htmlspecialchars($_GET['id'])
         );
 
         redirect('programs');
@@ -79,7 +73,8 @@ class ProgramsController
 
     public function store($user)
     {
-        // Redirect if the user is not logged or if no exerices are sent
+        // Redirection si l'utilisateur n'est pas connecté ou si aucun exercice
+        // n'est envoyé
         if (
             empty($user) || !isset($_POST['exercices']) ||
             count($_POST['exercices']) == 0
@@ -98,7 +93,7 @@ class ProgramsController
             $data->id = intval($id);
             $data->nbSériesConseillé = $exercice['nbsériesconseillé'];
             $data->ordre = $index + 1;
-            $data->tempsPause = self::DEFAULT_BREAK_TIME; // 30s par défaut
+            $data->tempsPause = self::DEFAULT_BREAK_TIME;
             $exercicesPopulated[] = $data;
         }
 
@@ -115,7 +110,8 @@ class ProgramsController
 
     public function edit($user)
     {
-        // Redirect if the user is not logged or if program is not set
+        // Redirection si l'utilisateur n'est pas connecté ou si l'id
+        // du programme à modifier n'est pas envoyé
         if (empty($user) || !isset($_GET['idProgram'])) {
             return redirect('');
         }
@@ -127,21 +123,24 @@ class ProgramsController
 
     public function update($user)
     {
+        // Redirection si l'utilisateur n'est pas connecté
         if (empty($user)) {
             return redirect('');
         }
 
+        $idProgram = htmlspecialchars($_POST['idprogramme'][0]);
+
+        // Modifie chaque exercice lié au programme 
         for ($i = 0; $i < count($_POST['idexercice']); $i++) {
             App::get('programs-repository')->confirmProgramExercice(
                 htmlspecialchars($_POST['idexercice'][$i]),
-                htmlspecialchars($_POST['idprogramme'][$i]),
+                $idProgram,
                 htmlspecialchars($_POST['nbséries'][$i]),
                 htmlspecialchars($_POST['tempspause'][$i]),
                 htmlspecialchars($_POST['ordre'][$i])
             );
         }
 
-        // TODO: redirect sur la page show une fois créée
-        return redirect('programs');
+        return redirect('program?id=' . $idProgram);
     }
 }
