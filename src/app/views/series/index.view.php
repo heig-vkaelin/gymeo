@@ -26,7 +26,12 @@
                 $x = 0;
                 foreach ($series[$serie] as $ser) :
                     $dateB = date('Y-m-d',strtotime($ser['datedébut']));
-                    $dateE = date('Y-m-d',strtotime($ser['datefin']));
+
+                    $dateE = null;
+
+                    if(!is_null($ser['datefin'])){
+                        $dateE = date('Y-m-d',strtotime($ser['datefin']));
+                    }
             ?>
                 <tr class="<?= $x % 2 == 0 ? 'bg-gray-100' : '' ?>">
                     <td class="px-4 py-2 truncate max-w-sm">
@@ -36,7 +41,7 @@
                         <?= $ser['poids']  == NULL ? '-' : $ser['poids'] . ' kg' ?>
                     </td>
                     <td class="px-4 py-2 truncate max-w-sm"><?= $dateB ?></td>
-                    <td class="px-4 py-2 truncate max-w-sm"><?= $dateE ?></td>
+                    <td class="px-4 py-2 truncate max-w-sm"><?= $dateE == NULL ? ' - ' : $dateE ?></td>
                 </tr>
                 <?php $x++;
             endforeach; ?>

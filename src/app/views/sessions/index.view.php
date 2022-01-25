@@ -23,8 +23,13 @@
             foreach ($sessions as $session) :
                 $dateB = date('Y-m-d',strtotime($session['datedébut']));
                 $timeB = date('H:i',strtotime($session['datedébut']));
-                $dateE = date('Y-m-d',strtotime($session['datefin']));
-                $timeE = date('H:i',strtotime($session['datefin']));
+                $dateE = null;
+                $timeE = null;
+
+                if(!is_null($session['datefin'])){
+                    $dateE = date('Y-m-d',strtotime($session['datefin']));
+                    $timeE = date('H:i',strtotime($session['datefin']));
+                }
             ?>
                 <tr class="<?= $i % 2 == 0 ? 'bg-gray-100' : '' ?>">
                     <td class="px-4 py-2 truncate max-w-sm">
@@ -33,8 +38,8 @@
                     </td>
                     <td class="px-4 py-2 truncate max-w-sm"><?= $dateB ?></td>
                     <td class="px-4 py-2 truncate max-w-sm"><?= $timeB ?></td>
-                    <td class="px-4 py-2 truncate max-w-sm"><?= $dateE ?></td>
-                    <td class="px-4 py-2 truncate max-w-sm"><?= $timeE ?></td>
+                    <td class="px-4 py-2 truncate max-w-sm"><?= $dateE == NULL ? ' - ' : $dateE ?></td>
+                    <td class="px-4 py-2 truncate max-w-sm"><?= $timeE == NULL ? ' - ' : $timeE ?></td>
                 </tr>
             <?php $i++;
             endforeach; ?>
