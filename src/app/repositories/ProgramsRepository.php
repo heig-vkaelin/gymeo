@@ -60,6 +60,25 @@ class ProgramsRepository extends Repository
         $this->closeCursor();
     }
 
+    public function deleteProgram($idUser, $idProgram){
+        $query = "DELETE 
+        FROM programme 
+        WHERE programme.idutilisateur = :idUser AND programme.id = :idProgram";
+
+        $this->prepareExecute($query, [
+            'idUser' => [
+                'value' => $idUser,
+                'type' => PDO::PARAM_INT
+            ],
+            'idProgram' => [
+                'value' => $idProgram,
+                'type' => PDO::PARAM_INT
+            ]
+        ]);
+
+        $this->closeCursor();
+    }
+
     public function getAllProgramsOfUser($idUser)
     {
         $query = "SELECT * 

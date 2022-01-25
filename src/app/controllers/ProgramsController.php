@@ -50,6 +50,28 @@ class ProgramsController
         return view('programs/create', compact('exercices'));
     }
 
+    public function delete($user)
+    {
+        // Redirect if the user is not logged or if no exerices are sent
+        if (
+            empty($user)
+        ) {
+            return redirect('');
+        }
+
+        if (!isset($_GET['id'])) {
+            return redirect('');
+        }
+
+
+        App::get('programs-repository')->deleteProgram(
+            $user['id'],
+            $_GET['id']
+        );
+
+        redirect('programs');
+    }
+
     public function store($user)
     {
         // Redirect if the user is not logged or if no exerices are sent
