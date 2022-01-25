@@ -25,7 +25,7 @@ class SessionsController
             return redirect('');
         }
 
-        $programs = App::get('programs-repository')->getAllProgramsOfUser(htmlspecialchars($user['id']));
+        $programs = App::get('programs-repository')->getLightProgramsOfUser($user['id']);
         return view('sessions/create', compact('programs'));
     }
 

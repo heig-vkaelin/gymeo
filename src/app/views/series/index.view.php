@@ -1,18 +1,15 @@
 <main>
     <div class="mt-6 container px-4 mx-auto">
         <div class="flex items-center justify-between">
-            <h2 class="text-lg font-semibold">Suivi des séries</h2>
-            <a href="/programs/create" class="flex-shrink-0 shadow bg-gray-800 hover:bg-gray-900 focus:outline-none text-white font-bold py-2 px-4 rounded">
-                Créer une séance
-            </a>
+            <h2 class="text-lg font-semibold">Historique des séries par exercice</h2>
         </div>
-        <div class="space-y-6">
+        <div class="mt-6 space-y-6">
             <?php
             $i = 0;
             foreach (array_keys($series) as $serie) :
             ?>
                 <div>
-                    <h2 class="text-lg font-semibold"><?= $serie ?></h2>
+                    <h3 class="text-base font-semibold"><?= $serie ?></h3>
                     <table class="mt-2 bg-white shadow rounded-lg overflow-hidden">
                         <thead>
                             <tr class="font-semibold">
@@ -20,7 +17,6 @@
                                 <th class="px-4 py-2 bg-gray-800 text-white">Charge</th>
                                 <th class="px-4 py-2 bg-gray-800 text-white">Date de début</th>
                                 <th class="px-4 py-2 bg-gray-800 text-white">Date de fin</th>
-                                <!-- <th class="px-4 py-2 bg-gray-800 text-white">Date de Naissance</th> -->
                             </tr>
                         </thead>
                         <tbody>

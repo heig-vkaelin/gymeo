@@ -6,28 +6,37 @@ use PDO;
 
 class ProgramsRepository extends Repository
 {
-    public function getProgram($userId, $idProgram)
+    public function getProgram($userId, $programId)
     {
         $query = '
-            SELECT Programme.id AS idProgramme, Programme.nom AS nomProgramme,
-            Exercice.id AS idExercice, Exercice.nom AS nomExercice,
-            Programme_Exercice.tempsPause, Programme_Exercice.nbSéries, Programme_Exercice.ordre
-            FROM Programme 
-            INNER JOIN Programme_Exercice
-            ON Programme.id = Programme_Exercice.idProgramme
-            INNER JOIN Exercice
-            ON Programme_Exercice.idExercice = Exercice.id
-            WHERE programme.idutilisateur = :user_id
-            AND programme.id = :program_id
+            SELECT
+                Programme.id AS idProgramme, Programme.nom AS nomProgramme,
+                Exercice.id AS idExercice, Exercice.nom AS nomExercice,
+                Programme_Exercice.tempsPause, Programme_Exercice.nbSéries, Programme_Exercice.ordre
+            FROM
+                Programme 
+            INNER JOIN
+                Programme_Exercice
+            ON
+                Programme.id = Programme_Exercice.idProgramme
+            INNER JOIN
+                Exercice
+            ON
+                Programme_Exercice.idExercice = Exercice.id
+            WHERE
+                programme.idutilisateur = :userId
+                AND programme.id = :programId
+            ORDER BY
+                Programme_Exercice.ordre ASC
         ';
 
         $this->prepareExecute($query, [
-            'user_id' => [
+            'userId' => [
                 'value' => $userId,
                 'type' => PDO::PARAM_INT
             ],
-            'program_id' => [
-                'value' => $idProgram,
+            'programId' => [
+                'value' => $programId,
                 'type' => PDO::PARAM_INT
             ]
         ]);
@@ -37,11 +46,11 @@ class ProgramsRepository extends Repository
     public function createProgram($userId, $programName, $exercices)
     {
         // Programme
-        $programQuery = "
+        $programQuery = '
             INSERT into Programme
             (nom, idUtilisateur)
             VALUES (:name, :userId)
-        ";
+        ';
 
         $this->prepareExecute($programQuery, [
             'name' => [
@@ -56,22 +65,22 @@ class ProgramsRepository extends Repository
 
         // Programme_Exercice
         $idProgram = $this->getLastInsertId();
-        $exercieQuery = "
+        $exercieQuery = '
             INSERT into Programme_Exercice
             (idExercice, idProgramme, tempsPause, nbSéries, ordre)
-            VALUES (:idExercice, :idProgramme, :tempsPause, :nbSeries, :ordre)
-        ";
+            VALUES (:exerciceId, :programId, :breakTime, :nbSeries, :order)
+        ';
         foreach ($exercices as $exercice) {
             $this->prepareExecute($exercieQuery, [
-                'idExercice' => [
+                'exerciceId' => [
                     'value' => $exercice->id,
                     'type' => PDO::PARAM_INT
                 ],
-                'idProgramme' => [
+                'programId' => [
                     'value' => $idProgram,
                     'type' => PDO::PARAM_INT
                 ],
-                'tempsPause' => [
+                'breakTime' => [
                     'value' => $exercice->tempsPause,
                     'type' => PDO::PARAM_INT
                 ],
@@ -79,29 +88,35 @@ class ProgramsRepository extends Repository
                     'value' => $exercice->nbSériesConseillé,
                     'type' => PDO::PARAM_INT
                 ],
-                'ordre' => [
+                'order' => [
                     'value' => $exercice->ordre,
                     'type' => PDO::PARAM_INT
                 ]
             ]);
         }
+
         $this->closeCursor();
         return $idProgram;
     }
 
-    public function deleteProgram($idUser, $idProgram)
+    public function deleteProgram($userId, $programId)
     {
-        $query = "DELETE 
-        FROM programme 
-        WHERE programme.idutilisateur = :idUser AND programme.id = :idProgram";
+        $query = '
+            DELETE 
+            FROM
+                Programme 
+            WHERE
+                Programme.idutilisateur = :userId
+                AND Programme.id = :programId
+        ';
 
         $this->prepareExecute($query, [
-            'idUser' => [
-                'value' => $idUser,
+            'userId' => [
+                'value' => $userId,
                 'type' => PDO::PARAM_INT
             ],
-            'idProgram' => [
-                'value' => $idProgram,
+            'programId' => [
+                'value' => $programId,
                 'type' => PDO::PARAM_INT
             ]
         ]);
@@ -109,15 +124,50 @@ class ProgramsRepository extends Repository
         $this->closeCursor();
     }
 
-    public function getAllProgramsOfUser($idUser)
+    public function getLightProgramsOfUser($userId)
     {
-        $query = "SELECT * 
-        FROM programme 
-        WHERE programme.idutilisateur = :id";
+        $query = '
+            SELECT
+                id, nom, idUtilisateur 
+            FROM
+                Programme 
+            WHERE
+                Programme.idUtilisateur = :userId
+        ';
 
         $this->prepareExecute($query, [
-            'id' => [
-                'value' => $idUser,
+            'userId' => [
+                'value' => $userId,
+                'type' => PDO::PARAM_INT
+            ]
+        ]);
+        return $this->fetchAll();
+    }
+
+    public function getAllProgramsOfUser($userId)
+    {
+        $query = "
+            SELECT
+                Programme.id, Programme.nom, COUNT(*) AS nbExercices, string_agg(Exercice.nom, ', ') AS Exercices
+            FROM
+                Programme 
+            LEFT JOIN 
+                Programme_Exercice
+            ON
+                Programme.id = Programme_Exercice.idProgramme
+            LEFT JOIN 
+                Exercice
+            ON
+                Programme_Exercice.idExercice = Exercice.id
+            WHERE
+                Programme.idUtilisateur = :userId
+            GROUP BY
+                Programme.id
+        ";
+
+        $this->prepareExecute($query, [
+            'userId' => [
+                'value' => $userId,
                 'type' => PDO::PARAM_INT
             ]
         ]);
@@ -126,12 +176,17 @@ class ProgramsRepository extends Repository
 
     public function confirmProgramExercice($exerciceId, $programId, $nbSeries, $breakTime, $order)
     {
-        $query = "
-            UPDATE Programme_Exercice
-            SET nbSéries = :nbSeries, tempsPause = :breakTime, ordre = :order
-            WHERE idExercice = :exerciceId
-            AND idProgramme = :programId
-        ";
+        $query = '
+            UPDATE
+                Programme_Exercice
+            SET
+                nbSéries = :nbSeries,
+                tempsPause = :breakTime,
+                ordre = :order
+            WHERE
+                idExercice = :exerciceId
+                AND idProgramme = :programId
+        ';
 
         $this->prepareExecute($query, [
             'nbSeries' => [

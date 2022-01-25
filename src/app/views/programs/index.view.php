@@ -8,10 +8,11 @@
         </div>
         <table class="mt-2 bg-white shadow rounded-lg overflow-hidden">
             <thead>
-                <tr class="font-semibold">
+                <tr class="font-semibold text-left">
                     <th class="px-4 py-2 bg-gray-800 text-white">Nom</th>
                     <th class="px-4 py-2 bg-gray-800 text-white">Nombre d'exercices</th>
-                    <th class="px-4 py-2 bg-gray-800 text-white">Suppression</th>
+                    <th class="px-4 py-2 bg-gray-800 text-white">Exercices</th>
+                    <th class="px-4 py-2 bg-gray-800 text-white">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -19,8 +20,13 @@
                 $i = 0;
                 foreach ($programs as $program) : ?>
                     <tr class="<?= $i % 2 == 0 ? 'bg-gray-100' : '' ?>">
-                        <td class="px-4 py-2 truncate max-w-sm"><?= $program['nom'] ?></td>
-                        <td class="px-4 py-2 truncate max-w-sm"><?= 0 ?></td>
+                        <td class="px-4 py-2 truncate max-w-sm">
+                            <a href="program?id=<?= $program['id'] ?>" class="border-b-2 border-transparent hover:border-gray-800">
+                                <?= $program['nom'] ?>
+                            </a>
+                        </td>
+                        <td class="px-4 py-2 truncate max-w-sm"><?= $program['nbexercices'] ?></td>
+                        <td class="px-4 py-2 truncate max-w-xl"><?= $program['exercices'] ?></td>
                         <td class="px-4 py-2 truncate max-w-sm">
                             <button onclick="deleteProgram(<?= $program['id'] ?>)" class="ml-3 hover:text-gray-700 focus:outline-none">
                                 <i class="fas fa-trash"></i>
