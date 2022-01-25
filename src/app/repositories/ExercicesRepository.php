@@ -98,4 +98,34 @@ class ExercicesRepository extends Repository
 
         return $this->fetchOne();
     }
+
+    public function getExercicesBySession($userid, $sessionid)
+    {
+        $query = "
+        SELECT
+            Exercice.id, Exercice.nom, Exercice.nbRépétitionsConseillé,
+            Exercice.tempsExécutionConseillé
+        FROM Exercice
+        INNER JOIN Programme_Exercice ON 
+            Programme_Exercice.idExercice = Exercice.id
+        INNER JOIN Programme ON 
+            Programme_Exercice.idProgramme = Programme.id
+        INNER JOIN Séance ON 
+            Programme.id = Séance.idProgramme
+        WHERE Séance.id = :session_id
+        AND Programme.idUtilisateur = :user_id
+        ORDER BY Programme_Exercice.ordre ASC
+        ";
+
+        $this->prepareExecute($query, [
+            'user_id' => [
+                'value' => $userid,
+                'type' => PDO::PARAM_INT
+            ], 'session_id' => [
+                'value' => $sessionid,
+                'type' => PDO::PARAM_INT
+            ]
+        ]);
+        return $this->fetchAll();
+    }
 }

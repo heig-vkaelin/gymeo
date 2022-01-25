@@ -115,4 +115,31 @@ class SeriesRepository extends Repository
         $series = $this->fetchAll();
         return $series;
     }
+
+    public function createSerie($sessionid, $exerciceid, $nbrep, $time, $weight)
+    {
+        $query = "
+        INSERT INTO Série (nbrépétitions, poids, idSéance, idExercice) VALUES
+        (:nbrep,:weight,:session_id,:exercice_id)";
+
+        $this->prepareExecute($query, [
+            'nbrep' => [
+                'value' => $nbrep,
+                'type' => PDO::PARAM_INT
+            ],
+            'weight' => [
+                'value' => $weight,
+                'type' => PDO::PARAM_INT
+            ],
+            'session_id' => [
+                'value' => $sessionid,
+                'type' => PDO::PARAM_INT
+            ],
+            'exercice_id' => [
+                'value' => $exerciceid,
+                'type' => PDO::PARAM_INT
+            ],
+        ]);
+        $this->closeCursor();
+    }
 }

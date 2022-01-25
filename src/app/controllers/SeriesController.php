@@ -47,8 +47,30 @@ class SeriesController
         }
 
         $series = App::get('series-repository')->getSeriesById($user['id'], $_GET['idSession']);
-        $exercices = App::get('exercices-repository')->getAllExercices();
-
+        $exercices = App::get('exercices-repository')->getExercicesBySession($user['id'], $_GET['idSession']);
         return view('series/create', compact('series', 'exercices'));
+    }
+
+    public function store($user)
+    {
+        // Redirect if the user is not logged
+        if (empty($user) || !isset($_POST['exercice'])) {
+            return redirect('');
+        }
+        $time = NULL;
+        $repetition = NULL;
+        if (isset($_POST['repetition'])) {
+            $repetition = htmlspecialchars($_POST['repetition']);
+        } else {
+            $time = htmlspecialchars($_POST['time']);
+        }
+        App::get('series-repository')->createSerie(
+            htmlspecialchars($_POST['idSession']),
+            htmlspecialchars($_POST['exercice']),
+            $repetition,
+            $time,
+            htmlspecialchars($_POST['weight'])
+        );
+        return redirect('series/create?idSession=' . $_POST['idSession']);
     }
 }
