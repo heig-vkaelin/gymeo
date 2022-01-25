@@ -17,7 +17,8 @@ class SessionsRepository extends Repository
                 programme ON
                 séance.idprogramme = programme.id
             WHERE
-                idutilisateur = :userid";
+                idutilisateur = :userid
+            ORDER BY séance.datedébut DESC";
         $this->prepareExecute($query, [
             'userid' => [
                 'value' => $userid,

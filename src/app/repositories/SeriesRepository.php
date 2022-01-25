@@ -59,6 +59,7 @@ class SeriesRepository extends Repository
                 série.idexercice = exercice.id
             WHERE
                 programme.idutilisateur = :userId
+            ORDER BY séance.datedébut DESC;
         ";
 
         $this->prepareExecute($query, [
