@@ -1,10 +1,9 @@
 <?php
 
 /**
- * ETML
- * Author: Valentin Kaelin
- * Date: 26.11.2019
- * Description: Manage all the actions with the Database
+ * Auteurs: Loïc Rosset, Alexandre Jaquier, Valentin Kaelin
+ * Date: 28.01.2022
+ * Description: Gère la connexion avec la base de données
  */
 
 namespace App\Core\Database;

@@ -1,10 +1,9 @@
 <?php
 
 /**
- * ETML
- * Author: Valentin Kaelin
- * Date: 21.11.2019
- * Description: Global store of the website
+ * Auteurs: Loïc Rosset, Alexandre Jaquier, Valentin Kaelin
+ * Date: 28.01.2022
+ * Description: Store principal du site, accessible depuis partout
  */
 
 namespace App\Core;

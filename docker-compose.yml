@@ -27,6 +27,5 @@ services:
       - POSTGRES_DB=gymeo
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=admin
-      #- POSTGRES_INITDB_ARGS='--encoding=UTF-8'
 volumes:
   pgdata:

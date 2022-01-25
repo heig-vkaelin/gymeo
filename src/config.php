@@ -1,10 +1,9 @@
 <?php
 
 /**
- * ETML
- * Author: Valentin Kaelin
- * Date: 21.11.2019
- * Description: Database connection config
+ * Auteurs: Loïc Rosset, Alexandre Jaquier, Valentin Kaelin
+ * Date: 28.01.2022
+ * Description: Fichier de configuration de la base de données
  */
 
 return [

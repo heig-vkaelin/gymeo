@@ -3,10 +3,9 @@
 
 <head>
     <!--
-    ETML
-    Author      : Valentin Kaelin
-    Date        : 05.12.2019
-    Description : Header for the whole project/website, contains the navigation and the login form
+    Auteurs      : Loïc Rosset, Alexandre Jaquier, Valentin Kaelin
+    Date         : 28.01.2022
+    Description  : En-tête pour le site entier, contient la navigation et le formulaire de connexion
     -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,6 +17,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/@tailwindcss/forms/dist/forms.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
 </head>
 
 <body class="font-sans antialiased bg-gray-200">

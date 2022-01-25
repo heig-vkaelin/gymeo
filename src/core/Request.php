@@ -1,10 +1,9 @@
 <?php
 
 /**
- * ETML
- * Author: Valentin Kaelin
- * Date: 21.11.2019
- * Description: Request helpers methods for the Router
+ * Auteurs: Loïc Rosset, Alexandre Jaquier, Valentin Kaelin
+ * Date: 28.01.2022
+ * Description: Méthodes d'helper pour le Router
  */
 
 namespace App\Core;

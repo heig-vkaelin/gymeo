@@ -1,10 +1,9 @@
 <?php
 
 /**
- * ETML
- * Author: Valentin Kaelin
- * Date: 21.11.2019
- * Description: First launched file of the website, call the bootstrap
+ * Auteurs: Loïc Rosset, Alexandre Jaquier, Valentin Kaelin
+ * Date: 28.01.2022
+ * Description: 1er fichier appelé, appelle le bootratap du site
  */
 
 require 'vendor/autoload.php';
@@ -12,6 +11,6 @@ require 'core/bootstrap.php';
 
 use App\Core\{Router, Request};
 
-// Load routes
+// Charge les routes
 Router::load('app/routes.php')
     ->direct(Request::uri(), Request::method());

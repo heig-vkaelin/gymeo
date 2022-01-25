@@ -1,8 +1,12 @@
 <?php
 
-namespace App\Repositories;
+/**
+ * Auteurs: Loïc Rosset, Alexandre Jaquier, Valentin Kaelin
+ * Date: 28.01.2022
+ * Description: Met à disposition des fonctions faciliant les requêtes avec la base de données
+ */
 
-use App\Core\App;
+namespace App\Repositories;
 
 abstract class Repository
 {

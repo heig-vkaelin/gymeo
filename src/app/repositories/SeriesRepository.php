@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Auteurs: Loïc Rosset, Alexandre Jaquier, Valentin Kaelin
+ * Date: 28.01.2022
+ * Description: Requêtes se rapportant aux Séries
+ */
+
 namespace App\Repositories;
 
 use PDO;

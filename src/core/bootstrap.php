@@ -1,10 +1,9 @@
 <?php
 
 /**
- * ETML
- * Author: Valentin Kaelin
- * Date: 21.11.2019
- * Description: Bootstrap the website
+ * Auteurs: Loïc Rosset, Alexandre Jaquier, Valentin Kaelin
+ * Date: 28.01.2022
+ * Description: Initie le site web
  */
 
 use App\Core\App;
@@ -13,10 +12,11 @@ use App\Repositories\{ExercicesRepository, ProgramsRepository, SeriesRepository,
 
 session_start();
 
-// Settings
+// Réglages globaux
 date_default_timezone_set('Europe/Zurich');
 setlocale(LC_TIME, 'fr_FR', 'french', 'French_France.1252', 'fr_FR.ISO8859-1', 'fra', 'fr_FR.utf8');
 
+// Stockage des instances des différents singletons accessibles dans toute l'app
 App::bind('config', require 'config.php');
 
 App::bind('database', new Database(App::get('config')['database']));

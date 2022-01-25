@@ -1,10 +1,9 @@
 <?php
 
 /**
- * ETML
- * Author: Valentin Kaelin
- * Date: 12.12.2019
- * Description: Controller for the users' sessions (login/logout)
+ * Auteurs: Loïc Rosset, Alexandre Jaquier, Valentin Kaelin
+ * Date: 28.01.2022
+ * Description: Controller pour les sessions Utilisateurs
  */
 
 namespace App\Controllers;
