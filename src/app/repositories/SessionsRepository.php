@@ -57,19 +57,19 @@ class SessionsRepository extends Repository
                 Série.nbRépétitions, Série.tempsExécution, Série.poids,
                 Exercice.nom AS nomExercice
             FROM
-                Série
-            INNER JOIN
-                Séance ON
-                Série.idséance = Séance.id
+                Séance
+            LEFT JOIN
+                Série ON
+                Séance.id = Série.idSéance 
             INNER JOIN
                 Programme ON
-                Séance.idprogramme = Programme.id
-            INNER JOIN
+                Séance.idProgramme = Programme.id
+            LEFT JOIN
                 Exercice ON
-                Série.idexercice = Exercice.id
+                Série.idExercice = Exercice.id
             WHERE
                 Séance.id = :sessionId AND
-                Programme.idutilisateur = :userId
+                Programme.idUtilisateur = :userId
         ';
 
         $this->prepareExecute($query, [

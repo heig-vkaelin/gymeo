@@ -16,13 +16,19 @@
                 $i = 0;
                 foreach ($sessions as $serie) :
                 ?>
-                    <tr class="<?= $i % 2 == 0 ? 'bg-gray-100' : '' ?>">
-                        <td class="px-4 py-2 truncate max-w-sm"><?= $serie['nomexercice'] ?></td>
-                        <td class="px-4 py-2 truncate max-w-sm">
-                            <?= $serie['nbrépétitions'] == NULL ? $serie['tempsexécution'] . ' minutes' : $serie['nbrépétitions'] . ' répétitions' ?>
-                        </td>
-                        <td class="px-4 py-2 truncate max-w-sm"><?= $serie['poids']  == NULL ? '-' : $serie['poids'] . ' kg' ?></td>
-                    </tr>
+                    <?php if ($serie['nomexercice']) : ?>
+                        <tr class="<?= $i % 2 == 0 ? 'bg-gray-100' : '' ?>">
+                            <td class="px-4 py-2 truncate max-w-sm"><?= $serie['nomexercice'] ?></td>
+                            <td class="px-4 py-2 truncate max-w-sm">
+                                <?= $serie['nbrépétitions'] == NULL ? $serie['tempsexécution'] . ' minutes' : $serie['nbrépétitions'] . ' répétitions' ?>
+                            </td>
+                            <td class="px-4 py-2 truncate max-w-sm"><?= $serie['poids']  == NULL ? '-' : $serie['poids'] . ' kg' ?></td>
+                        </tr>
+                    <? else : ?>
+                        <tr>
+                            <td class="px-4 py-2" colspan="3">Aucune série réalisée lors de cette séance</td>
+                        </tr>
+                    <?php endif; ?>
                 <?php $i++;
                 endforeach; ?>
             </tbody>
