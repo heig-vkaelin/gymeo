@@ -75,13 +75,13 @@ class SessionsController
     {
         // Redirection si l'utilisateur n'est pas connecté ou si l'id de
         // la séance à terminer n'est pas envoyé
-        if (empty($user) || !isset($_POST['sessionid'])) {
+        if (empty($user) || !isset($_POST['idSession'])) {
             return redirect('');
         }
 
-        $sessionId = intval(htmlspecialchars($_POST['sessionid']));
-        App::get('sessions-repository')->endSession($user, $sessionId);
+        $sessionId = intval(htmlspecialchars($_POST['idSession']));
+        App::get('sessions-repository')->endSession($sessionId);
 
-        return redirect('series');
+        return redirect('session');
     }
 }

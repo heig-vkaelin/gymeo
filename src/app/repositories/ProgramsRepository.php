@@ -150,19 +150,22 @@ class ProgramsRepository extends Repository
     }
 
     /**
-     * Récupère les informations essentielles des programmes créés par un utilisateur
-     *
+     * Récupère les informations essentielles des programmes contenant au moins un exercice créés par un utilisateur donné
+     * 
      * @param number $userId
      */
     public function getLightProgramsOfUser($userId)
     {
         $query = '
-            SELECT
+            SELECT DISTINCT
                 id, nom, idUtilisateur 
             FROM
                 Programme 
+            INNER JOIN Programme_Exercice ON
+                Programme.id = Programme_Exercice.idProgramme
             WHERE
                 Programme.idUtilisateur = :userId
+
         ';
 
         $this->prepareExecute($query, [

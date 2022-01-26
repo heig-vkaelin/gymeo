@@ -41,17 +41,20 @@ class SeriesController
     public function store($user)
     {
         // Redirection si l'utilisateur n'est pas connecté
-        if (empty($user) || !isset($_POST['exercice'])) {
+        if (empty($user)) {
             return redirect('');
         }
-
+        if ($_POST['exercice'] != NULL || $_POST['timeRep'] != NULL) {
+            return redirect('series/create?idSession=' . $_POST['idSession']);
+        }
         // Soit le nombre de répétitions soit le temps est utilisé
         $time = NULL;
         $repetition = NULL;
-        if (isset($_POST['repetition'])) {
-            $repetition = htmlspecialchars($_POST['repetition']);
+        $exercice = App::get('exercices-repository')->getOneExercice($_POST['exercice']);
+        if (isset($exercice["nbrépétitions"])) {
+            $repetition = htmlspecialchars($_POST['timeRep']);
         } else {
-            $time = htmlspecialchars($_POST['time']);
+            $time = htmlspecialchars($_POST['timeRep']);
         }
 
         App::get('series-repository')->createSerie(

@@ -121,12 +121,11 @@ class SessionsRepository extends Repository
      * @param number $userId
      * @param number $sessionId
      */
-    public function endSession($userId, $sessionId)
+    public function endSession($sessionId)
     {
         // TODO: A FAIRE
         $query = '
-            INSERT INTO Séance (dateDébut, idProgramme)
-            VALUES(:date, :idProgramme);
+            UPDATE Séance SET dateFin = :date WHERE id = :sessionId;
         ';
 
         $this->prepareExecute($query, [
@@ -134,15 +133,12 @@ class SessionsRepository extends Repository
                 'value' => date('Y-m-d H:i:s'),
                 'type' => PDO::PARAM_STR
             ],
-            'idProgramme' => [
-                'value' => $userId,
+            'sessionId' => [
+                'value' => $sessionId,
                 'type' => PDO::PARAM_INT
             ]
         ]);
 
-        $idSession = $this->getLastInsertId();
         $this->closeCursor();
-
-        return $idSession;
     }
 }

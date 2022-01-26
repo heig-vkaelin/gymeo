@@ -2,11 +2,12 @@
     <div class="mt-6 container px-4 mx-auto">
         <div class="flex items-center justify-between">
             <h2 class="text-lg font-semibold">Suivi des séries</h2>
-            <form action="/series" method="POST" class="flex items-center">
+            <form action="/sessions/end" method="POST" class="flex items-center">
                 <span class="hidden md:inline text-indigo-600">
                     <span class="font-semibold italic">Cliquez ici pour finir votre séance de sport !</span>
                     <i class="ml-2 fas fa-arrow-right"></i>
                 </span>
+                <input hidden name="idSession" value="<?= $_GET['idSession'] ?>">
                 <button class="ml-4 flex-shrink-0 shadow bg-gray-800 hover:bg-gray-900 focus:outline-none text-white text-base font-bold py-2 px-4 rounded" type="submit">
                     Finaliser la séance
                 </button>
@@ -56,21 +57,12 @@
                     </option>
                 <?php endforeach; ?>
             </select>
-            <?php if ($exercice['nbrépétitionsconseillé'] != NULL) : ?>
-                <div class="mt-3">
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="repetition">
-                        Nombre de Répétitions
-                    </label>
-                    <input class="appearance-none block w-full bg-white text-gray-700 border border-gray-20 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:border-gray-500" id="repetition" type="number" name="repetition" placeholder="12">
-                </div>
-            <?php else : ?>
-                <div>
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="time">
-                        Temps [secondes]
-                    </label>
-                    <input class="appearance-none block w-full bg-white text-gray-700 border border-gray-20 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:border-gray-500" id="time" type="number" name="time" placeholder="35">
-                </div>
-            <?php endif; ?>
+            <div class="mt-3">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="timeRep">
+                    Nombre de Répétitions ou temps en secondes
+                </label>
+                <input class="appearance-none block w-full bg-white text-gray-700 border border-gray-20 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:border-gray-500" id="timeRep" type="number" name="timeRep" placeholder="12">
+            </div>
             <div>
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="weight">
                     Poids [kg]
