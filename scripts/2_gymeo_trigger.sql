@@ -31,4 +31,4 @@ INSERT
 	ON
 	Série 
     FOR EACH ROW 
-EXECUTE FUNCTION vérification_exercice_série(); 
+EXECUTE FUNCTION function_exercice_dans_programme(); 
