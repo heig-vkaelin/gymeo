@@ -48,14 +48,13 @@ class SeriesRepository extends Repository
 
         $series = $this->fetchAll();
 
-        $orderedByExercice = [];
-
+        // Index des séries par exercice
+        $seriesByExercice = [];
         foreach ($series as $serie) {
-            // TODO: IL FAUT ORDER PAR DATE ET INDIQUER LA DATE
-            $orderedByExercice[$serie['nomexercice']][] = $serie;
+            $seriesByExercice[$serie['nomexercice']][] = $serie;
         }
 
-        return $orderedByExercice;
+        return $seriesByExercice;
     }
 
     /**

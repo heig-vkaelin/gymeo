@@ -200,9 +200,9 @@ class SessionsRepository extends Repository
      */
     public function endSession($sessionId)
     {
-        // TODO: A FAIRE
         $query = '
-            UPDATE Séance SET dateFin = :date WHERE id = :sessionId;
+            UPDATE Séance SET dateFin = :date
+            WHERE id = :sessionId;
         ';
 
         $this->prepareExecute($query, [

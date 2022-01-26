@@ -1,11 +1,5 @@
 set client_encoding to 'UTF8';
 
-/* TMP: RESET ALL */
-TRUNCATE Utilisateur, Programme, Matériel, GroupementMusculaire,
-Matériel_GroupementMusculaire, Exercice, Exercice_GroupementMusculaire,
-Séance, Série, Programme_Exercice, Lieu, Exercice_Lieu
- RESTART IDENTITY;
-
 /* Utilisateur */
 INSERT INTO Utilisateur (pseudonyme, dateNaissance) VALUES 
 ('Valentin', '1997-11-15'),
@@ -88,8 +82,7 @@ INSERT INTO Exercice (nom, description, nbSériesConseillé, nbRépétitionsCons
 ('Dips', 'Attention à vos coudes', 3, 12, null, 'Difficile', 10),
 ('Yoga', 'Respirez régulièrement', 3, 10, null, 'Facile', 9),
 ('Traction supination', '', 3, 10, null, 'Moyen', 4),
-('Tractions pronation', '', 3, 10, null, 'Moyen', 4)
-;
+('Tractions pronation', '', 3, 10, null, 'Moyen', 4);
 
 /* Exercice - Groupement musculaire */
 INSERT INTO Exercice_GroupementMusculaire (idExercice, idGroupementMusculaire) VALUES
@@ -123,8 +116,7 @@ INSERT INTO Exercice_GroupementMusculaire (idExercice, idGroupementMusculaire) V
 (15, 4),
 (15, 6),
 (15, 8),
-(16, 8)
-;
+(16, 8);
 
 /* Programme - Exercice*/
 INSERT INTO Programme_Exercice (idExercice, idProgramme, tempsPause, nbSéries, ordre) VALUES
@@ -272,6 +264,4 @@ INSERT INTO Exercice_Lieu (idExercice, nomLieu) VALUES
 (14, 'Salle de fitness'),
 (15, 'Salle de fitness'),
 (16, 'Maison'),
-(16, 'Extérieur')
-;
--- TODO
+(16, 'Extérieur');
