@@ -83,9 +83,9 @@ INSERT INTO Exercice (nom, description, nbSériesConseillé, nbRépétitionsCons
 ('Course d''endurance', 'Il faut courir', 1, null, 35, 'Facile', 5),
 ('Pompes diamant', 'Gardez une distance de 10cm entre vos mains', 3, 8, null, 'Difficile', null),
 ('Pull ups', 'Ecartez plus ou moins vos mains sur la barre pour muscler plus le dos.', 3, 10, null, 'Moyen', 3),
-('Gainage', 'Restez droit', 2, null, 1, 'Moyen', null),
+('Gainage', 'Restez droit', 2, null, 30, 'Moyen', null),
 ('Barbell romanian deadlift', 'Exercice légendaire permettant de rentrer dans le panthéon de l''élite', 5, 20, null, 'Difficile', 4),
-('Dips', '', 3, null, 1, 'Difficile', 10),
+('Dips', 'Attention à vos coudes', 3, 12, null, 'Difficile', 10),
 ('Yoga', 'Respirez régulièrement', 3, 10, null, 'Facile', 9),
 ('Traction supination', '', 3, 10, null, 'Moyen', 4),
 ('Tractions pronation', '', 3, 10, null, 'Moyen', 4)
@@ -220,15 +220,14 @@ INSERT INTO Série (nbrépétitions, tempsexécution, poids, idSéance, idExerci
 (30, null, null, 4, 6),
 (30, null, 20, 4, 9),
 (28, null, 45, 4, 9),
-(20, null, null, 4, 13),
-(15, null, null, 4, 13),
-(30, null, null, 4, 13),
-(30, null, null, 4, 13),
-(28, null, 45, 4, 15),
-(20, null, 45, 4, 15),
-(15, null, 45, 4, 15),
-(30, null, 30, 4, 15)
-;
+(null, 20, null, 4, 13),
+(null, 15, null, 4, 13),
+(null, 30, null, 4, 13),
+(null, 30, null, 4, 13),
+(16, null, 45, 4, 15),
+(14, null, 45, 4, 15),
+(12, null, 45, 4, 15),
+(6, null, 30, 4, 15);
 
 /* Séance - Fin de la création */
 UPDATE Séance SET dateFin = '2020-05-14 18:30' WHERE Séance.id = 1;

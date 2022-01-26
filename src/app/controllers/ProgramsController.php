@@ -83,6 +83,9 @@ class ProgramsController
         $exercices = App::get('exercices-repository')->getAllExercices();
         $exercicesPopulated = [];
 
+
+        // TODO: ne pas leur filer un ordre de base => champ à foutre NULLABLE
+
         foreach ($_POST['exercices'] as $index => $id) {
             $exerciceIndex = array_search($id, array_column($exercices, 'id'));
             $exercice = $exercices[$exerciceIndex];
@@ -126,6 +129,8 @@ class ProgramsController
         }
 
         $idProgram = htmlspecialchars($_POST['idprogramme'][0]);
+
+        // TODO: on ordre les exos par "ordre" pour le trigger
 
         // Modifie chaque exercice lié au programme 
         for ($i = 0; $i < count($_POST['idexercice']); $i++) {
