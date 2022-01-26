@@ -20,7 +20,7 @@
                         <tr class="<?= $i % 2 == 0 ? 'bg-gray-100' : '' ?>">
                             <td class="px-4 py-2 truncate max-w-sm"><?= $serie['nomexercice'] ?></td>
                             <td class="px-4 py-2 truncate max-w-sm">
-                                <?= $serie['nbrépétitions'] == NULL ? $serie['tempsexécution'] . ' minutes' : $serie['nbrépétitions'] . ' répétitions' ?>
+                                <?= $serie['nbrépétitions'] == NULL ? $serie['tempsexécution'] . ' secondes' : $serie['nbrépétitions'] . ' répétitions' ?>
                             </td>
                             <td class="px-4 py-2 truncate max-w-sm"><?= $serie['poids']  == NULL ? '-' : $serie['poids'] . ' kg' ?></td>
                         </tr>

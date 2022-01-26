@@ -64,7 +64,8 @@ class SeriesController
         $time = NULL;
         $repetition = NULL;
         $exercice = App::get('exercices-repository')->getOneExercice($_POST['exercice']);
-        if (isset($exercice["nbrépétitions"])) {
+
+        if (isset($exercice["nbrépétitionsconseillé"])) {
             $repetition = htmlspecialchars($_POST['timeRep']);
         } else {
             $time = htmlspecialchars($_POST['timeRep']);
