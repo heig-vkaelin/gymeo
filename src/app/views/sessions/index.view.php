@@ -39,9 +39,15 @@
                         <td class="px-4 py-3 truncate max-w-sm"><?= $dateE == NULL ? ' - ' : $dateE ?></td>
                         <td class="px-4 py-3 truncate max-w-sm"><?= $timeE == NULL ? ' - ' : $timeE ?></td>
                         <td class="px-4 py-3 truncate max-w-sm">
-                            <a href="session?id=<?= $session['id'] ?>" class="flex-shrink-0 shadow bg-indigo-500 hover:bg-indigo-600 focus:outline-none text-white text-sm py-2 px-4 rounded">
-                                Voir détails
-                            </a>
+                            <?php if ($timeE == NULL) : ?>
+                                <a href="series/create?id=<?= $session['id'] ?>" class="flex-shrink-0 shadow bg-indigo-500 hover:bg-indigo-600 focus:outline-none text-white text-sm py-2 px-4 rounded">
+                                    Continuer
+                                </a>
+                            <?php else : ?>
+                                <a href="session?id=<?= $session['id'] ?>" class="flex-shrink-0 shadow bg-indigo-500 hover:bg-indigo-600 focus:outline-none text-white text-sm py-2 px-4 rounded">
+                                    Voir détails
+                                </a>
+                            <?php endif; ?>
                         </td>
                     </tr>
                 <?php $i++;

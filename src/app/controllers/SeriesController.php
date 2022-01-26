@@ -32,10 +32,20 @@ class SeriesController
         }
 
         $idSession = htmlspecialchars($_GET['id']);
+
+        // Redirection sur la séance en cours, si ce n'est pas celle accédée
+        if (isset($user['currentSession']) && $user['currentSession'] != $idSession) {
+            return redirect('series/create?id=' . $user['currentSession']);
+        }
+
         $session = App::get('sessions-repository')->getSession($user['id'], $idSession);
 
         if ($session) {
             $exercices = App::get('exercices-repository')->getExercicesBySession($user['id'], $idSession);
+
+            // Stocke la séance en cours dans la session
+            $_SESSION['user']['currentSession'] = $idSession;
+
             return view('series/create', compact('session', 'exercices'));
         }
         return redirect('sessions');
