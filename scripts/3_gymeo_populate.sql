@@ -154,6 +154,8 @@ INSERT INTO Programme_Exercice (idExercice, idProgramme, tempsPause, nbSéries, 
 (2, 4, 20, 4, 3),
 (11, 4, 10, 2, 4),
 
+(11, 5, 10, 2, 4),
+
 (3, 6, 20, 5, 1),
 (2, 6, 160, 5, 2),
 (1, 6, 27, 5, 3),
