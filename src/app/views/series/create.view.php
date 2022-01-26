@@ -27,7 +27,8 @@
             <tbody>
                 <?php
                 $i = 0;
-                foreach ($series as $serie) : ?>
+                foreach ($session as $serie) : ?>
+                    <?php if (!isset($serie['nomexercice'])) break; ?>
                     <tr class="<?= $i % 2 == 0 ? 'bg-gray-100' : '' ?>">
                         <td class="px-4 py-2">
                             <?= $serie['nomexercice'] ?>
@@ -41,12 +42,14 @@
                     </tr>
                 <?php $i++;
                 endforeach; ?>
+                <tr>
+                    <?php if (count($session) <= 1 && !isset($session[0]['nomexercice'])) : ?>
+                        <td class="px-4 py-2" colspan="3">Aucune série n'as encore été effectuée</td>
+                    <?php endif; ?>
+                </tr>
             </tbody>
         </table>
 
-        <?php if (count($series) == 0) : ?>
-            <h2 class="text-lg font-semibold">Aucune série n'as encore été effectuée</h2>
-        <?php endif; ?>
         <h2 class="mt-8 text-lg font-semibold">Ajouter une série</h2>
         <form action="/series" method="POST" class="max-w-md">
             <label class="mt-2 block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="exercice">Exercice</label>

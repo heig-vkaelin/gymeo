@@ -32,10 +32,13 @@ class SeriesController
         }
 
         $idSession = htmlspecialchars($_GET['id']);
-        $series = App::get('series-repository')->getSeriesById($user['id'], $idSession);
-        $exercices = App::get('exercices-repository')->getExercicesBySession($user['id'], $idSession);
+        $session = App::get('sessions-repository')->getSession($user['id'], $idSession);
 
-        return view('series/create', compact('series', 'exercices'));
+        if ($session) {
+            $exercices = App::get('exercices-repository')->getExercicesBySession($user['id'], $idSession);
+            return view('series/create', compact('session', 'exercices'));
+        }
+        return redirect('sessions');
     }
 
     public function store($user)

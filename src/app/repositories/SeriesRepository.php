@@ -59,31 +59,31 @@ class SeriesRepository extends Repository
     }
 
     /**
-     * Récupère les séries réalisées lors d'une séance
+     * Récupère les séries réalisées par un utilisateur lors d'une' séance en cours
      *
      * @param number $userId
      * @param number $sessionId
      */
-    public function getSeriesById($userId, $sessionId)
+    public function getSeriesOfCurrentSession($userId, $sessionId)
     {
         $query = '
             SELECT
-                série.nbrépétitions, série.tempsexécution, série.poids, exercice.nom AS nomexercice
+                Série.nbRépétitions, Série.tempsExécution, Série.Poids, Exercice.nom AS nomExercice
             FROM
-                série
+                Série
             INNER JOIN
-                séance ON
-                série.idséance = séance.id
+                Séance ON
+                Série.idSéance = Séance.id
             INNER JOIN
-                programme ON
-                séance.idprogramme = programme.id
+                Programme ON
+                Séance.idProgramme = Programme.id
             INNER JOIN
-                exercice ON
-                série.idexercice = exercice.id
+                Exercice ON
+                Série.idExercice = Exercice.id
             WHERE
-                programme.idutilisateur = :userId
-                AND séance.id = :sessionId
-                AND séance.datefin IS NULL
+                Programme.idUtilisateur = :userId
+                AND Séance.id = :sessionId
+                AND Séance.dateFin IS NULL
         ';
         $this->prepareExecute($query, [
             'userId' => [
