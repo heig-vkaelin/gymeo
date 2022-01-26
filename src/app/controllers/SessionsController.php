@@ -91,8 +91,18 @@ class SessionsController
         if (empty($user) || !isset($_POST['idSession'])) {
             return redirect('');
         }
-
         $idSession = intval(htmlspecialchars($_POST['idSession']));
+
+        // Vérification que la séance ne soit pas déjà finie et qu'elle ait au moins une série
+        $currentSession = App::get('sessions-repository')->getNbSeriesOfCurrentSession(
+            $user['id'],
+            htmlspecialchars($_POST['idSession'])
+        );
+
+        if ($currentSession['nbséries'] <= 0) {
+            return redirect('series/create?id=' . $idSession);
+        }
+
         App::get('sessions-repository')->endSession($idSession);
 
         // Suppression de la séance en cours dans la session

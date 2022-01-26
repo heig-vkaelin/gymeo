@@ -87,6 +87,43 @@ class SessionsRepository extends Repository
     }
 
     /**
+     * Récupère le nombre de séries réalisé par un utilisateur lors d'une séance en cours
+     *
+     * @param number $userId
+     * @param number $sessionId
+     */
+    public function getNbSeriesOfCurrentSession($userId, $sessionId)
+    {
+        $query = '
+            SELECT
+                COUNT(*) AS nbSéries
+            FROM
+                Série
+            INNER JOIN
+                Séance ON
+                Série.idSéance = Séance.id
+            INNER JOIN
+                Programme ON
+                Séance.idProgramme = Programme.id
+            WHERE
+                Programme.idUtilisateur = :userId
+                AND Séance.id = :sessionId
+                AND Séance.dateFin IS NULL
+        ';
+        $this->prepareExecute($query, [
+            'userId' => [
+                'value' => $userId,
+                'type' => PDO::PARAM_INT
+            ],
+            'sessionId' => [
+                'value' => $sessionId,
+                'type' => PDO::PARAM_INT
+            ]
+        ]);
+        return $this->fetchOne();
+    }
+
+    /**
      * Crée une nouvelle séance dans la base de données
      *
      * @param number $programId

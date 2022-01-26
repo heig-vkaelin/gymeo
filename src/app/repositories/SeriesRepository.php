@@ -59,46 +59,6 @@ class SeriesRepository extends Repository
     }
 
     /**
-     * Récupère les séries réalisées par un utilisateur lors d'une' séance en cours
-     *
-     * @param number $userId
-     * @param number $sessionId
-     */
-    public function getSeriesOfCurrentSession($userId, $sessionId)
-    {
-        $query = '
-            SELECT
-                Série.nbRépétitions, Série.tempsExécution, Série.Poids, Exercice.nom AS nomExercice
-            FROM
-                Série
-            INNER JOIN
-                Séance ON
-                Série.idSéance = Séance.id
-            INNER JOIN
-                Programme ON
-                Séance.idProgramme = Programme.id
-            INNER JOIN
-                Exercice ON
-                Série.idExercice = Exercice.id
-            WHERE
-                Programme.idUtilisateur = :userId
-                AND Séance.id = :sessionId
-                AND Séance.dateFin IS NULL
-        ';
-        $this->prepareExecute($query, [
-            'userId' => [
-                'value' => $userId,
-                'type' => PDO::PARAM_INT
-            ],
-            'sessionId' => [
-                'value' => $sessionId,
-                'type' => PDO::PARAM_INT
-            ]
-        ]);
-        return $this->fetchAll();
-    }
-
-    /**
      * Crée une nouvelle série dans la base de données
      *
      * @param number $sessionId
