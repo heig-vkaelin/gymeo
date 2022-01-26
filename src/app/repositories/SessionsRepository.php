@@ -52,21 +52,29 @@ class SessionsRepository extends Repository
     public function getSession($userId, $sessionId)
     {
         $query = '
-            SELECT
+            SELECT DISTINCT
                 Séance.dateDébut,
-                Série.nbRépétitions, Série.tempsExécution, Série.poids,
-                Exercice.nom AS nomExercice
+                Série.id, Série.nbRépétitions, Série.tempsExécution, Série.poids,
+                Exercice.nom AS nomExercice, Programme_Exercice.tempsPause
             FROM
                 Séance
             LEFT JOIN
-                Série ON
+                Série
+            ON
                 Séance.id = Série.idSéance 
             INNER JOIN
-                Programme ON
+                Programme
+            ON
                 Séance.idProgramme = Programme.id
             LEFT JOIN
                 Exercice ON
                 Série.idExercice = Exercice.id
+            LEFT JOIN
+                Programme_Exercice
+            ON
+                Programme.id = Programme_Exercice.idProgramme
+            AND
+                Exercice.id = Programme_Exercice.idExercice
             WHERE
                 Séance.id = :sessionId AND
                 Programme.idUtilisateur = :userId
