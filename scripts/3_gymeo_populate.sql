@@ -237,31 +237,31 @@ INSERT INTO Lieu (nom) VALUES
 ('Salle de fitness');
 
 /* Exercice_Lieu */
-INSERT INTO Exercice_Lieu (idExercice, idLieu) VALUES
-(1, 1),
-(1, 3),
-(2, 3),
-(3, 3),
-(4, 3),
+INSERT INTO Exercice_Lieu (idExercice, nomLieu) VALUES
+(1, 'Maison'),
+(1, 'Salle de fitness'),
+(2, 'Salle de fitness'),
+(3, 'Salle de fitness'),
+(4, 'Salle de fitness'),
 /* ??? Faire un sprint en ext avec un tapis roulant*/
-(5, 2),
-(5, 1),
-(5, 3),
-(6, 2),
-(6, 1),
-(7, 3),
-(8, 3),
-(9, 3),
-(10, 1),
-(10, 2),
-(10, 3),
-(11, 3),
-(11, 2),
-(12, 3),
-(13, 3),
-(14, 3),
-(15, 3),
-(16, 1),
-(16, 2)
+(5, 'Extérieur'),
+(5, 'Maison'),
+(5, 'Salle de fitness'),
+(6, 'Extérieur'),
+(6, 'Maison'),
+(7, 'Salle de fitness'),
+(8, 'Salle de fitness'),
+(9, 'Salle de fitness'),
+(10, 'Maison'),
+(10, 'Extérieur'),
+(10, 'Salle de fitness'),
+(11, 'Salle de fitness'),
+(11, 'Extérieur'),
+(12, 'Salle de fitness'),
+(13, 'Salle de fitness'),
+(14, 'Salle de fitness'),
+(15, 'Salle de fitness'),
+(16, 'Maison'),
+(16, 'Extérieur')
 ;
 -- TODO

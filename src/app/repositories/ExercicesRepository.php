@@ -19,7 +19,7 @@ class ExercicesRepository extends Repository
     {
         $this->queryExecute('
             SELECT
-                id, nom
+                nom
             FROM Lieu
         ');
 
@@ -73,21 +73,21 @@ class ExercicesRepository extends Repository
         $data = [];
         if (isset($location)) {
             $query .= "\nINNER JOIN Exercice_lieu ON
-                Exercice_lieu.idexercice = Exercice.id\n";
-            $filters .= " AND idlieu = :idlocation";
-            $data['idlocation'] = [
+                Exercice_lieu.idExercice = Exercice.id\n";
+            $filters .= " AND nomLieu = :nomLocation";
+            $data['nomLocation'] = [
                 'value' => $location,
-                'type' => PDO::PARAM_INT
+                'type' => PDO::PARAM_STR
             ];
         }
         if (isset($material))
             $filters .= " AND idmatériel IS " . ($material ? "NOT" : "") . " NULL";
 
         if (isset($muscle)) {
-            $query .= "\nINNER JOIN Exercice_groupementmusculaire ON
-            Exercice_groupementmusculaire.idexercice = Exercice.id\n";
-            $filters .= " AND idgroupementmusculaire = :idmuscle";
-            $data['idmuscle'] = [
+            $query .= "\nINNER JOIN Exercice_GroupementMusculaire ON
+            Exercice_GroupementMusculaire.idExercice = Exercice.id\n";
+            $filters .= " AND idgroupementmusculaire = :idMuscle";
+            $data['idMuscle'] = [
                 'value' => $muscle,
                 'type' => PDO::PARAM_INT
             ];
@@ -126,7 +126,7 @@ class ExercicesRepository extends Repository
             LEFT JOIN
                 Lieu
             ON
-                Exercice_Lieu.idLieu = Lieu.id
+                Exercice_Lieu.nomLieu = Lieu.nom
             WHERE
                 Exercice.id = :id
             GROUP BY

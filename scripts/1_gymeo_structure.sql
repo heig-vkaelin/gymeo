@@ -58,9 +58,8 @@ CREATE TABLE Programme (
 
 DROP TABLE IF EXISTS Lieu CASCADE;
 CREATE TABLE Lieu (
-    id SERIAL,
     nom VARCHAR(50),
-    CONSTRAINT PK_Lieu PRIMARY KEY (id)
+    CONSTRAINT PK_Lieu PRIMARY KEY (nom)
 );
 
 DROP TABLE IF EXISTS Séance CASCADE;
@@ -118,8 +117,8 @@ CREATE TABLE Programme_Exercice (
 DROP TABLE IF EXISTS Exercice_Lieu CASCADE;
 CREATE TABLE Exercice_Lieu (
     idExercice INTEGER,
-    idLieu INTEGER,
-    CONSTRAINT PK_Exercice_Lieu PRIMARY KEY (idExercice, idLieu)
+    nomLieu VARCHAR(50),
+    CONSTRAINT PK_Exercice_Lieu PRIMARY KEY (idExercice, nomLieu)
 );
 
 /* ---------------------------------------------------------------------------- */
@@ -227,9 +226,9 @@ ON DELETE CASCADE
 ON UPDATE CASCADE;
 
 ALTER TABLE Exercice_Lieu
-    ADD CONSTRAINT FK_Exercice_Lieu_idLieu
-        FOREIGN KEY (idLieu)
-            REFERENCES Lieu (id)
+    ADD CONSTRAINT FK_Exercice_Lieu_nomLieu
+        FOREIGN KEY (nomLieu)
+            REFERENCES Lieu (nom)
 ON DELETE CASCADE
 ON UPDATE CASCADE;
 

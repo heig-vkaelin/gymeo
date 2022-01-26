@@ -7,7 +7,7 @@
                 <select class="ml-2 pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md" id="location" name="location">
                     <option value="-1">-- Non selectionné</option>
                     <?php foreach ($locations as $location) : ?>
-                        <option <?= $_GET && $_GET['location'] == $location['id'] ? 'selected' : '' ?> value="<?= $location['id'] ?>">
+                        <option <?= $_GET && $_GET['location'] == $location['nom'] ? 'selected' : '' ?> value="<?= $location['nom'] ?>">
                             <?= $location['nom'] ?>
                         </option>
                     <?php endforeach; ?>
