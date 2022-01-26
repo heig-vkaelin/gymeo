@@ -50,6 +50,11 @@ class SessionsController
             return redirect('');
         }
 
+        // Redirection si l'utilisateur a déjà une séance en cours
+        if (isset($user['currentSession'])) {
+            return redirect('series/create?idSession=' . $user['currentSession']);
+        }
+
         $programs = App::get('programs-repository')->getLightProgramsOfUser($user['id']);
 
         return view('sessions/create', compact('programs'));
@@ -62,10 +67,18 @@ class SessionsController
             return redirect('');
         }
 
-        $programId = intval(htmlspecialchars($_POST['program'] ?? 0));
-        $session = App::get('sessions-repository')->createSession($programId);
+        // Redirection si l'utilisateur a déjà une séance en cours
+        if (isset($user['currentSession'])) {
+            return redirect('series/create?idSession=' . $user['currentSession']);
+        }
 
-        return redirect('series/create?idSession=' . $session);
+        $programId = intval(htmlspecialchars($_POST['program'] ?? 0));
+        $idSession = App::get('sessions-repository')->createSession($programId);
+
+        // Stocke la séance en cours dans la session
+        $_SESSION['user']['currentSession'] = $idSession;
+
+        return redirect('series/create?idSession=' . $idSession);
     }
 
     /**
@@ -81,6 +94,9 @@ class SessionsController
 
         $sessionId = intval(htmlspecialchars($_POST['idSession']));
         App::get('sessions-repository')->endSession($sessionId);
+
+        // Suppression de la séance en cours dans la session
+        unset($_SESSION['user']['currentSession']);
 
         return redirect('session');
     }
