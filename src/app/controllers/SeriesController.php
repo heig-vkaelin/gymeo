@@ -27,11 +27,11 @@ class SeriesController
     public function create($user)
     {
         // Redirection si l'utilisateur n'est pas connecté
-        if (empty($user) || !isset($_GET['idSession'])) {
+        if (empty($user) || !isset($_GET['id'])) {
             return redirect('');
         }
 
-        $idSession = htmlspecialchars($_GET['idSession']);
+        $idSession = htmlspecialchars($_GET['id']);
         $series = App::get('series-repository')->getSeriesById($user['id'], $idSession);
         $exercices = App::get('exercices-repository')->getExercicesBySession($user['id'], $idSession);
 
@@ -44,8 +44,8 @@ class SeriesController
         if (empty($user)) {
             return redirect('');
         }
-        if ($_POST['exercice'] != NULL || $_POST['timeRep'] != NULL) {
-            return redirect('series/create?idSession=' . $_POST['idSession']);
+        if ($_POST['exercice'] == NULL || $_POST['timeRep'] == NULL) {
+            return redirect('series/create?id=' . $_POST['idSession']);
         }
         // Soit le nombre de répétitions soit le temps est utilisé
         $time = NULL;
@@ -65,6 +65,6 @@ class SeriesController
             htmlspecialchars($_POST['weight'])
         );
 
-        return redirect('series/create?idSession=' . $_POST['idSession']);
+        return redirect('series/create?id=' . $_POST['idSession']);
     }
 }

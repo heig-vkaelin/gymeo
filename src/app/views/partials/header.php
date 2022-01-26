@@ -56,7 +56,7 @@
                     <a href="/sessions" class="ml-3 border-b-2 border-transparent hover:border-gray-900">Historique séances</a>
                     <a href="/series" class="ml-3 border-b-2 border-transparent hover:border-gray-900">Historique séries</a>
                     <?php if (isset($user['currentSession'])) : ?>
-                        <a href="/series/create?idSession=<?= $user['currentSession'] ?>" class="ml-auto flex-shrink-0 shadow bg-indigo-600 hover:bg-indigo-500 focus:outline-none text-white font-bold py-3 px-4 rounded">
+                        <a href="/series/create?id=<?= $user['currentSession'] ?>" class="ml-auto flex-shrink-0 shadow bg-indigo-600 hover:bg-indigo-500 focus:outline-none text-white font-bold py-3 px-4 rounded">
                             Continuer la séance
                         </a>
                     <?php else : ?>

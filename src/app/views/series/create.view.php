@@ -7,7 +7,7 @@
                     <span class="font-semibold italic">Cliquez ici pour finir votre séance de sport !</span>
                     <i class="ml-2 fas fa-arrow-right"></i>
                 </span>
-                <input hidden name="idSession" value="<?= $_GET['idSession'] ?>">
+                <input hidden name="idSession" value="<?= $_GET['id'] ?>">
                 <button class="ml-4 flex-shrink-0 shadow bg-gray-800 hover:bg-gray-900 focus:outline-none text-white text-base font-bold py-2 px-4 rounded" type="submit">
                     Finaliser la séance
                 </button>
@@ -69,7 +69,7 @@
                 </label>
                 <input class="appearance-none block w-full bg-white text-gray-700 border border-gray-20 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:border-gray-500" id="weight" type="number" name="weight" placeholder="Non obligatoire">
             </div>
-            <input hidden name="idSession" value="<?= $_GET['idSession'] ?>">
+            <input hidden name="idSession" value="<?= $_GET['id'] ?>">
 
             <button class="mt-2 flex-shrink-0 shadow bg-gray-800 hover:bg-gray-900 focus:outline-none text-white text-sm font-bold py-2 px-4 rounded" type="submit">
                 Série terminée
