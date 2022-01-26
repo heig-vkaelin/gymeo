@@ -73,7 +73,9 @@ class ProgramsController
         // Redirection si l'utilisateur n'est pas connecté ou si aucun exercice
         // n'est envoyé
         if (
-            empty($user) || !isset($_POST['exercices']) ||
+            empty($user) ||
+            trim($_POST['programName']) == '' ||
+            !isset($_POST['exercices']) ||
             count($_POST['exercices']) == 0
         ) {
             return redirect('');
@@ -97,7 +99,7 @@ class ProgramsController
             $exercicesPopulated[] = $data;
         }
 
-        $programName = htmlspecialchars($_POST['programName'] ?? '');
+        $programName = htmlspecialchars($_POST['programName']);
 
         $idProgram = App::get('programs-repository')->createProgram(
             $user['id'],

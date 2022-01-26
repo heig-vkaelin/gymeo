@@ -19,6 +19,7 @@
                     <th class="px-4 py-2 bg-gray-800 text-white">Exercice</th>
                     <th class="px-4 py-2 bg-gray-800 text-white">Répétitions/Temps</th>
                     <th class="px-4 py-2 bg-gray-800 text-white">Poids</th>
+                    <th class="px-4 py-2 bg-gray-800 text-white">Temps de pause</th>
                 </tr>
             </thead>
             <tbody>
@@ -39,12 +40,15 @@
                         <td class="px-4 py-2">
                             <?= $serie['poids']  == NULL ? '-' : $serie['poids'] . ' kg' ?>
                         </td>
+                        <td class="px-4 py-2">
+                            <?= $serie['tempspause'] . ' secondes' ?>
+                        </td>
                     </tr>
                 <?php $i++;
                 endforeach; ?>
                 <tr>
                     <?php if (count($session) <= 1 && !isset($session[0]['nomexercice'])) : ?>
-                        <td class="px-4 py-2" colspan="3">Aucune série n'as encore été effectuée</td>
+                        <td class="px-4 py-2" colspan="4">Aucune série n'as encore été effectuée</td>
                     <?php endif; ?>
                 </tr>
             </tbody>

@@ -9,7 +9,7 @@
                 <?php
                 $i = 0;
                 foreach ($program as $exercice) : ?>
-                    <div class="mt-6 w-1/2 lg:w-1/3 px-8">
+                    <div class="mt-6 w-full sm:w-1/2 lg:w-1/3 px-8">
                         <h3 class="font-semibold">Exercice <span class="font-bold italic"> <?= $exercice['nomexercice'] ?></span></h3>
                         <input hidden class="hidden" type="number" name="idexercice[]" value="<?= $exercice['idexercice'] ?>">
                         <input hidden class="hidden" type="number" name="idprogramme[]" value="<?= $exercice['idprogramme'] ?>">
