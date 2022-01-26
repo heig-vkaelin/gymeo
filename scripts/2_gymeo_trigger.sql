@@ -3,7 +3,7 @@
 /* ---------------------------------------------------------------------------- */
 
 CREATE OR REPLACE
-FUNCTION vérification_exercice_série() 
+FUNCTION function_exercice_dans_programme() 
     RETURNS TRIGGER AS 
 $$ 
 BEGIN
@@ -25,7 +25,7 @@ END;
 
 $$ LANGUAGE plpgsql; 
  
-CREATE OR REPLACE TRIGGER avant_insertion_série
+CREATE OR REPLACE TRIGGER vérification_exercice_dans_programme
     BEFORE
 INSERT
 	ON
