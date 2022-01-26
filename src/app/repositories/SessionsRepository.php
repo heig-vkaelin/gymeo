@@ -12,6 +12,38 @@ use PDO;
 
 class SessionsRepository extends Repository
 {
+
+    /**
+     * Vérifie si l'utilisateur a une séance en cours ou non
+     *
+     * @param number $userId
+     */
+    public function userHasCurrentSession($userId)
+    {
+        $query = '
+            SELECT
+                Séance.id
+            FROM
+                Séance
+            INNER JOIN
+                Programme
+            ON
+                Séance.idProgramme = Programme.id
+            WHERE
+                Programme.idUtilisateur = :userId
+                AND dateFin IS NULL
+        ';
+
+        $this->prepareExecute($query, [
+            'userId' => [
+                'value' => $userId,
+                'type' => PDO::PARAM_INT
+            ]
+        ]);
+
+        return $this->fetchOne();
+    }
+
     /**
      * Retourne les séances d'un utilisateur
      *

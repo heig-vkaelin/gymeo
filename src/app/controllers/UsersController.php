@@ -30,6 +30,12 @@ class UsersController
                 'user' => $userFromDB['pseudonyme'],
                 'dateNaissance' => $userFromDB['datenaissance'],
             ];
+
+            // Si l'utilisateur s'est déconnecté et qu'il n'avait pas fini sa session
+            $currentSession = App::get('sessions-repository')->userHasCurrentSession($userFromDB['id']);
+            if ($currentSession) {
+                $_SESSION['user']['currentSession'] = $currentSession['id'];
+            }
         }
 
         return redirect('');
