@@ -86,13 +86,14 @@ class ProgramsController
         $exercices = App::get('exercices-repository')->getAllExercices();
         $exercicesPopulated = [];
 
-        foreach ($_POST['exercices'] as $id) {
+        foreach ($_POST['exercices'] as $index => $id) {
             $exerciceIndex = array_search($id, array_column($exercices, 'id'));
             $exercice = $exercices[$exerciceIndex];
-            $data = (object)null;
-            $data->id = intval($id);
-            $data->nbSériesConseillé = $exercice['nbsériesconseillé'];
-            $data->tempsPause = self::DEFAULT_BREAK_TIME;
+            $data = [];
+            $data['idExercice'] = intval($id);
+            $data['nbSeries'] = $exercice['nbsériesconseillé'];
+            $data['breakTime'] = self::DEFAULT_BREAK_TIME;
+            $data['order'] = $index + 1;
             $exercicesPopulated[] = $data;
         }
 
@@ -132,26 +133,37 @@ class ProgramsController
 
         $idProgram = htmlspecialchars($_POST['idprogramme'][0]);
 
-        // TODO: on ordre les exos par "ordre" pour le trigger
-
+        // Tri des exercices par ordre
+        $exercices = [];
+        for ($i = 0; $i < count($_POST['idexercice']); $i++) {
+            $exercices[] = [
+                'idExercice' => htmlspecialchars($_POST['idexercice'][$i]),
+                'idProgram' => $idProgram,
+                'nbSeries' => htmlspecialchars($_POST['nbséries'][$i]),
+                'breakTime' => htmlspecialchars($_POST['tempspause'][$i]),
+                'order' => htmlspecialchars($_POST['ordre'][$i]),
+            ];
+        }
+        usort($exercices, function ($a, $b) {
+            return $a['order'] - $b['order'];
+        });
 
         try {
             App::get('database')->beginTransaction();
 
+            // Supprime les états potentiels des exercices
+            App::get('programs-repository')->deleteExercicesFromProgram($user['id'], $idProgram);
+
             // Modifie chaque exercice lié au programme 
-            for ($i = 0; $i < count($_POST['idexercice']); $i++) {
-                App::get('programs-repository')->confirmProgramExercice(
-                    htmlspecialchars($_POST['idexercice'][$i]),
-                    $idProgram,
-                    htmlspecialchars($_POST['nbséries'][$i]),
-                    htmlspecialchars($_POST['tempspause'][$i]),
-                    htmlspecialchars($_POST['ordre'][$i])
-                );
+            foreach ($exercices as $exercice) {
+                App::get('programs-repository')->addExerciceToProgram($exercice);
             }
+
             App::get('database')->commit();
         } catch (Exception $e) {
             if (App::get('database')->inTransaction())
                 App::get('database')->rollback();
+            return redirect('programs/edit?idProgram=' . $idProgram);
         }
 
         return redirect('program?id=' . $idProgram);

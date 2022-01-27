@@ -57,6 +57,45 @@ class ProgramsRepository extends Repository
     }
 
     /**
+     * Ajoute un exercice à un programme
+     *
+     * @param object $exercice
+     */
+    public function addExerciceToProgram($exercice)
+    {
+        $query = '
+            INSERT INTO Programme_Exercice
+            (idExercice, idProgramme, tempsPause, nbSéries, ordre)
+            VALUES (:exerciceId, :programId, :breakTime, :nbSeries, :order)
+        ';
+
+        $this->prepareExecuteUnsafe($query, [
+            'exerciceId' => [
+                'value' => $exercice['idExercice'],
+                'type' => PDO::PARAM_INT
+            ],
+            'programId' => [
+                'value' => $exercice['idProgram'],
+                'type' => PDO::PARAM_INT
+            ],
+            'breakTime' => [
+                'value' => $exercice['breakTime'],
+                'type' => PDO::PARAM_INT
+            ],
+            'nbSeries' => [
+                'value' => $exercice['nbSeries'],
+                'type' => PDO::PARAM_INT
+            ],
+            'order' => [
+                'value' => $exercice['order'],
+                'type' => PDO::PARAM_INT
+            ],
+        ]);
+
+        $this->closeCursor();
+    }
+
+    /**
      * Crée un nouveau programme dans la base de données avec ses différents exercices liés
      * 
      * Si une erreur se produit, annule toutes les insertions grâce à une transaction
@@ -90,30 +129,9 @@ class ProgramsRepository extends Repository
 
             // Programme_Exercice
             $idProgram = $this->getLastInsertId();
-            $exercieQuery = '
-                INSERT INTO Programme_Exercice
-                (idExercice, idProgramme, tempsPause, nbSéries)
-                VALUES (:exerciceId, :programId, :breakTime, :nbSeries)
-            ';
             foreach ($exercices as $exercice) {
-                $this->prepareExecuteUnsafe($exercieQuery, [
-                    'exerciceId' => [
-                        'value' => $exercice->id,
-                        'type' => PDO::PARAM_INT
-                    ],
-                    'programId' => [
-                        'value' => $idProgram,
-                        'type' => PDO::PARAM_INT
-                    ],
-                    'breakTime' => [
-                        'value' => $exercice->tempsPause,
-                        'type' => PDO::PARAM_INT
-                    ],
-                    'nbSeries' => [
-                        'value' => $exercice->nbSériesConseillé,
-                        'type' => PDO::PARAM_INT
-                    ]
-                ]);
+                $exercice['idProgram'] = $idProgram;
+                $this->addExerciceToProgram($exercice);
             }
 
             $this->db->commit();
@@ -139,7 +157,7 @@ class ProgramsRepository extends Repository
             FROM
                 Programme 
             WHERE
-                Programme.idutilisateur = :userId
+                Programme.idUtilisateur = :userId
                 AND Programme.id = :programId
         ';
 
@@ -169,7 +187,9 @@ class ProgramsRepository extends Repository
                 id, nom, idUtilisateur 
             FROM
                 Programme 
-            INNER JOIN Programme_Exercice ON
+            INNER JOIN
+                Programme_Exercice
+            ON
                 Programme.id = Programme_Exercice.idProgramme
             WHERE
                 Programme.idUtilisateur = :userId
@@ -221,43 +241,35 @@ class ProgramsRepository extends Repository
     }
 
     /**
-     * Valide la création d'un nouveau programme en assignant un exercice au programme
+     * Supprime les exercices liés à un programme
      *
-     * @param number $exerciceId
+     * @param number $userId
      * @param number $programId
-     * @param number $nbSeries
-     * @param number $breakTime
-     * @param number $order
      */
-    public function confirmProgramExercice($exerciceId, $programId, $nbSeries, $breakTime, $order)
+    public function deleteExercicesFromProgram($userId, $programId)
     {
         $query = '
-            UPDATE
+            DELETE
+            FROM
                 Programme_Exercice
-            SET
-                nbSéries = :nbSeries,
-                tempsPause = :breakTime,
-                ordre = :order
-            WHERE
-                idExercice = :exerciceId
-                AND idProgramme = :programId
+            WHERE Programme_Exercice.idProgramme IN
+            (
+                SELECT
+                    PE.idProgramme
+                FROM
+                    Programme_Exercice PE
+                INNER JOIN
+                    Programme
+                ON
+                    PE.idProgramme = Programme.id
+                WHERE Programme.idUtilisateur = :userId
+                AND Programme_Exercice.idProgramme = :programId
+            )
         ';
 
         $this->prepareExecuteUnsafe($query, [
-            'nbSeries' => [
-                'value' => $nbSeries,
-                'type' => PDO::PARAM_INT
-            ],
-            'breakTime' => [
-                'value' => $breakTime,
-                'type' => PDO::PARAM_INT
-            ],
-            'order' => [
-                'value' => $order,
-                'type' => PDO::PARAM_INT
-            ],
-            'exerciceId' => [
-                'value' => $exerciceId,
+            'userId' => [
+                'value' => $userId,
                 'type' => PDO::PARAM_INT
             ],
             'programId' => [

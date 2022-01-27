@@ -110,7 +110,7 @@ CREATE TABLE Programme_Exercice (
     idProgramme INTEGER,
     tempsPause SMALLINT NOT NULL,
     nbSéries SMALLINT NOT NULL,
-    ordre SMALLINT,
+    ordre SMALLINT NOT NULL,
     CONSTRAINT PK_Programme_Exercice PRIMARY KEY (idExercice, idProgramme)
 );
 
@@ -253,10 +253,9 @@ ALTER TABLE Programme
     ADD CONSTRAINT UC_Programme_nom_idUtilisateur
         UNIQUE (idUtilisateur, nom);
 
--- TODO: Que faire de cette UC...
--- ALTER TABLE Programme_Exercice
---     ADD CONSTRAINT UC_Programme_Exercice_idProgramme_ordre
---         UNIQUE (idProgramme, ordre);
+ALTER TABLE Programme_Exercice
+    ADD CONSTRAINT UC_Programme_Exercice_idProgramme_ordre
+        UNIQUE (idProgramme, ordre);
 
 /* Checks triviaux */
 ALTER TABLE Utilisateur 
