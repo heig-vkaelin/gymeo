@@ -101,3 +101,39 @@ CREATE OR REPLACE TRIGGER avant_insertion_série_non_terminée
 	ON Série 
   FOR EACH ROW 
   EXECUTE FUNCTION function_vérification_fin_séance(); 
+
+
+/* --------------------------------------------------------------------------------- */
+/*  L'ordre d'un exercice dans un programme doit suivre la numérotation existante.   */
+/* --------------------------------------------------------------------------------- */
+
+CREATE OR REPLACE
+FUNCTION function_ordre_exercice_programme() 
+    RETURNS TRIGGER AS 
+$$
+DECLARE
+    dernierOrdre integer;
+BEGIN
+  SELECT 
+    MAX(ordre)
+  INTO
+    dernierOrdre
+  FROM
+    Programme_Exercice
+  WHERE
+    idProgramme = NEW.idProgramme;
+
+	IF ((dernierOrdre IS NULL AND NEW.ordre <> 1) OR (NEW.ordre <> dernierOrdre + 1)) THEN
+			RAISE EXCEPTION 'L''ordre de l''exercice dans le programme est invalide.'
+			USING HINT = 'L''ordre des exercices d''un programme doit se suivre.';
+	ELSE
+		RETURN NEW;
+	END IF;
+END;
+
+$$ LANGUAGE plpgsql; 
+ 
+CREATE OR REPLACE TRIGGER vérification_ordre_exercice_programme
+  BEFORE INSERT OR UPDATE
+  ON Programme_Exercice FOR EACH ROW 
+  EXECUTE FUNCTION function_ordre_exercice_programme();

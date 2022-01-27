@@ -148,7 +148,7 @@ INSERT INTO Programme_Exercice (idExercice, idProgramme, tempsPause, nbSéries, 
 (2, 4, 20, 4, 3),
 (11, 4, 10, 2, 4),
 
-(11, 5, 10, 2, 4),
+(11, 5, 10, 2, 1),
 
 (3, 6, 20, 5, 1),
 (2, 6, 160, 5, 2),
@@ -165,7 +165,7 @@ INSERT INTO Programme_Exercice (idExercice, idProgramme, tempsPause, nbSéries, 
 (15, 6, 30, 2, 13),
 (14, 6, 45, 1, 14),
 (13, 6, 100, 10, 15),
-(10, 7, 20, 10, 15);
+(10, 7, 20, 10, 1);
 
 /* Séance - pas encore terminées */
 INSERT INTO Séance (dateDébut, idProgramme) VALUES
