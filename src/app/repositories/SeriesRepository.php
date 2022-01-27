@@ -21,7 +21,7 @@ class SeriesRepository extends Repository
     {
         $query = '
             SELECT
-                série.nbrépétitions, série.tempsexécution, série.poids, exercice.nom AS nomexercice, séance.datedébut, séance.datefin
+                série.nbrépétitions, série.tempsexécution, série.poids, exercice.nom AS nomexercice, séance.datedébut, séance.datefin, séance.id
             FROM
                 série
             INNER JOIN

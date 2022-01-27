@@ -17,6 +17,7 @@
                                 <th class="px-4 py-2 bg-gray-800 text-white">Charge</th>
                                 <th class="px-4 py-2 bg-gray-800 text-white">Date de début</th>
                                 <th class="px-4 py-2 bg-gray-800 text-white">Date de fin</th>
+                                <th class="px-4 py-2 bg-gray-800 text-white">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -40,6 +41,11 @@
                                     </td>
                                     <td class="px-4 py-2 truncate max-w-sm"><?= $dateB ?></td>
                                     <td class="px-4 py-2 truncate max-w-sm"><?= $dateE == NULL ? ' - ' : $dateE ?></td>
+                                    <td class="px-4 py-2 truncate max-w-sm">
+                                        <a href="session?id=<?= $ser['id'] ?>" class="flex-shrink-0 shadow bg-indigo-500 hover:bg-indigo-600 focus:outline-none text-white text-sm py-2 px-4 rounded">
+                                            Voir séance
+                                        </a>
+                                    </td>
                                 </tr>
                             <?php $x++;
                             endforeach; ?>
