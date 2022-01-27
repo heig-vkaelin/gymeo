@@ -33,7 +33,7 @@
                             ?>
                                 <tr class="<?= $x % 2 == 0 ? 'bg-gray-100' : '' ?>">
                                     <td class="px-4 py-2 truncate max-w-sm">
-                                        <?= $ser['nbrépétitions'] == NULL ? $ser['tempsexécution'] . ' minutes' : $ser['nbrépétitions'] . ' répétitions'  ?>
+                                        <?= $ser['nbrépétitions'] == NULL ? $ser['tempsexécution'] . ' secondes' : $ser['nbrépétitions'] . ' répétitions'  ?>
                                     </td>
                                     <td class="px-4 py-2 truncate max-w-sm">
                                         <?= $ser['poids']  == NULL ? '-' : $ser['poids'] . ' kg' ?>

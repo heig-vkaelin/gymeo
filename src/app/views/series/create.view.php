@@ -68,13 +68,13 @@
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="timeRep">
                     Nombre de Répétitions ou temps en secondes
                 </label>
-                <input class="appearance-none block w-full bg-white text-gray-700 border border-gray-20 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:border-gray-500" id="timeRep" type="number" name="timeRep" placeholder="12">
+                <input class="appearance-none block w-full bg-white text-gray-700 border border-gray-20 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:border-gray-500" id="timeRep" type="number" min="1" name="timeRep" placeholder="12">
             </div>
             <div>
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="weight">
                     Poids [kg]
                 </label>
-                <input class="appearance-none block w-full bg-white text-gray-700 border border-gray-20 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:border-gray-500" id="weight" type="number" name="weight" placeholder="Non obligatoire">
+                <input class="appearance-none block w-full bg-white text-gray-700 border border-gray-20 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:border-gray-500" id="weight" type="number" min="0" name="weight" placeholder="Non obligatoire">
             </div>
             <input hidden name="idSession" value="<?= $_GET['id'] ?>">
 

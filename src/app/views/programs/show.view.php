@@ -30,7 +30,7 @@
                                 <?= $exercice['nomexercice'] ?>
                             </td>
                             <td class="px-4 py-2">
-                                <?= $exercice['tempspause'] ?>
+                                <?= $exercice['tempspause'] ?> secondes
                             </td>
                             <td class="px-4 py-2">
                                 <?= $exercice['nbséries'] ?>

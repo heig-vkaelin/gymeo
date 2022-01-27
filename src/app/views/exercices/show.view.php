@@ -9,7 +9,7 @@
             <?php if ($exercice['nbrépétitionsconseillé']) : ?>
                 <div>Nombre de répétitions recommandé: <?= $exercice['nbrépétitionsconseillé'] ?></div>
             <?php else : ?>
-                <div>Temps d'exécution recommandé: <?= $exercice['tempsexécutionconseillé'] ?></div>
+                <div>Temps d'exécution recommandé: <?= $exercice['tempsexécutionconseillé'] ?> secondes</div>
             <?php endif; ?>
             <div class="mt-2">
                 <span>Difficulté: <span class="font-bold"><?= $exercice['difficulté'] ?></span></span>
