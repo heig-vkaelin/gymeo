@@ -8,6 +8,7 @@
 
 namespace App\Repositories;
 
+use Exception;
 use PDO;
 
 class ProgramsRepository extends Repository
@@ -56,7 +57,9 @@ class ProgramsRepository extends Repository
     }
 
     /**
-     * Crée un nouveau programme dans la base de données
+     * Crée un nouveau programme dans la base de données avec ses différents exercices liés
+     * 
+     * Si une erreur se produit, annule toutes les insertions grâce à une transaction
      *
      * @param number $userId
      * @param string $programName
@@ -64,58 +67,63 @@ class ProgramsRepository extends Repository
      */
     public function createProgram($userId, $programName, $exercices)
     {
-        // Programme
-        $programQuery = '
-            INSERT INTO Programme
-            (nom, idUtilisateur)
-            VALUES (:name, :userId)
-        ';
+        try {
+            $this->db->beginTransaction();
 
-        $this->prepareExecute($programQuery, [
-            'name' => [
-                'value' => $programName,
-                'type' => PDO::PARAM_STR
-            ],
-            'userId' => [
-                'value' => $userId,
-                'type' => PDO::PARAM_INT
-            ]
-        ]);
+            // Programme
+            $programQuery = '
+                INSERT INTO Programme
+                (nom, idUtilisateur)
+                VALUES (:name, :userId)
+            ';
 
-        // Programme_Exercice
-        $idProgram = $this->getLastInsertId();
-        $exercieQuery = '
-            INSERT INTO Programme_Exercice
-            (idExercice, idProgramme, tempsPause, nbSéries, ordre)
-            VALUES (:exerciceId, :programId, :breakTime, :nbSeries, :order)
-        ';
-        foreach ($exercices as $exercice) {
-            $this->prepareExecute($exercieQuery, [
-                'exerciceId' => [
-                    'value' => $exercice->id,
-                    'type' => PDO::PARAM_INT
+            $this->prepareExecuteUnsafe($programQuery, [
+                'name' => [
+                    'value' => $programName,
+                    'type' => PDO::PARAM_STR
                 ],
-                'programId' => [
-                    'value' => $idProgram,
-                    'type' => PDO::PARAM_INT
-                ],
-                'breakTime' => [
-                    'value' => $exercice->tempsPause,
-                    'type' => PDO::PARAM_INT
-                ],
-                'nbSeries' => [
-                    'value' => $exercice->nbSériesConseillé,
-                    'type' => PDO::PARAM_INT
-                ],
-                'order' => [
-                    'value' => $exercice->ordre,
+                'userId' => [
+                    'value' => $userId,
                     'type' => PDO::PARAM_INT
                 ]
             ]);
-        }
 
-        $this->closeCursor();
-        return $idProgram;
+            // Programme_Exercice
+            $idProgram = $this->getLastInsertId();
+            $exercieQuery = '
+                INSERT INTO Programme_Exercice
+                (idExercice, idProgramme, tempsPause, nbSéries)
+                VALUES (:exerciceId, :programId, :breakTime, :nbSeries)
+            ';
+            foreach ($exercices as $exercice) {
+                $this->prepareExecuteUnsafe($exercieQuery, [
+                    'exerciceId' => [
+                        'value' => $exercice->id,
+                        'type' => PDO::PARAM_INT
+                    ],
+                    'programId' => [
+                        'value' => $idProgram,
+                        'type' => PDO::PARAM_INT
+                    ],
+                    'breakTime' => [
+                        'value' => $exercice->tempsPause,
+                        'type' => PDO::PARAM_INT
+                    ],
+                    'nbSeries' => [
+                        'value' => $exercice->nbSériesConseillé,
+                        'type' => PDO::PARAM_INT
+                    ]
+                ]);
+            }
+
+            $this->db->commit();
+            $this->closeCursor();
+            return $idProgram;
+        } catch (Exception $e) {
+            if ($this->db->inTransaction())
+                $this->db->rollback();
+        }
+        return NULL;
     }
 
     /**
@@ -235,7 +243,7 @@ class ProgramsRepository extends Repository
                 AND idProgramme = :programId
         ';
 
-        $this->prepareExecute($query, [
+        $this->prepareExecuteUnsafe($query, [
             'nbSeries' => [
                 'value' => $nbSeries,
                 'type' => PDO::PARAM_INT

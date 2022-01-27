@@ -110,7 +110,7 @@ CREATE TABLE Programme_Exercice (
     idProgramme INTEGER,
     tempsPause SMALLINT NOT NULL,
     nbSéries SMALLINT NOT NULL,
-    ordre SMALLINT NOT NULL,
+    ordre SMALLINT,
     CONSTRAINT PK_Programme_Exercice PRIMARY KEY (idExercice, idProgramme)
 );
 
