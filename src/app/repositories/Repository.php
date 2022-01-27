@@ -10,7 +10,7 @@ namespace App\Repositories;
 
 abstract class Repository
 {
-    protected $db;
+    public $db;
 
     /**
      * Stocke une référence vers l'instance de la classe permettant de communiquer avec la base de données
@@ -41,6 +41,18 @@ abstract class Repository
     function prepareExecute($query, $params)
     {
         return $this->db->prepareExecute($query, $params);
+    }
+
+    /**
+     * Prépare et exécute une requête afin d'éviter les injections SQL
+     * Throw en cas d'erreur
+     *
+     * @param string $query
+     * @param array $params
+     */
+    function prepareExecuteUnsafe($query, $params)
+    {
+        return $this->db->prepareExecuteUnCatched($query, $params);
     }
 
     /**

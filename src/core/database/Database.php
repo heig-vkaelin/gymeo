@@ -43,21 +43,33 @@ class Database
 
     /**
      * Prépare et exécute une requête afin d'éviter les injections SQL
+     * 
+     * Ne throw pas en cas d'erreur
      */
     public function prepareExecute($query, $params)
     {
-        $this->req = $this->connector->prepare($query);
-
         try {
-            foreach ($params as $key => $value) {
-                $this->req->bindValue($key, $value['value'], $value['type']);
-            }
-            $this->req->execute();
+            $this->prepareExecuteUnCatched($query, $params);
         } catch (PDOException $e) {
             dd($e);
             // TODO: add this in production
             // redirect('');
         }
+    }
+
+    /**
+     * Prépare et exécute une requête afin d'éviter les injections SQL
+     * 
+     * Throw en cas d'erreur
+     */
+    public function prepareExecuteUnCatched($query, $params)
+    {
+        $this->req = $this->connector->prepare($query);
+
+        foreach ($params as $key => $value) {
+            $this->req->bindValue($key, $value['value'], $value['type']);
+        }
+        $this->req->execute();
     }
 
     /**
@@ -99,5 +111,41 @@ class Database
     public function getLastInsertId()
     {
         return $this->connector->lastInsertId();
+    }
+
+    /**
+     * Démarre une transaction
+     *
+     */
+    public function beginTransaction()
+    {
+        return $this->connector->beginTransaction();
+    }
+
+    /**
+     * Commit une transaction
+     *
+     */
+    public function commit()
+    {
+        return $this->connector->commit();
+    }
+
+    /**
+     * Vérifie si une transaction est en cours ou non
+     *
+     */
+    public function inTransaction()
+    {
+        return $this->connector->inTransaction();
+    }
+
+    /**
+     * Annule une transaction
+     *
+     */
+    public function rollback()
+    {
+        return $this->connector->rollback();
     }
 }

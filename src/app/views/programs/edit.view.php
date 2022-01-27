@@ -24,7 +24,7 @@
                         <label class="mt-1 block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                             Ordre
                         </label>
-                        <input class="appearance-none block w-full bg-white text-gray-700 border border-gray-20 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:border-gray-500" type="number" name="ordre[]" value="<?= $exercice['ordre'] ?>">
+                        <input class="appearance-none block w-full bg-white text-gray-700 border border-gray-20 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:border-gray-500" type="number" name="ordre[]" value="<?= $i + 1 ?>">
                     </div>
 
                 <?php $i++;
