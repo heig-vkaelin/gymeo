@@ -12,7 +12,7 @@ Docker-Compose s’installe automatiquement à l’installation de Docker.
 
 Aucun autre prérequis n’est nécessaire, PHP et Postgresql sont directement installés et configurés dans le container Docker.
 
-Une fois cela fait, le lancement du site et de la base de données se fait en réalisant la commande suivante à la racine du projet:
+Une fois cela fait, le lancement du site et de la base de données se fait en réalisant la commande suivante à la racine du répertoire:
 
 ```bash
 docker-compose up
@@ -32,13 +32,16 @@ Mot de passe: admin
 Nom de la base de données: gymeo
 ```
 
-Pour finir, l’arrêt du container se fait via la commande suivante (toujours à la racine du projet):
+Pour finir, l’arrêt du container se fait via la commande suivante (toujours à la racine du répertoire):
 
 ```bash
 docker-compose down
 ```
 
+### Remise à zéro de la base de données
+
 Afin de retourner à l’état initial de la base de données, quelques opérations doivent être effectuées sur Docker.
+
 Premièrement, il est nécessaire de stopper le container avec la commande expliquée précédemment: `docker-compose down`.
 
 Ensuite il faut supprimer le volume utilisé par ledit container. Cette opération peut être effectuée en ligne de commande:
