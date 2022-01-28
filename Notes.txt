@@ -1,3 +1,0 @@
-Utilise docker pas uwamp
-
-port 9090
