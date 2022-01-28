@@ -4547,9 +4547,9 @@
 									},
 									"font": "Arial;13;0",
 									"showShadow": false,
-									"left": 694,
+									"left": 701,
 									"top": 246,
-									"width": 19.5126953125,
+									"width": 5.05908203125,
 									"height": 13,
 									"autoResize": true,
 									"alpha": -0.5235987755982988,
@@ -4558,7 +4558,7 @@
 										"$ref": "AAAAAAF9MiILWgLWUxg="
 									},
 									"edgePosition": 2,
-									"text": "0..*"
+									"text": "*"
 								},
 								{
 									"_type": "EdgeLabelView",
@@ -5886,7 +5886,7 @@
 								"reference": {
 									"$ref": "AAAAAAF9MiGyBf8/8R4="
 								},
-								"multiplicity": "0..*"
+								"multiplicity": "*"
 							},
 							"end2": {
 								"_type": "UMLAssociationEnd",
