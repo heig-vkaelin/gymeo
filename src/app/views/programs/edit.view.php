@@ -1,6 +1,6 @@
 <main>
     <div class="mt-6 container mx-auto px-4">
-        <h2 class="text-lg font-semibold">Finition de la création du programme
+        <h2 class="text-lg font-semibold">Modification du programme
             <span class="font-bold italic"><?= $program[0]['nomprogramme'] ?></span>
         </h2>
 
