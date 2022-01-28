@@ -130,45 +130,6 @@ WHERE
 IF FOUND THEN
 	RETURN NEW;
 ELSE 
-	RAISE EXCEPTION 'L''exercice %d %d ne possède aucun groupement musculaire en rapport avec le matériel utilisé.', NEW.idexercice, NEW.idgroupementmusculaire;
-END IF;
-END;
-
-$$ LANGUAGE plpgsql; 
- 
-CREATE TRIGGER après_insertion_exercice_groupementmusculaire
-    AFTER
-INSERT
-	ON
-	exercice_groupementmusculaire 
-    FOR EACH ROW 
-EXECUTE FUNCTION vérification_exercice_matériel(); 
-
-
-CREATE OR REPLACE
-FUNCTION vérification_exercice_matériel() 
-    RETURNS TRIGGER AS 
-$$ 
-BEGIN 
-PERFORM
-	DISTINCT exercice.id
-FROM
-	exercice
-LEFT JOIN matériel ON
-	matériel.id = exercice.idmatériel
-LEFT JOIN matériel_groupementmusculaire ON
-	matériel_groupementmusculaire.idmatériel = matériel.id
-INNER JOIN exercice_groupementmusculaire ON
-	exercice_groupementmusculaire.idexercice = exercice.id
-WHERE
-	exercice.id = NEW.idexercice
-	AND (matériel_groupementmusculaire.idgroupementmusculaire = exercice_groupementmusculaire.idgroupementmusculaire
-	OR exercice.idmatériel IS NULL)
-	;
-
-IF FOUND THEN
-	RETURN NEW;
-ELSE 
 	RAISE EXCEPTION 'L''exercice ne possède aucun groupement musculaire en rapport avec le matériel utilisé.';
 END IF;
 END;
