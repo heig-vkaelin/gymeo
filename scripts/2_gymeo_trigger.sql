@@ -102,38 +102,83 @@ CREATE OR REPLACE TRIGGER avant_insertion_série_non_terminée
   FOR EACH ROW 
   EXECUTE FUNCTION function_vérification_fin_séance(); 
 
-
-/* --------------------------------------------------------------------------------- */
-/*  L'ordre d'un exercice dans un programme doit suivre la numérotation existante.   */
-/* --------------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------------------------- */
+/* Rollback l'insertion d'un exercice_groupementMusculaire s'il ne correspond pas au matériel  */
+/* ------------------------------------------------------------------------------------------- */
 
 CREATE OR REPLACE
-FUNCTION function_ordre_exercice_programme() 
+FUNCTION vérification_exercice_matériel() 
     RETURNS TRIGGER AS 
-$$
-DECLARE
-    dernierOrdre integer;
-BEGIN
-  SELECT 
-    MAX(ordre)
-  INTO
-    dernierOrdre
-  FROM
-    Programme_Exercice
-  WHERE
-    idProgramme = NEW.idProgramme;
+$$ 
+BEGIN 
+PERFORM
+	DISTINCT exercice.id
+FROM
+	exercice
+LEFT JOIN matériel ON
+	matériel.id = exercice.idmatériel
+LEFT JOIN matériel_groupementmusculaire ON
+	matériel_groupementmusculaire.idmatériel = matériel.id
+INNER JOIN exercice_groupementmusculaire ON
+	exercice_groupementmusculaire.idexercice = exercice.id
+WHERE
+	exercice.id = NEW.idexercice
+	AND (matériel_groupementmusculaire.idgroupementmusculaire = exercice_groupementmusculaire.idgroupementmusculaire
+	OR exercice.idmatériel IS NULL)
+	;
 
-	IF ((dernierOrdre IS NULL AND NEW.ordre <> 1) OR (NEW.ordre <> dernierOrdre + 1)) THEN
-			RAISE EXCEPTION 'L''ordre de l''exercice dans le programme est invalide.'
-			USING HINT = 'L''ordre des exercices d''un programme doit se suivre.';
-	ELSE
-		RETURN NEW;
-	END IF;
+IF FOUND THEN
+	RETURN NEW;
+ELSE 
+	RAISE EXCEPTION 'L''exercice %d %d ne possède aucun groupement musculaire en rapport avec le matériel utilisé.', NEW.idexercice, NEW.idgroupementmusculaire;
+END IF;
 END;
 
 $$ LANGUAGE plpgsql; 
  
-CREATE OR REPLACE TRIGGER vérification_ordre_exercice_programme
-  BEFORE INSERT OR UPDATE
-  ON Programme_Exercice FOR EACH ROW 
-  EXECUTE FUNCTION function_ordre_exercice_programme();
+CREATE TRIGGER après_insertion_exercice_groupementmusculaire
+    AFTER
+INSERT
+	ON
+	exercice_groupementmusculaire 
+    FOR EACH ROW 
+EXECUTE FUNCTION vérification_exercice_matériel(); 
+
+
+CREATE OR REPLACE
+FUNCTION vérification_exercice_matériel() 
+    RETURNS TRIGGER AS 
+$$ 
+BEGIN 
+PERFORM
+	DISTINCT exercice.id
+FROM
+	exercice
+LEFT JOIN matériel ON
+	matériel.id = exercice.idmatériel
+LEFT JOIN matériel_groupementmusculaire ON
+	matériel_groupementmusculaire.idmatériel = matériel.id
+INNER JOIN exercice_groupementmusculaire ON
+	exercice_groupementmusculaire.idexercice = exercice.id
+WHERE
+	exercice.id = NEW.idexercice
+	AND (matériel_groupementmusculaire.idgroupementmusculaire = exercice_groupementmusculaire.idgroupementmusculaire
+	OR exercice.idmatériel IS NULL)
+	;
+
+IF FOUND THEN
+	RETURN NEW;
+ELSE 
+	RAISE EXCEPTION 'L''exercice ne possède aucun groupement musculaire en rapport avec le matériel utilisé.';
+END IF;
+END;
+
+$$ LANGUAGE plpgsql; 
+ 
+CREATE TRIGGER après_insertion_exercice_groupementmusculaire
+    AFTER
+INSERT
+	ON
+	exercice_groupementmusculaire 
+    FOR EACH ROW 
+EXECUTE FUNCTION vérification_exercice_matériel(); 
