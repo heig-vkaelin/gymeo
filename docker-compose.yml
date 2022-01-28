@@ -3,7 +3,7 @@ services:
   web:
     build: ./src/.
     ports:
-      - "8080:80" # Possible de modifier le port de l'application web
+      - "8080:80" # Possiblité de modifier le port externe de l'application web
     volumes:
       - ./src:/var/www/html
     depends_on:
@@ -19,7 +19,7 @@ services:
     image: postgres:14.0
     container_name: gymeo-postgres
     ports:
-      - "5433:5432" # Possible de modifier le port de la base de données
+      - "5433:5432" # Possiblité de modifier le port externe de la base de données
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./scripts:/docker-entrypoint-initdb.d

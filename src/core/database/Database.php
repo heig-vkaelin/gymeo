@@ -51,9 +51,8 @@ class Database
         try {
             $this->prepareExecuteUnCatched($query, $params);
         } catch (PDOException $e) {
-            dd($e);
-            // TODO: add this in production
-            // redirect('');
+            // Redirige l'utilisateur si l'erreur n'est pas traitée ailleurs
+            redirect('');
         }
     }
 
