@@ -1,3 +1,12 @@
+<?php
+
+/**
+ * Auteurs: Loïc Rosset, Alexandre Jaquier, Valentin Kaelin
+ * Date: 28.01.2022
+ * Description: Affiche les détails d'une séance
+ */
+?>
+
 <main>
     <div class="mt-6 container px-4 mx-auto">
         <?php $startDate = custom_strftime("%A %d %B %G", strtotime($sessions[0]['datedébut'])); ?>

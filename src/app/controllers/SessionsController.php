@@ -12,6 +12,11 @@ use App\Core\App;
 
 class SessionsController
 {
+    /**
+     * Historique des séances d'un utilisateur
+     *
+     * @param object $user potentiel utilisateur connecté
+     */
     public function index($user)
     {
         // Redirection si l'utilisateur n'est pas connecté
@@ -24,6 +29,11 @@ class SessionsController
         return view('sessions/index', compact('sessions'));
     }
 
+    /**
+     * Affiche les détails d'une séance réalisée par un utilisateur
+     *
+     * @param object $user potentiel utilisateur connecté
+     */
     public function show($user)
     {
         // Redirection si l'utilisateur n'est pas connecté
@@ -43,6 +53,11 @@ class SessionsController
         return view('sessions/show', compact('sessions'));
     }
 
+    /**
+     * Formulaire permettant de démarrer une nouvelle séance
+     *
+     * @param object $user potentiel utilisateur connecté
+     */
     public function create($user)
     {
         // Redirection si l'utilisateur n'est pas connecté
@@ -60,6 +75,11 @@ class SessionsController
         return view('sessions/create', compact('programs'));
     }
 
+    /**
+     * Enregistre une nouvelle séance dans la base de données
+     *
+     * @param object $user potentiel utilisateur connecté
+     */
     public function store($user)
     {
         // Redirection si l'utilisateur n'est pas connecté
@@ -83,6 +103,8 @@ class SessionsController
 
     /**
      * Termine la séance d'un utilisateur
+     *
+     * @param object $user potentiel utilisateur connecté
      */
     public function end($user)
     {

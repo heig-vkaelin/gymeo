@@ -1,3 +1,12 @@
+<?php
+
+/**
+ * Auteurs: Loïc Rosset, Alexandre Jaquier, Valentin Kaelin
+ * Date: 28.01.2022
+ * Description: Liste les programmes de l'utilisateur connecté
+ */
+?>
+
 <main>
     <div class="mt-6 container px-4 mx-auto">
         <div class="flex items-center justify-between">

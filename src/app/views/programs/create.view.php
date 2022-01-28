@@ -1,3 +1,12 @@
+<?php
+
+/**
+ * Auteurs: Loïc Rosset, Alexandre Jaquier, Valentin Kaelin
+ * Date: 28.01.2022
+ * Description: Formulaire permettant de créer un nouveau programme
+ */
+?>
+
 <main>
     <div class="mt-6 container mx-auto px-4">
         <h2 class="text-lg font-semibold">Créer un programme</h2>

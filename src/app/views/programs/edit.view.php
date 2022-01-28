@@ -1,3 +1,12 @@
+<?php
+
+/**
+ * Auteurs: Loïc Rosset, Alexandre Jaquier, Valentin Kaelin
+ * Date: 28.01.2022
+ * Description: Formulaire permettant de modifier les réglages des exercices ajoutés au programme
+ */
+?>
+
 <main>
     <div class="mt-6 container mx-auto px-4">
         <h2 class="text-lg font-semibold">Modification du programme

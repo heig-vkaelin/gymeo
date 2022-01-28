@@ -1,12 +1,16 @@
+<?php
+
+/**
+ * Auteurs: Loïc Rosset, Alexandre Jaquier, Valentin Kaelin
+ * Date: 28.01.2022
+ * Description: En-tête pour le site entier, contient la navigation et le formulaire de connexion
+ */
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
 <head>
-    <!--
-    Auteurs      : Loïc Rosset, Alexandre Jaquier, Valentin Kaelin
-    Date         : 28.01.2022
-    Description  : En-tête pour le site entier, contient la navigation et le formulaire de connexion
-    -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">

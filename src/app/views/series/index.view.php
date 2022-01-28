@@ -1,3 +1,12 @@
+<?php
+
+/**
+ * Auteurs: Loïc Rosset, Alexandre Jaquier, Valentin Kaelin
+ * Date: 28.01.2022
+ * Description: Affiche l'historiques des séries d'un utilisateur, triées par exercice
+ */
+?>
+
 <main>
     <div class="mt-6 container px-4 mx-auto">
         <div class="flex items-center justify-between">
@@ -33,15 +42,15 @@
                                 }
                             ?>
                                 <tr class="<?= $x % 2 == 0 ? 'bg-gray-100' : '' ?>">
-                                    <td class="px-4 py-2 truncate max-w-sm">
+                                    <td class="px-4 py-3 truncate max-w-sm">
                                         <?= $ser['nbrépétitions'] == NULL ? $ser['tempsexécution'] . ' secondes' : $ser['nbrépétitions'] . ' répétitions'  ?>
                                     </td>
-                                    <td class="px-4 py-2 truncate max-w-sm">
+                                    <td class="px-4 py-3 truncate max-w-sm">
                                         <?= $ser['poids']  == NULL ? '-' : $ser['poids'] . ' kg' ?>
                                     </td>
-                                    <td class="px-4 py-2 truncate max-w-sm"><?= $dateB ?></td>
-                                    <td class="px-4 py-2 truncate max-w-sm"><?= $dateE == NULL ? ' - ' : $dateE ?></td>
-                                    <td class="px-4 py-2 truncate max-w-sm">
+                                    <td class="px-4 py-3 truncate max-w-sm"><?= $dateB ?></td>
+                                    <td class="px-4 py-3 truncate max-w-sm"><?= $dateE == NULL ? ' - ' : $dateE ?></td>
+                                    <td class="px-4 py-3 truncate max-w-sm">
                                         <a href="session?id=<?= $ser['id'] ?>" class="flex-shrink-0 shadow bg-indigo-500 hover:bg-indigo-600 focus:outline-none text-white text-sm py-2 px-4 rounded">
                                             Voir séance
                                         </a>

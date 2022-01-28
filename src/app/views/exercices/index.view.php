@@ -1,3 +1,13 @@
+<?php
+
+/**
+ * Auteurs: Loïc Rosset, Alexandre Jaquier, Valentin Kaelin
+ * Date: 28.01.2022
+ * Description: Liste tous les exercices disponibles sur l'application.
+ *              Il est possible de les trier via plusieurs critères.
+ */
+?>
+
 <main>
     <div class="mt-6 container px-4 mx-auto">
         <div>

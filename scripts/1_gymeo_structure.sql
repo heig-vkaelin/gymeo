@@ -1,16 +1,5 @@
 SET client_encoding TO 'UTF-8';
 
--- TODO - retours de l'assistant
--- Check les not null, plutôt cascade (surtout que le champ est NOT NULL) 
--- “On delete restrict” si on veut être + spécifique
-
--- TODO - CI à implémenter
--- Un exercice utilisant un matériel doit travailler les mêmes groupements musculaires que ce dernier. 
--- OK - Une série doit contenir le même attribut que l’exercice auquel elle se rattache (soit nbRépétitions soit tempsExécution). 
--- OK - L'exercice d’une série doit faire partie du programme de cette dernière. 
--- OK - Une fois la séance terminée, il est impossible d’y ajouter une série supplémentaire. 
--- Les numéros des exercices d’un programme s’incrémentent, il n’y a pas de saut entre les différents numéros. Ceux-ci commencent à 1. 
-
 /* ---------------------------------------------------------------------------- */
 /*                               Création des types                             */
 /* ---------------------------------------------------------------------------- */

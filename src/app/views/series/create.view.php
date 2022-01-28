@@ -1,3 +1,13 @@
+<?php
+
+/**
+ * Auteurs: Loïc Rosset, Alexandre Jaquier, Valentin Kaelin
+ * Date: 28.01.2022
+ * Description: Page permettant d'ajouter une série lors de sa séance.
+ *              Il est également possible de terminer sa séance.
+ */
+?>
+
 <main>
     <div class="mt-6 container px-4 mx-auto">
         <div class="flex items-center justify-between">

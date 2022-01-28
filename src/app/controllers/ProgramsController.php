@@ -16,6 +16,11 @@ class ProgramsController
     // Temps de pause par défaut entre 2 séries d'exercice
     const DEFAULT_BREAK_TIME = 30;
 
+    /**
+     * Liste les programmes de l'utilisateur connecté
+     *
+     * @param object $user potentiel utilisateur connecté
+     */
     public function index($user)
     {
         // Redirection si l'utilisateur n'est pas connecté
@@ -28,6 +33,11 @@ class ProgramsController
         return view('programs/index', compact('programs'));
     }
 
+    /**
+     * Affiche les détails d'un programme (sa liste d'exercices)
+     *
+     * @param object $user potentiel utilisateur connecté
+     */
     public function show($user)
     {
         // Redirection si l'utilisateur n'est pas connecté ou que l'id du programme
@@ -41,6 +51,11 @@ class ProgramsController
         return view('programs/show', compact('program'));
     }
 
+    /**
+     * Formulaire permettant de créer un nouveau programme
+     *
+     * @param object $user potentiel utilisateur connecté
+     */
     public function create($user)
     {
         // Redirection si l'utilisateur n'est pas connecté
@@ -53,6 +68,11 @@ class ProgramsController
         return view('programs/create', compact('exercices'));
     }
 
+    /**
+     * Supprime un programme
+     *
+     * @param object $user potentiel utilisateur connecté
+     */
     public function delete($user)
     {
         // Redirection si l'utilisateur n'est pas connecté ou que l'id du programme
@@ -69,6 +89,11 @@ class ProgramsController
         redirect('programs');
     }
 
+    /**
+     * Enregistre un nouveau programme dans la base de données
+     *
+     * @param object $user potentiel utilisateur connecté
+     */
     public function store($user)
     {
         // Redirection si l'utilisateur n'est pas connecté ou si aucun exercice
@@ -111,6 +136,11 @@ class ProgramsController
         return redirect('programs/create');
     }
 
+    /**
+     * Formulaire permettant de modifier un programme
+     *
+     * @param object $user potentiel utilisateur connecté
+     */
     public function edit($user)
     {
         // Redirection si l'utilisateur n'est pas connecté ou si l'id
@@ -124,6 +154,11 @@ class ProgramsController
         return view('programs/edit', compact('program'));
     }
 
+    /**
+     * Enregistre les modifications apportées à un programme dans la base de données
+     *
+     * @param object $user potentiel utilisateur connecté
+     */
     public function update($user)
     {
         // Redirection si l'utilisateur n'est pas connecté

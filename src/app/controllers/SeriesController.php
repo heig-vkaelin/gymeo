@@ -12,6 +12,11 @@ use App\Core\App;
 
 class SeriesController
 {
+    /**
+     * Affiche la l'historique des séries réalisées par un utilisateur
+     *
+     * @param object $user potentiel utilisateur connecté
+     */
     public function index($user)
     {
         // Redirection si l'utilisateur n'est pas connecté
@@ -24,6 +29,11 @@ class SeriesController
         return view('series/index', compact('series'));
     }
 
+    /**
+     * Formulaire permettant d'ajouter une série à la séance en cours
+     *
+     * @param object $user potentiel utilisateur connecté
+     */
     public function create($user)
     {
         // Redirection si l'utilisateur n'est pas connecté
@@ -51,6 +61,11 @@ class SeriesController
         return redirect('sessions');
     }
 
+    /**
+     * Enregistre la nouvelle série dans la base de données
+     *
+     * @param object $user potentiel utilisateur connecté
+     */
     public function store($user)
     {
         // Redirection si l'utilisateur n'est pas connecté

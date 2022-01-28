@@ -20,7 +20,7 @@ docker-compose up
 
 Il est également possible d’ajouter l’attribut `-d` à la commande afin de pouvoir fermer la console tout en gardant l’application en ligne.
 
-Par la suite, le site est disponible à l’adresse suivante: [localhost:9090](http://localhost:9090/)
+Par la suite, le site est disponible à l’adresse suivante: [localhost:8080](http://localhost:8080/)
 
 Quant à la base de données, elle a été créée et remplie automatiquement. Il est possible de s’y connecter via n’importe quel logiciel de gestion de base de données (ex: DBeaver) en utilisant les informations suivantes:
 

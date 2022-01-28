@@ -1,3 +1,12 @@
+<?php
+
+/**
+ * Auteurs: Loïc Rosset, Alexandre Jaquier, Valentin Kaelin
+ * Date: 28.01.2022
+ * Description: Affiche les détails d'un programme
+ */
+?>
+
 <main>
     <div class="mt-6 container mx-auto px-4">
         <div class="">

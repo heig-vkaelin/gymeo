@@ -3,7 +3,7 @@
 /**
  * Auteurs: Loïc Rosset, Alexandre Jaquier, Valentin Kaelin
  * Date: 28.01.2022
- * Description: Initie le site web
+ * Description: Initie l'application web
  */
 
 use App\Core\App;
@@ -16,7 +16,7 @@ session_start();
 date_default_timezone_set('Europe/Zurich');
 setlocale(LC_TIME, 'fr_FR', 'french', 'French_France.1252', 'fr_FR.ISO8859-1', 'fra', 'fr_FR.utf8');
 
-// Stockage des instances des différents singletons accessibles dans toute l'app
+// Stockage des instances des différents singletons accessibles dans toute l'application
 App::bind('config', require 'config.php');
 
 App::bind('database', new Database(App::get('config')['database']));

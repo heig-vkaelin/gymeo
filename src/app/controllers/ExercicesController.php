@@ -12,6 +12,10 @@ use App\Core\App;
 
 class ExercicesController
 {
+    /**
+     * Liste tous les exercices disponibles.
+     * Des tris peuvent être appliqués
+     */
     public function index()
     {
         $locations = App::get('exercices-repository')->getAllLocations();
@@ -40,6 +44,9 @@ class ExercicesController
         return view('exercices/index', compact('exercices', 'locations', 'muscles'));
     }
 
+    /**
+     * Affiche les détails d'un exercice
+     */
     public function show()
     {
         // Redirection si l'id de l'exercice n'est pas envoyé

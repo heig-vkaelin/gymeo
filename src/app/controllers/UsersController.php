@@ -43,6 +43,8 @@ class UsersController
 
     /**
      * Déconnecte l'utilisateur
+     *
+     * @param object $user potentiel utilisateur connecté
      */
     public function logout($user)
     {
