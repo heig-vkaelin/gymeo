@@ -1,5 +1,7 @@
 # Project BDR - gymeo
 
+Auteurs: Loïc Rosset, Alexandre Jaquier, Valentin Kaelin
+
 ## Introduction
 
 Notre application gymeo a pour but de permettre à toute personne pratiquant de l’entraînement physique comme du fitness, du CrossFit ou encore du Street Workout, de pouvoir enregistrer ses séances et visualiser sa progression. Les utilisateurs peuvent créer des programmes à partir d’exercices existants et visionner leurs historiques de séances.
@@ -31,6 +33,8 @@ Utilisateur: postgres
 Mot de passe: admin
 Nom de la base de données: gymeo
 ```
+
+Il est possible de changer les ports de l’application web (8080) et de la base de données (5433) si ceux-ci sont déjà utilisés sur la machine hôte. Pour ce faire, il suffit de modifier le fichier de configuration `docker-compose.yml` aux lignes indiquées par un commentaire.
 
 Pour finir, l’arrêt du container se fait via la commande suivante (toujours à la racine du répertoire):
 
